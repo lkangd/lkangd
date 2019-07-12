@@ -1,0 +1,32 @@
+{
+  "name": "curtis-spot",
+  "version": "1.0.0",
+  "description": "Curtis' Spot",
+  "author": "CurtisLiong",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/markdownit": "^1.2.5",
+    "dayjs": "^1.8.14",
+    "front-matter": "^3.0.2",
+    "highlight.js": "^9.15.8",
+    "marked": "^0.7.0",
+    "nuxt": "^2.8.1",
+    "nuxt-payload-extractor": "0.0.10",
+    "prismjs": "^1.16.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/style-resources": "^0.1.2",
+    "@nuxtjs/svg-sprite": "^0.2.1",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "less-plugin-functions": "^1.0.0",
+    "nodemon": "^1.18.9"
+  }
+}
