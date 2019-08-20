@@ -71,13 +71,13 @@ export default {
       margin: 24px 0;
       font-size: 16px;
       line-height: 28px;
+      color: var(--text-normal);
     }
     code:not([class*='language-']) {
       padding: 0 4px;
       font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
-      color: rgba(49, 51, 51, 0.9);
-      // background-color: rgba(79, 192, 141, 0.4);
-      background-color: rgba(255, 233, 87, 0.4);
+      color: var(--inline-code-fg);
+      background-color: var(--inline-code-bg);
       border-radius: 3px;
     }
     strong em {
@@ -87,7 +87,7 @@ export default {
     hr {
       margin: 30px 0;
       border: 0;
-      border-bottom: 1px solid #a7adba;
+      border-bottom: 1px solid var(--hr);
     }
     em {
       margin: 0 6px;

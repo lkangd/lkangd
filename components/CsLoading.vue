@@ -70,7 +70,7 @@ export default {
   z-index: 100;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: var(--bg);
   will-change: opacity;
   transition: opacity 0.5s 0.4s;
 
@@ -119,7 +119,7 @@ export default {
       position: absolute;
       z-index: 3;
       width: 7px;
-      background: #272b36;
+      background: var(--text-normal);
       will-change: transform;
       transform: rotateZ(45deg);
 
@@ -243,7 +243,7 @@ export default {
       width: 100%;
       font-size: 18px;
       font-weight: bold;
-      color: #272b36;
+      color: var(--text-normal);
       text-align: center;
       will-change: opacity;
       transition: opacity 0.5s 0.5s;

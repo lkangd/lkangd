@@ -33,12 +33,12 @@ export default {
   hr {
     margin: 64px 0;
     border: 0;
-    border-bottom: 1px solid #a7adba;
+    border-bottom: 1px solid var(--hr);
   }
   &__text {
     margin: 8px 0;
     line-height: 1.7;
-    color: #65737e;
+    color: var(--text-normal);
   }
   &__reward-code {
     margin-top: 50px;

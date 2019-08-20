@@ -12,12 +12,6 @@
         href="/"
         target="_blank"
       >Curtis' Spot</a>
-      <!-- - Powered by
-      <a
-        class="cs-outside-link"
-        href="https://nuxtjs.org/"
-        target="_blank"
-      >Nuxt.js</a>-->
     </p>
   </footer>
 </template>
@@ -48,14 +42,14 @@ export default {
     right: 0;
     bottom: 0;
     z-index: -2;
-    background-color: #fafafa;
+    background-color: var(--footer-bg);
   }
   &__logo {
     display: block;
     margin: 18px auto;
     width: 28px;
     height: 28px;
-    color: #000;
+    color: var(--logo);
   }
   &__text,
   &__text > a {
@@ -68,7 +62,6 @@ export default {
     display: inline-block;
     vertical-align: middle;
     font-size: 14px;
-    color: black;
   }
 }
 </style>

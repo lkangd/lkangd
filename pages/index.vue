@@ -100,9 +100,17 @@ export default {
 <style scoped lang="less">
 .curtis-spot {
   padding-bottom: 64px;
+  color: var(--text-normal);
   .contact-list {
     a {
       color: #343d46;
+    }
+  }
+}
+.dark {
+  .contact-list {
+    a {
+      color: rgba(255, 255, 255, 0.88);;
     }
   }
 }

@@ -87,5 +87,8 @@ sw.*
 # Mac OSX
 .DS_Store
 
+# dependency lock
+package-lock.json
+
 # Origin MD Files
 posts/**/*.md

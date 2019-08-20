@@ -2,7 +2,6 @@ const appConfig = require('./config/app.config');
 const LessPluginFunctions = require('less-plugin-functions');
 const postPayload = require('./post-payload');
 const path = require('path');
-const Prism = require('prismjs');
 
 export default {
   mode: 'universal',
@@ -19,6 +18,7 @@ export default {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:900&display=swap' },
     ],
   },
   generate: {
@@ -59,12 +59,9 @@ export default {
   },
   router: {
     // base: '/dist',
-    // scrollBehavior(to, from, savedPosition) {
-    //   return { x: 0, y: 0 };
-    // },
   },
   server: {
-    port: 8080, // default: 3000
+    port: 59057, // default: 3000
     host: '127.0.0.1', // default: localhost,
   },
   /*
@@ -80,10 +77,6 @@ export default {
   css: [
     {
       src: '@/assets/less/index.less',
-      lang: 'less',
-    },
-    {
-      src: '@/assets/less/dracula.less',
       lang: 'less',
     },
     {
@@ -109,9 +102,6 @@ export default {
         html: true,
         linkify: true,
         breaks: true,
-        // highlight: (code, lang) => {
-        //   return Prism.highlight(code, Prism.languages[lang] || Prism.languages.markup);
-        // },
       },
     ],
   ],

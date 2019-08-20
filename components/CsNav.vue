@@ -60,9 +60,10 @@ export default {
   &__item {
     display: inline-block;
     padding: 0 8px;
-    color: #343d46;
+    color: var(--site-nav);
     cursor: pointer;
     > a {
+    font-weight: bold;
       line-height: 1.4;
     }
   }

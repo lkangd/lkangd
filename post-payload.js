@@ -21,7 +21,7 @@ module.exports = dirPath => {
   const walker = (dirPath, result) => {
     const dirList = fs.readdirSync(dirPath);
     dirList.forEach(fileName => {
-      // '.XXXXX' exception
+      // '.xxx' exception
       if (/^\./.test(fileName)) return;
 
       const subDirPath = `${dirPath}/${fileName}`;
@@ -34,7 +34,6 @@ module.exports = dirPath => {
         const post = frontMatter(file);
 
         // post.body = htmlResult(post.body);
-        // post.attributes.link = post.link = `/post/${String(Math.round(Math.random() * 1000000000)).slice(0, 7)}`;
         post.attributes.link = post.link = `/post/${fileName.replace(/\..*$/, '')}`;
         result.push(post);
       }

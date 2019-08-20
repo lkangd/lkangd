@@ -1,6 +1,7 @@
 <template>
   <header class="cs-header">
     <svg-icon
+      @click.native="toggleTheme"
       class="cs-header__logo"
       name="logo"
     />
@@ -20,6 +21,21 @@
 
 export default {
   name: 'cs-header',
+  data() {
+    return {
+      body: null,
+    };
+  },
+  created() {
+    if (process.client) {
+      this.body = document.querySelector('body');
+    }
+  },
+  methods: {
+    toggleTheme() {
+      this.body.classList.toggle('dark');
+    },
+  },
 };
 </script>
 
@@ -33,7 +49,7 @@ export default {
     margin: 0 auto;
     width: 128px;
     height: 128px;
-    color: #000;
+    color: var(--logo);
     transition: color 0.5s;
     cursor: pointer;
     &:hover {
@@ -46,8 +62,9 @@ export default {
     font-weight: bold;
     line-height: 1.4;
     text-align: center;
+    color: var(--text-normal);
     &--light {
-      color: #65737e;
+      color: var(--site-desc);
       font-weight: 500;
     }
   }

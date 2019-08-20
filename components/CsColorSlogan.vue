@@ -171,6 +171,7 @@ export default {
   display: inline-block;
   position: relative;
   font-family: serif;
+  color: var(--text-normal);
   background-color: transparent;
   &__placeholder {
     opacity: 0;
