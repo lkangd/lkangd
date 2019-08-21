@@ -7,6 +7,19 @@
       v-html="$md.render(post.body || '')"
     />
     <!-- <article v-html="Article" /> -->
+    <hr />
+    <div class="post__wrapper">
+      <nuxt-link
+        :to="post.next.link"
+        class="cs-outside-link fr"
+        v-if="post.next"
+      >{{ post.next.title }} →</nuxt-link>
+      <nuxt-link
+        :to="post.prev.link"
+        class="cs-outside-link fl"
+        v-if="post.prev"
+      >← {{ post.prev.title }}</nuxt-link>
+    </div>
     <cs-statement />
   </section>
 </template>
@@ -42,6 +55,7 @@ export default {
     } else {
       this.post = JSON.parse(localStorage.getItem('article'));
     }
+    console.log('this.post :', this.post);
     Prism.highlightAll();
   },
   components: { CsStatement },
@@ -51,6 +65,11 @@ export default {
 <style lang="less">
 .post {
   background-color: transparent;
+  hr {
+    margin: 64px 0;
+    border: 0;
+    border-bottom: 1px solid var(--hr);
+  }
   .cs-post-article {
     a {
       padding: 0 4px;
@@ -112,6 +131,9 @@ export default {
       width: 100%;
       height: auto;
     }
+  }
+  &__wrapper {
+    overflow: hidden;
   }
 }
 </style>
