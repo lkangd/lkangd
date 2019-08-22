@@ -49,6 +49,16 @@ export default {
       // Article,
     };
   },
+  beforeMount() {
+    this.$md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
+      const token = tokens[idx];
+      const dataLine = token.attrs && token.attrs[0];
+
+      return `<pre ${(dataLine && 'data-line="' + dataLine + '"') || ''} ${slf.renderAttrs(token)}><code class="language-${token.info}">${
+        token.content
+      }</code></pre>`;
+    };
+  },
   mounted() {
     if (this.post.link) {
       localStorage.setItem('article', JSON.stringify(this.post));
