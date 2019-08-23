@@ -29,6 +29,7 @@
     "less-loader": "^5.0.0",
     "less-plugin-functions": "^1.0.0",
     "markdown-it-attrs": "^3.0.1",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "striptags": "^3.1.1"
   }
 }

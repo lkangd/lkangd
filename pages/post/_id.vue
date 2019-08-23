@@ -1,7 +1,11 @@
 <template>
   <section class="post cs-container-big">
-    <h2 class="cs-title-big">{{ post.attributes && post.attributes.title }}</h2>
-    <p class="cs-date">{{ post.attributes && post.attributes.date | formatDate('DD, MMM, YYYY') }}</p>
+    <template v-if="post.attributes">
+      <h2 class="cs-title-big">{{ post.attributes.title }}</h2>
+      <p
+        class="cs-date"
+      >{{ post.attributes.date | formatDate('DD, MMM, YYYY') }}•{{ post.attributes.wordcount }} words•{{ post.attributes.min2read }}</p>
+    </template>
     <article
       class="cs-post-article"
       v-html="$md.render(post.body || '')"
@@ -144,6 +148,9 @@ export default {
   }
   &__wrapper {
     overflow: hidden;
+    > a {
+      margin: 20px 0;
+    }
   }
 }
 </style>

@@ -1,3 +1,4 @@
+import { min2read, wordcount } from './utils/wordcount';
 const fs = require('fs');
 const frontMatter = require('front-matter');
 // const marked = require('marked');
@@ -35,6 +36,8 @@ module.exports = dirPath => {
 
         // post.body = htmlResult(post.body);
         post.attributes.link = post.link = `/post/${fileName.replace(/\..*$/, '')}`;
+        post.attributes.min2read = min2read(post.body);
+        post.attributes.wordcount = wordcount(post.body);
         result.push(post);
       }
     });
