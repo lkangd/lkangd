@@ -29,11 +29,13 @@ export default {
   created() {
     if (process.client) {
       this.body = document.querySelector('body');
+      localStorage.getItem('CURTIS_SPOT_DARK_MODE') === 'true' && this.body.classList.add('dark');
     }
   },
   methods: {
     toggleTheme() {
       this.body.classList.toggle('dark');
+      localStorage.setItem('CURTIS_SPOT_DARK_MODE', this.body.classList.contains('dark'));
     },
   },
 };
