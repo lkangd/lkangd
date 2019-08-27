@@ -17,12 +17,14 @@
     "front-matter": "^3.0.2",
     "highlight.js": "^9.15.8",
     "lodash": "^4.17.15",
+    "markdown-it": "^9.1.0",
     "marked": "^0.7.0",
     "nuxt": "^2.8.1",
     "nuxt-payload-extractor": "0.0.10",
     "prismjs": "^1.16.0"
   },
   "devDependencies": {
+    "@nuxtjs/feed": "^1.1.0",
     "@nuxtjs/style-resources": "^0.1.2",
     "@nuxtjs/svg-sprite": "^0.2.1",
     "less": "^3.9.0",

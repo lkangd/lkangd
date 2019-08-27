@@ -2,7 +2,6 @@
   <nav class="cs-nav">
     <div
       :key="index"
-      @click="$router.push(nav.path)"
       class="cs-nav__item"
       v-for="(nav, index) in navs"
     >
@@ -11,6 +10,13 @@
         class="cs-nav-link"
         replace
       >{{ nav.text }}</nuxt-link>
+    </div>
+    <div class="cs-nav__item">
+      <a
+        class="cs-nav-link"
+        href="/feed.xml"
+        target="_blank"
+      >RSS</a>
     </div>
   </nav>
 </template>
@@ -56,6 +62,7 @@ export default {
 <style scoped lang="less">
 .cs-nav {
   padding: 32px;
+  font-size: 0;
   text-align: center;
   &__item {
     display: inline-block;
@@ -63,7 +70,8 @@ export default {
     color: var(--site-nav);
     cursor: pointer;
     > a {
-    font-weight: bold;
+      font-size: 16px;
+      font-weight: bold;
       line-height: 1.4;
     }
   }

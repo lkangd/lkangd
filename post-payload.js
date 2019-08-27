@@ -1,21 +1,7 @@
 import { min2read, wordcount } from './utils/wordcount';
+import md from './utils/markdown-it';
 const fs = require('fs');
 const frontMatter = require('front-matter');
-// const marked = require('marked');
-
-// const rendererMD = new marked.Renderer();
-// const htmlResult = contentBody => {
-//   return marked(contentBody, {
-//     renderer: rendererMD,
-//     gfm: true,
-//     tables: true,
-//     breaks: true,
-//     pedantic: false,
-//     sanitize: false,
-//     smartLists: true,
-//     smartypants: false,
-//   });
-// };
 
 module.exports = dirPath => {
   const result = {};
@@ -34,7 +20,7 @@ module.exports = dirPath => {
         const file = fs.readFileSync(subDirPath, 'utf8');
         const post = frontMatter(file);
 
-        // post.body = htmlResult(post.body);
+        post.body = String(md.render(post.body));
         post.attributes.link = post.link = `/post/${fileName.replace(/\..*$/, '')}`;
         post.attributes.min2read = min2read(post.body);
         post.attributes.wordcount = wordcount(post.body);

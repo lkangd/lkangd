@@ -8,9 +8,8 @@
     </template>
     <article
       class="cs-post-article"
-      v-html="$md.render(post.body || '')"
+      v-html="post.body"
     />
-    <!-- <article v-html="Article" /> -->
     <hr />
     <div class="post__wrapper">
       <nuxt-link
@@ -30,7 +29,6 @@
 
 <script>
 /* eslint-disable no-console */
-// import Article from '@/posts/fun/why-do-we-write-super-props.md';
 import CsStatement from '@/components/CsStatement';
 import appConfig from '@/config/app.config';
 
@@ -48,28 +46,12 @@ export default {
 
     return { post: (payload && payload.post) || {} };
   },
-  data() {
-    return {
-      // Article,
-    };
-  },
-  beforeMount() {
-    this.$md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
-      const token = tokens[idx];
-      const dataLine = token.attrs && token.attrs[0];
-
-      return `<pre ${(dataLine && 'data-line="' + dataLine + '"') || ''} ${slf.renderAttrs(token)}><code class="language-${token.info}">${
-        token.content
-      }</code></pre>`;
-    };
-  },
   mounted() {
     if (this.post.link) {
       localStorage.setItem('article', JSON.stringify(this.post));
     } else {
       this.post = JSON.parse(localStorage.getItem('article'));
     }
-    console.log('this.post :', this.post);
     Prism.highlightAll();
   },
   components: { CsStatement },

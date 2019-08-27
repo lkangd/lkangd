@@ -34,9 +34,7 @@ export default {
           result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes) } });
           category.forEach((post, index) => {
             allPosts.push(post.attributes);
-            if (post.attributes.featured) {
-              featuredPosts.push(post.attributes);
-            }
+            post.attributes.featured && featuredPosts.push(post.attributes);
 
             const next = category[index + 1] && category[index + 1].attributes;
             const prev = category[index - 1] && category[index - 1].attributes;
@@ -93,6 +91,7 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/feed',
     '@nuxtjs/axios',
     '@nuxtjs/svg-sprite',
     'nuxt-payload-extractor',
@@ -104,6 +103,40 @@ export default {
         breaks: true,
       },
     ],
+  ],
+  feed: [
+    {
+      path: '/feed.xml',
+      create(feed) {
+        feed.options = {
+          title: "Curtis' Spot",
+          link: 'http://127.0.0.1:8080/feed.xml',
+          description: 'Front-end Engineer. Blogging about life, tech & everything I love.',
+        };
+        const posts = postPayload(path.resolve(__dirname, './posts'));
+        for (const key in posts) {
+          if (posts.hasOwnProperty(key)) {
+            posts[key].forEach(post => {
+              feed.addItem({
+                title: post.attributes.title,
+                id: post.attributes.link,
+                link: post.attributes.link,
+                description: post.attributes.spoiler,
+                content: post.body,
+              });
+            });
+          }
+        }
+        feed.addCategory("Curtis' Spot");
+        feed.addContributor({
+          name: 'Curtis Liong',
+          email: 'lkangd@gmail.com',
+          link: 'http://127.0.0.1:8080',
+        });
+      },
+      cacheTime: 1000 * 60 * 15,
+      type: 'rss2',
+    },
   ],
   markdownit: {
     injected: true,
