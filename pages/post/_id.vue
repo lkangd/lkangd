@@ -29,6 +29,7 @@
 
 <script>
 /* eslint-disable no-console */
+import Prism from 'prismjs';
 import CsStatement from '@/components/CsStatement';
 import appConfig from '@/config/app.config';
 

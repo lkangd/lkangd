@@ -71,15 +71,12 @@ md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
     }
 
     // Fake token just to render attributes
-    tmpToken = {
-      attrs: tmpAttrs,
-    };
+    tmpToken = { attrs: tmpAttrs };
 
-    const dataLine = token.attrs && token.attrs[0];
+    let dataLine = token.attrs && token.attrs[0];
+    dataLine = (dataLine && `data-line="${dataLine}"`) || '';
 
-    return `<pre ${(dataLine && 'data-line="' + dataLine + '"') || ''} ${slf.renderAttrs(tmpToken)}><code${slf.renderAttrs(
-      tmpToken,
-    )}>${highlighted}</code></pre>`;
+    return `<pre ${dataLine} ${slf.renderAttrs(tmpToken)}><code${slf.renderAttrs(tmpToken)}>${highlighted}</code></pre>`;
   }
 
   return `<pre${slf.renderAttrs(token)}><code${slf.renderAttrs(token)}>${highlighted}</code></pre>`;

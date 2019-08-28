@@ -24,13 +24,13 @@ export default {
   generate: {
     // subFolders: false,
     routes(callback) {
-      const res = postPayload(path.resolve(__dirname, './posts'));
+      const posts = postPayload(path.resolve(__dirname, './posts'));
       const result = [];
       const allPosts = [];
       const featuredPosts = [];
-      for (const key in res) {
-        if (res.hasOwnProperty(key)) {
-          const category = res[key];
+      for (const key in posts) {
+        if (posts.hasOwnProperty(key)) {
+          const category = posts[key];
           result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes) } });
           category.forEach((post, index) => {
             allPosts.push(post.attributes);
@@ -85,7 +85,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/vue-filters', '@/plugins/vue-directives', '@/plugins/prism'],
+  plugins: ['@/plugins/vue-filters', '@/plugins/vue-directives'],
   /*
    ** Nuxt.js modules
    */
@@ -110,7 +110,10 @@ export default {
       create(feed) {
         feed.options = {
           title: "Curtis' Spot",
-          link: 'http://127.0.0.1:8080/feed.xml',
+          id: 'https://lkangd.com/feed.xml',
+          link: 'https://lkangd.com/feed.xml',
+          favicon: 'https://lkangd.com/favicon.png',
+          copyright: 'All rights reserved 2019, Curtis Liong',
           description: 'Front-end Engineer. Blogging about life, tech & everything I love.',
         };
         const posts = postPayload(path.resolve(__dirname, './posts'));
@@ -131,7 +134,7 @@ export default {
         feed.addContributor({
           name: 'Curtis Liong',
           email: 'lkangd@gmail.com',
-          link: 'http://127.0.0.1:8080',
+          link: 'https://lkangd.com/feed.xml',
         });
       },
       cacheTime: 1000 * 60 * 15,
@@ -154,6 +157,18 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    babel: {
+      plugins: [
+        [
+          'prismjs',
+          {
+            languages: ['javascript', 'jsx', 'css', 'markup'],
+            plugins: ['line-highlight'],
+            css: true,
+          },
+        ],
+      ],
+    },
     extend(config, ctx) {
       // 增加 less 自定义 function 插件
       if (ctx.isClient) {
