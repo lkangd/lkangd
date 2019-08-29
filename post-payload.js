@@ -3,7 +3,7 @@ import md from './utils/markdown-it';
 const fs = require('fs');
 const frontMatter = require('front-matter');
 
-module.exports = dirPath => {
+const postPayload = dirPath => {
   const result = {};
   const walker = (dirPath, result) => {
     const dirList = fs.readdirSync(dirPath);
@@ -31,3 +31,5 @@ module.exports = dirPath => {
   walker(dirPath, result);
   return result;
 };
+
+module.exports = postPayload('./posts');

@@ -18,6 +18,13 @@
         target="_blank"
       >RSS</a>
     </div>
+    <div class="cs-nav__item">
+      <a
+        class="cs-nav-link"
+        href="/sitemap.xml"
+        target="_blank"
+      >Sitemap</a>
+    </div>
   </nav>
 </template>
 
