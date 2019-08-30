@@ -88,7 +88,19 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@nuxtjs/feed', '@nuxtjs/axios', '@nuxtjs/sitemap', '@nuxtjs/svg-sprite', 'nuxt-payload-extractor'],
+  modules: [
+    '@nuxtjs/feed',
+    '@nuxtjs/axios',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/svg-sprite',
+    'nuxt-payload-extractor',
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-106568709-1',
+      },
+    ],
+  ],
   sitemap: {
     hostname: appConfig.meta.url,
     routes() {
