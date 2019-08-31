@@ -18,13 +18,10 @@ body {
 
   color: var(--text-normal);
   background-color: var(--bg);
-  transition: background-color 0.3s, color 0.3s;
 }
 
 body {
   &.dark {
-    -webkit-font-smoothing: antialiased;
-
     --yellow: hsl(222, 14%, 25%);
     --bg: #282c35;
     --header: #ffffff;
@@ -38,5 +35,6 @@ body {
     --site-nav: rgba(255, 255, 255, 0.88);
     --inline-code-fg: #e6e6e6;
     --inline-code-bg: #373c49;
+    -webkit-font-smoothing: antialiased;
   }
 }

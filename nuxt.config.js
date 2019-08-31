@@ -19,6 +19,39 @@ export default {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:900&display=swap' },
     ],
+    __dangerouslyDisableSanitizers: ['script'],
+    script: [
+      {
+        type: 'text/javascript',
+        body: true,
+        innerHTML: `(function() {
+                      function setTheme(newTheme) {
+                        preferredTheme = newTheme;
+                        document.body.className = newTheme;
+                      }
+
+                      var themes = { light: 'light', dark: 'dark' }
+                      var preferredTheme;
+                      try {
+                        preferredTheme = localStorage.getItem('theme');
+                      } catch (err) {}
+
+                      window.__setPreferredTheme = function(newTheme) {
+                        setTheme(newTheme);
+                        try {
+                          localStorage.setItem('theme', newTheme);
+                        } catch (err) {}
+                      }
+
+                      var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                      darkQuery.addListener(function(e) {
+                        window.__setPreferredTheme(themes[preferredTheme] || (e.matches ? 'dark' : 'light'));
+                      });
+
+                      setTheme(themes[preferredTheme] || (darkQuery.matches ? 'dark' : 'light'));
+                    })();`,
+      },
+    ],
   },
   generate: {
     // subFolders: false,

@@ -26,16 +26,14 @@ export default {
       body: null,
     };
   },
-  created() {
-    if (process.client) {
-      this.body = document.querySelector('body');
-      localStorage.getItem('CURTIS_SPOT_DARK_MODE') === 'true' && this.body.classList.add('dark');
-    }
-  },
   methods: {
     toggleTheme() {
-      this.body.classList.toggle('dark');
-      localStorage.setItem('CURTIS_SPOT_DARK_MODE', this.body.classList.contains('dark'));
+      const body = document.querySelector('body');
+
+      body.style.transition = 'background-color 0.3s, color 0.3s';
+      body.classList.toggle('light');
+      body.classList.toggle('dark');
+      localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
     },
   },
 };
