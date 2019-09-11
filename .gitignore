@@ -91,7 +91,7 @@ sw.*
 package-lock.json
 
 # Origin MD Files
-posts/**/*.md
+# posts/**/*.md
 
 # RSS
 static/feed.xml
