@@ -8,7 +8,8 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "cross-env GENERTATE_MODE=normal nuxt generate",
+    "deploy": "cross-env GENERTATE_MODE=deploy nuxt generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
@@ -20,7 +21,7 @@
     "markdown-it": "^9.1.0",
     "marked": "^0.7.0",
     "nuxt": "^2.8.1",
-    "nuxt-payload-extractor": "0.0.10",
+    "nuxt-payload-extractor": "0.0.12",
     "prismjs": "^1.16.0"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "@nuxtjs/style-resources": "^0.1.2",
     "@nuxtjs/svg-sprite": "^0.2.1",
     "babel-plugin-prismjs": "^1.1.1",
+    "cross-env": "^5.2.1",
     "install": "^0.13.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
@@ -37,6 +39,7 @@
     "markdown-it-attrs": "^3.0.1",
     "nodemon": "^1.18.9",
     "npm": "^6.11.2",
+    "push-dir": "^0.4.1",
     "striptags": "^3.1.1"
   }
 }

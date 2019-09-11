@@ -88,7 +88,7 @@ export default {
     },
   },
   router: {
-    // base: '/dist',
+    base: process.env.GENERTATE_MODE === 'deploy' ? '/lkangd.com/' : '',
   },
   server: {
     port: 8080, // default: 3000

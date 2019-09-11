@@ -37,10 +37,12 @@ export default {
   data() {
     return {
       loading: false,
+      bodySmoothBehavior: '',
     };
   },
   methods: {
-    start() {
+    async start() {
+      await this._normalizeScrollBehavior();
       this.loading = true;
       setTimeout(() => {
         this.$refs.main.classList.remove('out-of-window');
@@ -54,9 +56,22 @@ export default {
           this.$refs.csLoading.classList.remove('loaded');
           setTimeout(() => {
             this.loading = false;
+            this._revertScrollBehavior();
           }, 50);
         }, 900);
       }, 900);
+    },
+    _normalizeScrollBehavior() {
+      return new Promise(resolve => {
+        const body = document.querySelector('body');
+        this.bodySmoothBehavior = body.style.scrollBehavior;
+        body.style.scrollBehavior = 'unset';
+        this.$nextTick(resolve);
+      });
+    },
+    _revertScrollBehavior() {
+      const body = document.querySelector('body');
+      body.style.scrollBehavior = this.bodySmoothBehavior;
     },
   },
 };
