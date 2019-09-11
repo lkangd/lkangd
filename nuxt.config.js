@@ -126,7 +126,12 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/sitemap',
     '@nuxtjs/svg-sprite',
-    'nuxt-payload-extractor',
+    [
+      'nuxt-payload-extractor',
+      {
+        versioning: true,
+      },
+    ],
     [
       '@nuxtjs/google-analytics',
       {

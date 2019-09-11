@@ -9,6 +9,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "cross-env GENERTATE_MODE=normal nuxt generate",
+    "generate:ci": "cross-env GENERTATE_MODE=deploy nuxt generate",
     "deploy": "cross-env GENERTATE_MODE=deploy nuxt generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
