@@ -63,20 +63,23 @@ md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
   if (info) {
     i = token.attrIndex('class');
     tmpAttrs = token.attrs ? token.attrs.slice() : [];
+    // fix code line highlight: ['1,2,3,4', ''] => ['data-line', '1,2,3,4']
+    tmpAttrs.forEach(attr => {
+      if (/^(\d,?)+$/.test(attr[0]) && !attr[1]) {
+        [attr[0], attr[1]] = ['data-line', attr[0]];
+      }
+    });
 
     if (i < 0) {
       tmpAttrs.push(['class', options.langPrefix + langName]);
     } else {
-      tmpAttrs[i][1] += ' ' + options.langPrefix + langName;
+      tmpAttrs[i][1] += '' + options.langPrefix + langName;
     }
 
     // Fake token just to render attributes
     tmpToken = { attrs: tmpAttrs };
 
-    let dataLine = token.attrs && token.attrs[0];
-    dataLine = (dataLine && `data-line="${dataLine}"`) || '';
-
-    return `<pre ${dataLine} ${slf.renderAttrs(tmpToken)}><code${slf.renderAttrs(tmpToken)}>${highlighted}</code></pre>`;
+    return `<pre ${slf.renderAttrs(tmpToken)}><code${slf.renderAttrs(tmpToken)}>${highlighted}</code></pre>`;
   }
 
   return `<pre${slf.renderAttrs(token)}><code${slf.renderAttrs(token)}>${highlighted}</code></pre>`;

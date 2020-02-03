@@ -1,7 +1,7 @@
 <template>
   <header class="cs-header">
     <svg-icon
-      @click.native="toggleTheme"
+      @click="toggleTheme"
       class="cs-header__logo"
       name="logo"
     />
