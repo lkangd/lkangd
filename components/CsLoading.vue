@@ -49,6 +49,8 @@ export default {
       }, 100);
     },
     async finish() {
+      if (!this.loading) return;
+
       setTimeout(() => {
         this.$refs.csLoading.classList.add('loaded');
         setTimeout(() => {
