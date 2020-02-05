@@ -51,7 +51,7 @@
         :
         <a
           class="cs-outside-link"
-          href="https://www.douban.com/people/71683143/"
+          href="https://www.douban.com/people/204029818/"
           target="_blank"
         >吖侃</a>
       </li>
@@ -60,9 +60,9 @@
         :
         <a
           class="cs-outside-link"
-          href="https://github.com/CurtisLiong"
+          href="https://github.com/lkangd"
           target="_blank"
-        >CurtisLiong</a>
+        >Curtis Liong</a>
       </li>
       <li class="cs-text">
         <span>E-MAIL</span>
