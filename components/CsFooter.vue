@@ -1,5 +1,8 @@
 <template>
-  <footer class="cs-footer">
+  <footer
+    ref="footer"
+    class="cs-footer"
+  >
     <cs-color-slogan class="cs-footer__slogan" />
     <svg-icon
       class="cs-footer__logo"
@@ -22,16 +25,31 @@ import CsColorSlogan from '@/components/CsColorSlogan';
 
 export default {
   name: 'cs-footer',
+  mounted() {
+    // sticky footer
+    const nuxt = document.getElementById('__nuxt');
+    nuxt && (nuxt.style['padding-bottom'] = `${this.$refs.footer.offsetHeight}px`);
+  },
   components: { CsColorSlogan },
 };
 </script>
 
+<style>
+#__nuxt {
+  position: relative;
+  min-height: 100%;
+}
+</style>
+
 <style scoped lang="less">
 .cs-footer {
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   margin-top: 40px;
   padding: 40px;
   padding-bottom: 20px;
+  width: 100%;
   color: #9aa0ac;
   text-align: center;
   &::after {

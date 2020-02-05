@@ -11,7 +11,7 @@
         class="cs-outside-link"
         href="https://en.wikipedia.org/wiki/Front-end_web_development"
         target="_blank"
-      >Front-end</a> Engineer. Blogging about life, tech & everything I love.
+      >Front-end</a> Engineer. Blogging about life, tech & everything I love in this world.
     </p>
   </header>
 </template>
