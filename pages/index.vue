@@ -83,10 +83,14 @@
 export default {
   name: 'curtis-spot',
   async asyncData({ $axios, $payloadURL, route, payload }) {
-    if (process.static && process.client) {
-      return await $axios.$get($payloadURL(route));
-    } else {
-      return await $axios.$get(`/api${route.path}`);
+    try {
+      if (process.static && process.client) {
+        return await $axios.$get($payloadURL(route));
+      } else {
+        return await $axios.$get(`/api${route.path}`);
+      }
+    } catch (e) {
+      return { postList: (payload && payload.postList) || [] };
     }
   },
   data() {

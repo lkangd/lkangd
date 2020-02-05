@@ -49,6 +49,7 @@ export default {
       }
     } catch (e) {
       redirect('/404');
+      return { post: (payload && payload.post) || {} };
     }
   },
   mounted() {
