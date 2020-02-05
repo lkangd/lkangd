@@ -90,7 +90,7 @@ export default {
         return await $axios.$get(`/api${route.path}`);
       }
     } catch (e) {
-      return { postList: (payload && payload.postList) || [] };
+      return { postList: (payload && payload.postList) || [], featuredList: (payload && payload.featuredList) || [] };
     }
   },
   data() {
