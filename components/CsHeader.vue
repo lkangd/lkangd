@@ -52,8 +52,10 @@ export default {
     color: var(--logo);
     transition: color 0.5s;
     cursor: pointer;
-    &:hover {
-      color: rgba(255, 233, 87);
+    @media (min-width: 700px) {
+      &:hover {
+        color: rgba(255, 233, 87);
+      }
     }
   }
   &__text {
