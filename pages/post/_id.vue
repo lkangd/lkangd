@@ -40,19 +40,18 @@ export default {
       title: `${(this.post.attributes && this.post.attributes.title) || 'Article'} - ${appConfig.meta.title}`,
     };
   },
-  async asyncData({ $axios, $payloadURL, route, payload }) {
-    if (process.static && process.client) {
-      return await $axios.$get($payloadURL(route));
+  async asyncData({ $axios, $payloadURL, route, payload, redirect }) {
+    try {
+      if (process.static && process.client) {
+        return await $axios.$get($payloadURL(route));
+      } else {
+        return await $axios.$get(`/api${route.path}`);
+      }
+    } catch (e) {
+      redirect('/404');
     }
-
-    return { post: (payload && payload.post) || {} };
   },
   mounted() {
-    if (this.post.link) {
-      localStorage.setItem('article', JSON.stringify(this.post));
-    } else {
-      this.post = JSON.parse(localStorage.getItem('article'));
-    }
     Prism.highlightAll();
   },
   components: { CsStatement },

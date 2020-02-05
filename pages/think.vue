@@ -29,9 +29,9 @@ export default {
   async asyncData({ $axios, $payloadURL, route, payload }) {
     if (process.static && process.client) {
       return await $axios.$get($payloadURL(route));
+    } else {
+      return await $axios.$get(`/api${route.path}`);
     }
-
-    return { postList: (payload && payload.postList) || [] };
   },
 };
 </script>

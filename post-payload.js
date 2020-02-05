@@ -32,4 +32,42 @@ const postPayload = dirPath => {
   return result;
 };
 
-module.exports = postPayload('./posts');
+const raw = postPayload('./posts');
+// 路由化处理
+const processed = (() => {
+  const posts = raw;
+  const result = [];
+  const allPosts = [];
+  const featuredPosts = [];
+  for (const key in posts) {
+    if (posts.hasOwnProperty(key)) {
+      const category = posts[key];
+      result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes) } });
+      result[`/${key}`] = { postList: category.map(({ attributes }) => attributes) };
+      category.forEach((post, index) => {
+        allPosts.push(post.attributes);
+        post.attributes.featured && featuredPosts.push(post.attributes);
+
+        const next = category[index + 1] && category[index + 1].attributes;
+        const prev = category[index - 1] && category[index - 1].attributes;
+        result.push({
+          route: post.link,
+          payload: { post: { ...post, next, prev } },
+        });
+        result[post.link] = { post: { ...post, next, prev } };
+      });
+    }
+  }
+  const rootPayload = {
+    postList: allPosts.sort((a, b) => b.date - a.date),
+    featuredList: featuredPosts.sort((a, b) => b.date - a.date),
+  };
+  result.push({
+    route: '/',
+    payload: rootPayload,
+  });
+  result['/'] = rootPayload;
+  return result;
+})();
+
+module.exports = { raw, processed };

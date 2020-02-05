@@ -56,35 +56,7 @@ export default {
   generate: {
     // subFolders: false,
     routes(callback) {
-      const posts = postPayload;
-      const result = [];
-      const allPosts = [];
-      const featuredPosts = [];
-      for (const key in posts) {
-        if (posts.hasOwnProperty(key)) {
-          const category = posts[key];
-          result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes) } });
-          category.forEach((post, index) => {
-            allPosts.push(post.attributes);
-            post.attributes.featured && featuredPosts.push(post.attributes);
-
-            const next = category[index + 1] && category[index + 1].attributes;
-            const prev = category[index - 1] && category[index - 1].attributes;
-            result.push({
-              route: post.link,
-              payload: { post: { ...post, next, prev } },
-            });
-          });
-        }
-      }
-      result.push({
-        route: '/',
-        payload: {
-          postList: allPosts.sort((a, b) => b.date - a.date),
-          featuredList: featuredPosts.sort((a, b) => b.date - a.date),
-        },
-      });
-      callback(null, result);
+      callback(null, postPayload.processed);
     },
   },
   router: {
@@ -94,6 +66,10 @@ export default {
     port: 8080, // default: 3000
     host: '127.0.0.1', // default: localhost,
   },
+  serverMiddleware: [
+    // develoment API middleware
+    '@/api',
+  ],
   /*
    ** Customize the loading component
    */
@@ -144,7 +120,7 @@ export default {
     routes() {
       return new Promise(resolve => {
         const result = [];
-        const posts = postPayload;
+        const posts = postPayload.raw;
         for (const key in posts) {
           if (posts.hasOwnProperty(key)) {
             const category = posts[key];
@@ -171,7 +147,7 @@ export default {
           copyright: `All rights reserved ${new Date().getFullYear()}, ${appConfig.meta.author}`,
           description: appConfig.meta.description,
         };
-        const posts = postPayload;
+        const posts = postPayload.raw;
         for (const key in posts) {
           if (posts.hasOwnProperty(key)) {
             posts[key].forEach(post => {

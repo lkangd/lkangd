@@ -85,9 +85,9 @@ export default {
   async asyncData({ $axios, $payloadURL, route, payload }) {
     if (process.static && process.client) {
       return await $axios.$get($payloadURL(route));
+    } else {
+      return await $axios.$get(`/api${route.path}`);
     }
-
-    return { postList: (payload && payload.postList) || [], featuredList: (payload && payload.featuredList) || [] };
   },
   data() {
     return {
@@ -99,7 +99,6 @@ export default {
 
 <style scoped lang="less">
 .curtis-spot {
-  padding-bottom: 64px;
   color: var(--text-normal);
   .contact-list {
     a {
@@ -110,7 +109,7 @@ export default {
 .dark {
   .contact-list {
     a {
-      color: rgba(255, 255, 255, 0.88);;
+      color: rgba(255, 255, 255, 0.88);
     }
   }
 }
