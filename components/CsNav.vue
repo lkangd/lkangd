@@ -80,6 +80,14 @@ export default {
       font-size: 16px;
       font-weight: bold;
       line-height: 1.4;
+      &.nuxt-link-exact-active {
+        &:hover {
+          text-shadow: none;
+        }
+        &::before {
+          bottom: 10px;
+        }
+      }
     }
   }
 }

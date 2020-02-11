@@ -10,8 +10,11 @@
       class="cs-post-article"
       v-html="post.body"
     />
-    <hr />
-    <div class="post__wrapper">
+    <div
+      class="post__wrapper"
+      v-if="post.next || post.prev"
+    >
+      <hr />
       <nuxt-link
         :to="post.next.link"
         class="cs-outside-link fr"
@@ -72,22 +75,46 @@ export default {
       padding: 0 4px;
       text-decoration: underline;
     }
+    h1 {
+      margin: 50px 0 24px;
+      font-size: 22px;
+      font-weight: bold;
+    }
     h2 {
-      margin: 24px 0;
+      margin: 50px 0 24px;
       font-size: 20px;
       font-weight: bold;
     }
     h3 {
-      margin: 24px 0;
+      margin: 50px 0 24px;
       font-size: 18px;
       font-weight: bold;
     }
+    h4 {
+      margin: 30px 0 24px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    h5 {
+      margin: 30px 0 24px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    h6 {
+      margin: 30px 0 24px;
+      font-size: 12px;
+      font-weight: bold;
+    }
     p,
-    li {
-      margin: 24px 0;
+    li,
+    td {
+      margin: 0;
       font-size: 16px;
       line-height: 28px;
       color: var(--text-normal);
+    }
+    p {
+      margin-bottom: 24px;
     }
     code:not([class*='language-']) {
       padding: 0 4px;
@@ -109,17 +136,35 @@ export default {
       margin: 0 6px;
     }
     pre {
+      margin: 24px 0;
       background-color: rgb(1, 22, 39);
       border-radius: 10px;
     }
+    blockquote {
+      background: var(--blockquote-bg);
+      border-left: 10px solid var(--blockquote-bl);
+      margin: 24px 10px;
+      padding: 16px 10px;
+      quotes: '\201C''\201D''\2018''\2019';
+      p {
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
     ul {
+      margin: 24px 0;
+      padding-left: 40px;
       li {
+        text-align: -webkit-match-parent;
         font-size: 16px;
         line-height: 28px;
         list-style: disc;
       }
     }
     ol {
+      margin: 24px 0;
+      padding-left: 40px;
       li {
         list-style: decimal;
       }
@@ -127,6 +172,39 @@ export default {
     img {
       width: 100%;
       height: auto;
+    }
+    table {
+      margin: 24px 0;
+      width: 100%;
+      max-width: 100%;
+      border: 1px solid #dee2e6;
+      thead {
+        tr {
+          th {
+            padding: 12px;
+            font-weight: bold;
+            color: #495057;
+            background-color: #e9ecef;
+            border-bottom: 2px solid #dee2e6;
+            + th {
+              border-left: 1px solid #dee2e6;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            padding: 12px;
+            + td {
+              border-left: 1px solid #dee2e6;
+            }
+          }
+          + tr {
+            border-top: 1px solid #dee2e6;
+          }
+        }
+      }
     }
   }
   &__wrapper {

@@ -1,7 +1,11 @@
 <template>
   <section class="about cs-container">
+    <h2 class="cs-title">Self-introduction</h2>
+    <p
+      class="cs-text"
+    >My name is Curtis Liong (梁康达). I was born in 1992 and started programming {{ new Date().getFullYear() - new Date(2016, 3, 1).getFullYear() }} years ago. I used to be an operation and maintenance engineer, but now I focus on JavaScript and wanna create something cool.</p>
     <h2 class="cs-title">
-      The Principle Of Life
+      The Principles Of Life That I Follow
       <sup>1</sup>
     </h2>
     <ul class="cs-list">
@@ -61,6 +65,10 @@ export default {
         {
           text: 'Reading 📚',
           link: 'https://book.douban.com/people/204029818/do',
+        },
+        {
+          text: 'Coffee ☕️',
+          link: '',
         },
         {
           text: 'Running 🏃',

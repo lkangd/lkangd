@@ -45,17 +45,17 @@ export default {
       await this._normalizeScrollBehavior();
       this.loading = true;
       setTimeout(() => {
-        this.$refs.main.classList.remove('out-of-window');
+        this.$refs.main && this.$refs.main.classList.remove('out-of-window');
       }, 100);
     },
     async finish() {
-      if (!this.loading) return;
+      // if (!this.loading) return;
 
       setTimeout(() => {
-        this.$refs.csLoading.classList.add('loaded');
+        this.$refs.csLoading && this.$refs.csLoading.classList.add('loaded');
         setTimeout(() => {
-          this.$refs.main.classList.add('out-of-window');
-          this.$refs.csLoading.classList.remove('loaded');
+          this.$refs.main.classList && this.$refs.main.classList.add('out-of-window');
+          this.$refs.csLoading && this.$refs.csLoading.classList.remove('loaded');
           setTimeout(() => {
             this.loading = false;
             this._revertScrollBehavior();
