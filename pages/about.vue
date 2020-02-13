@@ -31,7 +31,7 @@
       </li>
     </ul>
     <p class="cs-text">
-      <small>[1] 康德在《实用人类学》中对“人是什么”作答: “人具有一种自己创造自己的特性。”, 在复杂多变的环境和人际关系中总结并奉行良好的原则有助于创造独特且向完美不断趋近的自我。</small>
+      <small>[1] 康德在《实用人类学》中对“人是什么”作答: “人具有一种自己创造自己的特性。”，在复杂多变的环境和人际关系中总结并奉行良好的原则有助于创造独特且向完美不断趋近的自我。</small>
     </p>
   </section>
 </template>
@@ -52,26 +52,26 @@ export default {
       principles: [
         '自尊、尊重他人。',
         '笃信「自助者天助之」。',
-        '凡所有事, 未知全貌, 不予置评。',
-        '当断立断, 奉行「断舍离」。',
+        '当断立断，奉行「断舍离」。',
+        '凡所有事，未知全貌，不予置评。',
         '不作出为获取关注而违心的表达。',
         '终身学习。',
       ],
       hobbies: [
         {
-          text: 'Guitar 🎸',
+          text: '🎸Guitar',
           link: '',
         },
         {
-          text: 'Reading 📚',
+          text: '📚Reading',
           link: 'https://book.douban.com/people/204029818/do',
         },
         {
-          text: 'Coffee ☕️',
+          text: '☕️Coffee',
           link: '',
         },
         {
-          text: 'Running 🏃',
+          text: '🏃Running',
           link: '',
         },
       ],
