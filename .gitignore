@@ -95,3 +95,6 @@ package-lock.json
 
 # RSS
 static/feed.xml
+
+# Example Artilces
+posts/example

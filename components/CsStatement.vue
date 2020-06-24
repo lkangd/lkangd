@@ -4,7 +4,6 @@
     <p class="cs-statement__text">
       讨论请发邮件到
       <a
-        class="cs-outside-link"
         href="mailto:lkangd@gmail.com"
         target="_blank"
       >lkangd@gmail.com</a>
@@ -27,20 +26,22 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-.cs-statement {
+<style scoped lang="scss">
+@include B(statement) {
   text-align: center;
+  font-family: 'Noto Serif SC', Lusitana, serif;
+  font-size: 14px;
   hr {
     margin: 64px 0;
     border: 0;
     border-bottom: 1px solid var(--hr);
   }
-  &__text {
+  @include e(text) {
     margin: 8px 0;
     line-height: 1.7;
     color: var(--text-normal);
   }
-  &__reward-code {
+  @include e(reward-code) {
     margin-top: 50px;
     max-width: 30%;
     height: auto;

@@ -1,11 +1,11 @@
 <template>
-  <section class="about cs-container">
-    <h2 class="cs-title">Self-introduction</h2>
+  <section class="cs-about cs-container">
+    <h2 class="cs-title">个人介绍</h2>
     <p
       class="cs-text"
     >My name is Curtis Liong (梁康达). I was born in 1992 and started programming {{ new Date().getFullYear() - new Date(2016, 3, 1).getFullYear() }} years ago. I used to be an operation and maintenance engineer, but now I focus on JavaScript and wanna create something cool.</p>
     <h2 class="cs-title">
-      The Principles Of Life That I Follow
+      原则
       <sup>1</sup>
     </h2>
     <ul class="cs-list">
@@ -15,7 +15,7 @@
         v-for="(principle, index) in principles"
       >{{ principle }}</li>
     </ul>
-    <h2 class="cs-title">Hobby</h2>
+    <h2 class="cs-title">兴趣爱好</h2>
     <ul class="cs-list">
       <li
         :key="index"
@@ -41,7 +41,7 @@
 import appConfig from '@/config/app.config';
 
 export default {
-  name: 'about',
+  name: 'cs-about',
   head() {
     return {
       title: `About - ${appConfig.meta.title}`,
@@ -50,28 +50,28 @@ export default {
   data() {
     return {
       principles: [
+        '终身学习。',
         '自尊、尊重他人。',
         '笃信「自助者天助之」。',
         '当断立断，奉行「断舍离」。',
         '凡所有事，未知全貌，不予置评。',
-        '不作出为获取关注而违心的表达。',
-        '终身学习。',
+        '不作违心的表达。',
       ],
       hobbies: [
         {
-          text: '🎸Guitar',
+          text: '🎸 Guitar',
           link: '',
         },
         {
-          text: '📚Reading',
+          text: '📚 Reading',
           link: 'https://book.douban.com/people/204029818/do',
         },
         {
-          text: '☕️Coffee',
+          text: '☕️ Coffee',
           link: '',
         },
         {
-          text: '🏃Running',
+          text: '🏃 Running',
           link: '',
         },
       ],

@@ -1,0 +1,173 @@
+@mixin utils-user-select($value) {
+  -moz-user-select: $value;
+  -webkit-user-select: $value;
+  -ms-user-select: $value;
+}
+
+@mixin utils-clearfix {
+  $selector: &;
+
+  @at-root {
+    #{$selector}::before,
+    #{$selector}::after {
+      display: table;
+      content: '';
+    }
+    #{$selector}::after {
+      clear: both;
+    }
+  }
+}
+
+@mixin utils-vertical-center {
+  $selector: &;
+
+  @at-root {
+    #{$selector}::after {
+      display: inline-block;
+      content: '';
+      height: 100%;
+      vertical-align: middle;
+    }
+  }
+}
+
+@mixin utils-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@for $i from 2 through 3 {
+  %line-clamp-#{$i} {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $i;
+    overflow: hidden;
+  }
+}
+
+@mixin utils-transitions($name, $tranStyle, $tranArgs, $tranType: all 0.3s ease) {
+  &.#{$name}-enter-active {
+    transition: $tranType;
+  }
+  &.#{$name}-leave-active {
+    transition: $tranType;
+  }
+  &.#{$name}-enter,
+  &.#{$name}-leave-to {
+    #{$tranStyle}: $tranArgs;
+  }
+}
+
+@mixin utils-extend-click($size: 10px, $zIndex: 100) {
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -$size;
+    left: -$size;
+    right: -$size;
+    bottom: -$size;
+    z-index: $zIndex;
+  }
+}
+
+@mixin utils-hide-scrollbar {
+  &::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+@mixin utils-bg-image($url, $ext: '.png') {
+  background-size: 100% 100%;
+  background-image: url($url+'@2x'+$ext);
+  @media (min-resolution: 3dppx) {
+    background-image: url($url+'@3x'+$ext);
+  }
+}
+
+@mixin utils-bt-1px($color: #ccc, $style: solid) {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-top: 1PX $style $color;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transform-origin: 0 top;
+
+    @media (min-resolution: 2dppx) {
+      width: 200%;
+      transform: scale(0.5);
+    }
+
+    @media (min-resolution: 3dppx) {
+      width: 300%;
+      transform: scale(0.333);
+    }
+  }
+}
+
+@mixin utils-bb-1px($color: #ccc, $style: solid) {
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    border-bottom: 1PX $style $color;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    transform-origin: 0 bottom;
+
+    @media (min-resolution: 2dppx) {
+      width: 200%;
+      transform: scale(0.5);
+    }
+
+    @media (min-resolution: 3dppx) {
+      width: 300%;
+      transform: scale(0.333);
+    }
+  }
+}
+
+@mixin utils-b-1px($color: #ccc, $radius: 2px, $style: solid) {
+  position: relative;
+
+  &::after {
+    content: '';
+    pointer-events: none;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    border: 1PX $style $color;
+    border-radius: $radius;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+
+    @media (min-resolution: 2dppx) {
+      width: 200%;
+      height: 200%;
+      border-radius: $radius * 2;
+      transform: scale(0.5);
+    }
+
+    @media (min-resolution: 3dppx) {
+      width: 300%;
+      height: 300%;
+      border-radius: $radius * 3;
+      transform: scale(0.333);
+    }
+  }
+}

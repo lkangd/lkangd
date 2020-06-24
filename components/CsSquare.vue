@@ -40,13 +40,13 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.cs-square {
-  @size: 280px;
+<style lang="scss" scoped>
+@include B(square) {
+  $size: 280px;
   position: relative;
   width: 100%;
-  min-height: @size + 100px;
-  &__border {
+  min-height: $size + 100px;
+  @include e(border) {
     position: absolute;
     top: 0;
     left: 0;
@@ -54,16 +54,16 @@ export default {
     bottom: 0;
     margin: auto;
     z-index: 4;
-    width: @size;
-    height: @size;
+    width: $size;
+    height: $size;
     border: 20px solid var(--logo);
     box-sizing: border-box;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     will-change: transform;
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  &__tab-name {
-    @size: 100px;
+  @include e(tab-name) {
+    $size: 100px;
     position: absolute;
     top: 0;
     left: 0;
@@ -72,17 +72,17 @@ export default {
     margin: auto;
     z-index: 5;
     width: 100%;
-    height: @size;
+    height: $size;
     text-align: center;
-    font-size: @size;
-    line-height: @size;
+    font-size: $size;
+    line-height: $size;
     font-family: 'Montserrat', serif;
     color: #fff;
     text-shadow: 10px 20px 0 rgba(0, 0, 0, 0.05);
     user-select: none;
     cursor: default;
     @media (max-width: 700px) {
-      font-size: @size * 0.7;
+      font-size: $size * 0.7;
     }
   }
 }

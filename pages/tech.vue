@@ -1,26 +1,21 @@
 <template>
-  <section class="tech cs-container">
-    <h2 class="cs-title">一起探索编码的世界</h2>
-    <br />
-    <ul class="post-list">
-      <li
-        :key="index"
-        class="cs-text"
-        v-for="(post, index) in postList"
-      >
-        <nuxt-link :to="post.link">{{ post.title }}</nuxt-link>
-        ({{ post.date | formatDate('MMM DD, YYYY ')}})
-      </li>
-    </ul>
+  <section class="cs-container">
+    <cs-article-item
+      :article="post"
+      v-for="(post, index) in postList"
+      :key="index"
+    />
   </section>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import appConfig from '@/config/app.config';
+import CsArticleItem from '@/components/CsArticleItem';
 
 export default {
-  name: 'tech',
+  name: 'cs-tech',
+  components: { CsArticleItem },
   head() {
     return {
       title: `Tech - ${appConfig.meta.title}`,

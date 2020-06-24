@@ -1,26 +1,21 @@
 <template>
-  <section class="fun cs-container">
-    <h2 class="cs-title">记录触动过我的一些书影音和玩物</h2>
-    <br />
-    <ul class="post-list">
-      <li
-        :key="index"
-        class="cs-text"
-        v-for="(post, index) in postList"
-      >
-        <nuxt-link :to="post.link">{{ post.title }}</nuxt-link>
-        ({{ post.date | formatDate('MMM DD, YYYY ')}})
-      </li>
-    </ul>
+  <section class="cs-container">
+    <cs-article-item
+      :article="post"
+      v-for="(post, index) in postList"
+      :key="index"
+    />
   </section>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import appConfig from '@/config/app.config';
+import CsArticleItem from '@/components/CsArticleItem';
 
 export default {
-  name: 'fun',
+  name: 'cs-fun',
+  components: { CsArticleItem },
   head() {
     return {
       title: `Fun - ${appConfig.meta.title}`,

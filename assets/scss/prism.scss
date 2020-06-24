@@ -63,6 +63,11 @@ pre[class*='language-'] ::selection {
   white-space: normal;
 }
 
+.token {
+  position: relative;
+  z-index: 1;
+}
+
 .token.attr-name {
   color: rgb(173, 219, 103);
   font-style: italic;
@@ -109,7 +114,7 @@ pre[class*='language-'] ::selection {
 .token.tag,
 .token.operator,
 .token.keyword {
-  color: #ffa7c4;
+  color: var(--main);
 }
 
 .token.boolean {
@@ -136,7 +141,7 @@ pre[data-line] {
   margin-left: -1.3125rem;
   padding-right: 1em;
   padding-left: 1.25em;
-  border-left: 0.25em solid #ffa7c4;
+  border-left: 0.25em solid var(--main);
 }
 
 .gatsby-highlight {
@@ -144,7 +149,7 @@ pre[data-line] {
   margin-left: -1.3125rem;
   margin-right: -1.3125rem;
   border-radius: 10px;
-  background: #011627;
+  // background: #011627;
   -webkit-overflow-scrolling: touch;
   overflow: auto;
 }
@@ -161,8 +166,12 @@ pre[data-line] {
 }
 
 .line-highlight {
-  border-left: 4px solid #ffa7c4;
-  &::before, &::after {
+  z-index: -1;
+  border-left: 4px solid var(--main);
+  background: hsla(207, 95%, 15%, 0.8) !important;
+  // background: linear-gradient(to right, hsla(207, 95%, 15%, 0.8) 70%, hsla(207, 95%, 15%, 0)) !important;
+  &::before,
+  &::after {
     display: none;
   }
 }

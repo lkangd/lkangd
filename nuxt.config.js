@@ -1,4 +1,3 @@
-const LessPluginFunctions = require('less-plugin-functions');
 const appConfig = require('./config/app.config');
 const postPayload = require('./post-payload');
 
@@ -79,16 +78,16 @@ export default {
    ** Global CSS
    */
   styleResources: {
-    less: ['@/assets/less/vars/*.less', '@/assets/less/mixins.less'],
+    scss: ['@/assets/scss/mixins.scss', '@/assets/scss/utils.scss', '@/assets/scss/function.scss', '@/assets/scss/theme.scss'],
   },
   css: [
     {
-      src: '@/assets/less/index.less',
-      lang: 'less',
+      src: '@/assets/scss/index.scss',
+      lang: 'scss',
     },
     {
-      src: '@/assets/less/prism.less',
-      lang: 'less',
+      src: '@/assets/scss/prism.scss',
+      lang: 'scss',
     },
   ],
   /*
@@ -103,6 +102,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/sitemap',
     '@nuxtjs/svg-sprite',
+    '@nuxtjs/style-resources',
     [
       'nuxt-payload-extractor',
       {
@@ -198,10 +198,10 @@ export default {
       ],
     },
     extend(config, ctx) {
-      // 增加 less 自定义 function 插件
-      if (ctx.isClient) {
-        ctx.loaders.less.plugins = [new LessPluginFunctions()];
-      }
+      // // 增加 less 自定义 function 插件
+      // if (ctx.isClient) {
+      //   ctx.loaders.less.plugins = [new LessPluginFunctions()];
+      // }
     },
   },
 };

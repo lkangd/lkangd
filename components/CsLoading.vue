@@ -79,7 +79,7 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .cs-loading {
   position: fixed;
   top: 0;
@@ -258,7 +258,7 @@ export default {
       bottom: -18%;
       left: 0;
       width: 100%;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       color: var(--text-normal);
       text-align: center;

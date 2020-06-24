@@ -1,17 +1,21 @@
 <template>
-  <section class="post cs-container-big">
+  <section class="cs-post cs-container">
+    <cs-theme-toggle class="cs-post__toggle" />
+    <h3 class="cs-post__blog-name">
+      <nuxt-link to="/">Curtis' Spot</nuxt-link>
+    </h3>
     <template v-if="post.attributes">
-      <h2 class="cs-title-big">{{ post.attributes.title }}</h2>
+      <h2 class="cs-post__title">{{ post.attributes.title }}</h2>
       <p
-        class="cs-date"
-      >{{ post.attributes.date | formatDate('DD, MMM, YYYY') }}•{{ post.attributes.wordcount }} words•{{ post.attributes.min2read }}</p>
+        class="cs-post__info"
+      >{{ post.attributes.date | formatDate('DD, MMM, YYYY') }}&nbsp;•&nbsp;{{ post.attributes.wordcount }} words&nbsp;•&nbsp;{{ post.attributes.min2read }}</p>
     </template>
     <article
-      class="cs-post-article"
+      class="cs-post__article"
       v-html="post.body"
     />
     <div
-      class="post__wrapper"
+      class="cs-post__wrapper"
       v-if="post.next || post.prev"
     >
       <hr />
@@ -33,11 +37,14 @@
 <script>
 /* eslint-disable no-console */
 import Prism from 'prismjs';
+import CsThemeToggle from '@/components/CsThemeToggle';
 import CsStatement from '@/components/CsStatement';
 import appConfig from '@/config/app.config';
 
 export default {
-  name: 'post',
+  name: 'cs-post',
+  layout: 'post',
+  components: { CsThemeToggle, CsStatement },
   head() {
     return {
       title: `${(this.post.attributes && this.post.attributes.title) || 'Article'} - ${appConfig.meta.title}`,
@@ -58,19 +65,59 @@ export default {
   mounted() {
     Prism.highlightAll();
   },
-  components: { CsStatement },
 };
 </script>
 
-<style lang="less">
-.post {
+<style lang="scss">
+@include B(post) {
+  position: relative;
+  padding: 42px 21px;
   background-color: transparent;
+  @include e(toggle) {
+    position: absolute;
+    top: 52px;
+    right: 21px;
+  }
+  @include e(blog-name) {
+    margin-bottom: 42px;
+    height: 42px;
+    font-family: Montserrat, sans-serif;
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 2.625rem;
+    color: var(--main);
+    > a {
+      box-shadow: none;
+    }
+  }
+  @include e(title) {
+    margin-top: 56px;
+    line-height: 44px;
+    font-size: 40px;
+    font-family: 'Montserrat', serif;
+    font-weight: 900;
+    color: var(--text-title);
+  }
+  @include e(info) {
+    margin-bottom: 28px;
+    line-height: 2;
+    font-size: 14px;
+    font-family: 'Merriweather', 'Georgia', serif;
+    word-spacing: 2px;
+  }
   hr {
     margin: 64px 0;
     border: 0;
     border-bottom: 1px solid var(--hr);
   }
-  .cs-post-article {
+  @include e(wrapper) {
+    overflow: hidden;
+    > a {
+      margin: 20px 0;
+    }
+  }
+  @include e(article) {
+    font-family: 'Noto Serif SC', Lusitana, serif;
     a {
       padding: 0 4px;
       text-decoration: underline;
@@ -109,7 +156,7 @@ export default {
     li,
     td {
       margin: 0;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 28px;
       color: var(--text-normal);
     }
@@ -136,14 +183,25 @@ export default {
       margin: 0 6px;
     }
     pre {
+      position: relative;
       margin: 24px 0;
-      background-color: rgb(1, 22, 39);
+      font-size: 12px;
       border-radius: 10px;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -2;
+        background-color: #011627;
+      }
     }
     blockquote {
       background: var(--blockquote-bg);
-      border-left: 10px solid var(--blockquote-bl);
-      margin: 24px 10px;
+      border-left: 6px solid var(--blockquote-bl);
+      margin: 24px 6px;
       padding: 16px 10px;
       quotes: '\201C''\201D''\2018''\2019';
       p {
@@ -154,10 +212,9 @@ export default {
     }
     ul {
       margin: 24px 0;
-      padding-left: 40px;
+      padding-left: 30px;
       li {
         text-align: -webkit-match-parent;
-        font-size: 16px;
         line-height: 28px;
         list-style: disc;
       }
@@ -205,12 +262,6 @@ export default {
           }
         }
       }
-    }
-  }
-  &__wrapper {
-    overflow: hidden;
-    > a {
-      margin: 20px 0;
     }
   }
 }

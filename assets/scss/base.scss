@@ -1,19 +1,16 @@
-@import './vars/color.less';
-@import './vars/size.less';
-
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-size: 16px !important;
+  font-size: 14px !important;
 }
 
 body,
 html {
   height: 100%;
   line-height: 1;
-  font-family: 'Noto Serif SC', serif;
+  font-family: 'Noto Serif SC', Lusitana, serif;
   -webkit-tap-highlight-color: transparent;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -46,11 +43,10 @@ a {
   &:active {
     outline: none !important;
   }
-  &:hover {
-    text-shadow: 0 0 1px #000;
-  }
 }
 
-::selection {
-  background: @high-light-color;
+a {
+  color: var(--main);
+  text-decoration: none !important;
+  box-shadow: 0 1px 0 0 currentColor;
 }

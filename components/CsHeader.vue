@@ -1,31 +1,35 @@
 <template>
   <header class="cs-header">
-    <svg-icon
-      @click="toggleTheme"
-      class="cs-header__logo"
-      name="logo"
-    />
-    <p class="cs-header__text">Curtis Liong</p>
-    <p class="cs-header__text cs-header__text--light">
-      <a
-        class="cs-outside-link"
-        href="https://en.wikipedia.org/wiki/Front-end_web_development"
-        target="_blank"
-      >Front-end</a> Engineer. Blogging about life, tech & everything I love in this world.
-    </p>
+    <cs-theme-toggle class="cs-header__toggle" />
+    <h1 class="cs-header__title">
+      <nuxt-link to="/">Curtis' Spot</nuxt-link>
+      {{ ['tech', 'think', 'fun'].includes($route.name) && `/ ${$route.name}` || '' }}
+    </h1>
+    <div class="cs-header__wrapper">
+      <svg-icon
+        class="cs-header__logo"
+        name="logo"
+        @click="$route.path === '/' ? '' : $router.replace('/')"
+      />
+      <p class="cs-header__describe">
+        Personal blog by
+        <nuxt-link
+          to="/about"
+          replace
+        >Curtis Liong</nuxt-link>.
+        <br />Blogging about life, tech & everything I love in this world.
+      </p>
+    </div>
   </header>
 </template>
 
 <script>
 /* eslint-disable no-console */
+import CsThemeToggle from '@/components/CsThemeToggle';
 
 export default {
   name: 'cs-header',
-  data() {
-    return {
-      body: null,
-    };
-  },
+  components: { CsThemeToggle },
   methods: {
     toggleTheme() {
       const body = document.querySelector('body');
@@ -39,35 +43,45 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-.cs-header {
-  padding-top: 64px;
-  &__logo {
-    position: relative;
-    left: 4px;
-    display: block;
-    margin: 0 auto;
-    width: 128px;
-    height: 128px;
-    color: var(--logo);
-    transition: color 0.5s;
-    cursor: pointer;
-    @media (min-width: 700px) {
-      &:hover {
-        color: rgba(255, 233, 87);
-      }
+<style scoped lang="scss">
+@include B(header) {
+  position: relative;
+  margin: 0 auto;
+  padding: 42px 21px 0;
+  max-width: $container-fixed;
+  @include e(toggle) {
+    position: absolute;
+    top: 46px;
+    right: 21px;
+  }
+  @include e(title) {
+    margin-bottom: 42px;
+    font-family: Montserrat, sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    > a {
+      color: var(--text-title);
+      box-shadow: none;
     }
   }
-  &__text {
-    margin: 16px 0;
-    padding: 0 32px;
-    font-weight: bold;
-    line-height: 1.4;
-    text-align: center;
-    color: var(--text-normal);
-    &--light {
-      color: var(--site-desc);
-      font-weight: 500;
+  @include e(logo) {
+    margin-right: 14px;
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+  }
+  @include e(wrapper) {
+    display: flex;
+    align-items: center;
+    margin-bottom: 88px;
+  }
+  @include e(describe) {
+    max-width: 420px;
+    line-height: 1.5;
+    font-family: 'Merriweather', 'Georgia', serif;
+    > a {
+      color: var(--main);
+      box-shadow: 0 1px 0 0 currentColor;
     }
   }
 }

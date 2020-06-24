@@ -166,17 +166,17 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-.cs-color-slogan {
+<style scoped lang="scss">
+@include B(color-slogan) {
   display: inline-block;
   position: relative;
-  font-family: serif;
+  font-family: 'Merriweather', 'Georgia', serif;
   color: var(--text-normal);
   background-color: transparent;
-  &__placeholder {
+  @include e(placeholder) {
     opacity: 0;
   }
-  &__wrapper {
+  @include e(wrapper) {
     position: absolute;
     top: 0;
     white-space: nowrap;
