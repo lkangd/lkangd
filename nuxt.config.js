@@ -69,6 +69,7 @@ export default {
   serverMiddleware: [
     // develoment API middleware
     '@/api',
+    '@/api/static',
   ],
   /*
    ** Customize the loading component

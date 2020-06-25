@@ -3,6 +3,7 @@ import md from './utils/markdown-it';
 const fs = require('fs');
 const path = require('path');
 const frontMatter = require('front-matter');
+const isGenerateMode = process.argv.pop() === 'generate';
 
 const postPayload = dirPath => {
   const result = {};
@@ -27,7 +28,7 @@ const postPayload = dirPath => {
         const file = fs.readFileSync(subDirPath, 'utf8');
         const post = frontMatter(file);
 
-        post.body = String(md.render(post.body));
+        post.body = updateImgPath(String(md.render(post.body)), dirPath);
         post.attributes.link = post.link = `/post/${
           path.basename(subDirPath, '.md') === 'index' ? path.basename(dirPath) : fileName.replace(/\..*$/, '')
         }`;
@@ -83,3 +84,11 @@ const processed = (() => {
 })();
 
 module.exports = { raw, processed };
+
+function updateImgPath(target, fillPath) {
+  if (isGenerateMode) {
+    return target;
+  } else {
+    return target.replace(/src="(.*?([^\/]*\.(gif|jpe?g|png)))/g, (...w) => w[0].replace(w[1], `./static/${fillPath}/${w[1]}`));
+  }
+}
