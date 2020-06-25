@@ -2,8 +2,22 @@ import { min2read, wordcount } from './utils/wordcount';
 import md from './utils/markdown-it';
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const frontMatter = require('front-matter');
+
 const isGenerateMode = process.argv.pop() === 'generate';
+const afterHooks = {
+  run() {
+    for (let i = 0; i < this.fns.length; i++) {
+      const fn = this.fns[i];
+      typeof fn === 'function' && fn();
+    }
+  },
+  add(fn) {
+    this.fns.push(fn);
+  },
+  fns: [],
+};
 
 const postPayload = dirPath => {
   const result = {};
@@ -83,12 +97,44 @@ const processed = (() => {
   return result;
 })();
 
-module.exports = { raw, processed };
+module.exports = { raw, processed, afterHooks };
 
 function updateImgPath(target, fillPath) {
-  if (isGenerateMode) {
-    return target;
-  } else {
-    return target.replace(/src="(.*?([^\/]*\.(gif|jpe?g|png)))/g, (...w) => w[0].replace(w[1], `./static/${fillPath}/${w[1]}`));
-  }
+  const regExp = /src="(.*?(([^\/]*)\.(gif|jpe?g|png|svg)))/gim;
+  return target.replace(regExp, (...w) => {
+    let fileUrl = w[1];
+    if (/^http/.test(fileUrl)) {
+      return w[0];
+    }
+    if (isGenerateMode) {
+      try {
+        const resourcePath = path.resolve(__dirname, fillPath, fileUrl);
+        const hex = genFileHex(resourcePath);
+        fileUrl = `_nuxt/img/${w[3]}.${hex}.${w[4]}`;
+        afterHooks.add(function() {
+          copyFile(resourcePath, path.join(__dirname, `./dist/${fileUrl}`));
+        });
+      } catch (error) {
+        console.log('replace file error :>> ', error);
+      }
+    } else {
+      fileUrl = `./static/${fillPath}/${w[1]}`;
+    }
+    return w[0].replace(w[1], fileUrl);
+  });
+}
+
+function genFileHex(file, length = 7) {
+  let md5;
+  try {
+    const buffer = fs.readFileSync(file);
+    const fsHash = crypto.createHash('md5');
+    fsHash.update(buffer);
+    md5 = fsHash.digest('hex');
+  } catch (error) {}
+  return md5 ? `${md5.slice(0, length)}` : '';
+}
+
+function copyFile(src, dist) {
+  fs.writeFileSync(dist, fs.readFileSync(src));
 }

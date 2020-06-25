@@ -56,6 +56,9 @@ export default {
     // subFolders: false,
     routes(callback) {
       callback(null, postPayload.processed);
+      setTimeout(() => {
+        postPayload.afterHooks.run();
+      }, 0);
     },
   },
   router: {
