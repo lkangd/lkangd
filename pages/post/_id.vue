@@ -187,20 +187,11 @@ export default {
       margin: 0 6px;
     }
     pre {
-      position: relative;
       margin: 24px 0;
       font-size: 12px;
       border-radius: 10px;
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: -2;
-        background-color: #011627;
-      }
+      background-color: #011627;
+      opacity: 0.99;
     }
     blockquote {
       background: var(--blockquote-bg);

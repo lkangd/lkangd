@@ -41,7 +41,10 @@
         <span>立即订阅</span>
       </button>
       <p class="cs-subscribe__tips">请放心我不会发送任何辣鸡邮件给你.</p>
-      <p class="cs-subscribe__tips">你 <em>随时</em> 可以取消订阅.</p>
+      <p class="cs-subscribe__tips">
+        你可以
+        <em>随时</em> 取消订阅.
+      </p>
     </div>
   </form>
 </template>
@@ -51,9 +54,6 @@
 
 export default {
   name: 'cs-subscribe',
-  data() {
-    return {};
-  },
 };
 </script>
 
@@ -68,6 +68,9 @@ export default {
   box-shadow: var(--form-shadow);
   border-radius: 6px;
   overflow: hidden;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
   @include e(wrapper) {
     flex: 1;
     padding: 40px;

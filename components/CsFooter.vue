@@ -4,18 +4,36 @@
     ref="footer"
   >
     <div class="cs-footer__wrapper">
-      <nuxt-link to="/about">About</nuxt-link>•
-      <nuxt-link to="/tech">Tech</nuxt-link>•
-      <nuxt-link to="/think">Think</nuxt-link>•
-      <nuxt-link to="/fun">Fun</nuxt-link>•
+      <nuxt-link
+        class="fl"
+        to="/about"
+      >About</nuxt-link>
+      <span class="fl">•&nbsp;</span>
+      <nuxt-link
+        class="fl"
+        to="/tech"
+      >Tech</nuxt-link>
+      <span class="fl">•&nbsp;</span>
+      <nuxt-link
+        class="fl"
+        to="/think"
+      >Think</nuxt-link>
+      <span class="fl">•&nbsp;</span>
+      <nuxt-link
+        class="fl"
+        to="/fun"
+      >Fun</nuxt-link>
       <a
-        href="/feed.xml"
-        target="_blank"
-      >RSS</a>•
-      <a
+        class="fr"
         href="/sitemap.xml"
         target="_blank"
       >Sitemap</a>
+      <span class="fr">•&nbsp;</span>
+      <a
+        class="fr"
+        href="/feed.xml"
+        target="_blank"
+      >RSS</a>
       <div
         class="cs-footer__bottom"
         @click="$route.path === '/' ? '' : $router.replace('/')"
@@ -24,12 +42,15 @@
           class="cs-footer__logo"
           name="logo"
         />
-        2017-{{ new Date().getFullYear() }}&nbsp;
-        Curtis' Spot
-        &nbsp;
-        •
-        &nbsp;
-        <cs-color-slogan />
+        <p>
+          2017-{{ new Date().getFullYear() }}&nbsp;
+          <a
+            href="/"
+            target="_blank"
+          >Curtis' Spot</a>
+          <!-- • -->
+          <cs-color-slogan class="cs-footer__slogan" />
+        </p>
       </div>
     </div>
   </footer>
@@ -74,19 +95,31 @@ export default {
     cursor: pointer;
     > a {
       margin-right: 5px;
-      color: var(--main);
+      color: #20f1b4;
       box-shadow: 0 1px 0 0 currentColor;
+    }
+    @media (max-width: 500px) {
+      text-align: center;
     }
   }
   @include e(bottom) {
     display: flex;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 40px;
+    @media (max-width: 500px) {
+      justify-content: center;
+    }
   }
   @include e(logo) {
     margin-right: 10px;
     width: 20px;
     height: 20px;
+  }
+  @include e(slogan) {
+    @media (max-width: 500px) {
+      display: block;
+      margin-top: 2px;
+    }
   }
 }
 </style>
