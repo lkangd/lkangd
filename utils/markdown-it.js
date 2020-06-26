@@ -1,5 +1,18 @@
 const markdownItAttrs = require('markdown-it-attrs');
-const md = require('markdown-it')({ html: true, linkify: true, breaks: true }).use(markdownItAttrs);
+const markdownItAnchor = require('markdown-it-anchor');
+const md = require('markdown-it')({ html: true, linkify: true, breaks: true });
+md.use(markdownItAttrs);
+md.use(markdownItAnchor, {
+  level: 2,
+  permalink: true,
+  permalinkClass: 'cs-header-anchor',
+  permalinkSymbol: '¶',
+  permalinkBefore: true,
+  permalinkHref: slug => '',
+  permalinkAttrs: slug => ({
+    onclick: `!this.getAttribute('href') && this.setAttribute('href', window.location.origin+window.location.pathname+'#'+'${slug}')`,
+  }),
+});
 
 const HTML_ESCAPE_TEST_RE = /[&<>"]/;
 const HTML_ESCAPE_REPLACE_RE = /[&<>"]/g;

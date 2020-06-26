@@ -105,3 +105,23 @@ body {
 .fr {
   float: right;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  .cs-header-anchor {
+    float: left;
+    margin-left: -30px;
+    box-shadow: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  &:hover {
+    .cs-header-anchor {
+      opacity: 1;
+    }
+  }
+}
