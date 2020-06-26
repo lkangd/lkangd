@@ -30,6 +30,8 @@
         v-if="post.prev"
       >← {{ post.prev.title }}</nuxt-link>
     </div>
+    <hr />
+    <cs-subscribe />
     <cs-statement />
   </section>
 </template>
@@ -39,15 +41,17 @@
 import Prism from 'prismjs';
 import CsThemeToggle from '@/components/CsThemeToggle';
 import CsStatement from '@/components/CsStatement';
+import CsSubscribe from '@/components/CsSubscribe';
 import appConfig from '@/config/app.config';
 
 export default {
   name: 'cs-post',
   layout: 'post',
-  components: { CsThemeToggle, CsStatement },
+  components: { CsThemeToggle, CsStatement, CsSubscribe },
   head() {
     return {
       title: `${(this.post.attributes && this.post.attributes.title) || 'Article'} - ${appConfig.meta.title}`,
+      // script: [{ src: 'https://lkangd.ck.page/51a87aa3a3/index.js', body: true, 'data-uid': '51a87aa3a3', async: true }],
     };
   },
   async asyncData({ $axios, $payloadURL, route, payload, redirect }) {

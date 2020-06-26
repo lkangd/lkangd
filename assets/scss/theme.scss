@@ -5,6 +5,7 @@ body {
   --main: #1cc794;
   --text-title: #222;
   --bg: #fff;
+  --bg-secondary: rgb(249, 250, 251);
   --text-normal: #000;
   --text-title: #222;
   --text-link: #d23669;
@@ -17,6 +18,7 @@ body {
   --inline-code-bg: rgba(34, 241, 179, 0.4);
   --blockquote-bg: #f9f9f9;
   --blockquote-bl: #ccc;
+  --form-shadow: rgba(210, 214, 220, 0.5) 0px 2px 15px 0px;
 
   color: var(--text-normal);
   background-color: var(--bg);
@@ -27,6 +29,7 @@ body {
     --main: #20f1b4;
     --text-title: #fff;
     --bg: #282c35;
+    --bg-secondary: rgb(54, 60, 72);
     --header: #fff;
     --text-normal: rgba(255, 255, 255, 0.88);
     --hr: hsla(0, 0%, 100%, 0.2);
@@ -38,6 +41,7 @@ body {
     --inline-code-bg: #373c49;
     --blockquote-bg: #242830;
     --blockquote-bl: #ccc;
+    --form-shadow: rgba(26, 26, 27, 0.635) 0px 2px 15px 0px;
     -webkit-font-smoothing: antialiased;
   }
 }

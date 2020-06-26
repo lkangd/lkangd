@@ -1,6 +1,5 @@
 <template>
   <section class="cs-statement">
-    <hr />
     <p class="cs-statement__text">
       讨论请发邮件到
       <a
