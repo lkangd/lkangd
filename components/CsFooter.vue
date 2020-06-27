@@ -42,15 +42,9 @@
           class="cs-footer__logo"
           name="logo"
         />
-        <p>
-          2017-{{ new Date().getFullYear() }}&nbsp;
-          <a
-            href="/"
-            target="_blank"
-          >Curtis' Spot</a>
-          <!-- • -->
-          <cs-color-slogan class="cs-footer__slogan" />
-        </p>
+        2017-{{ new Date().getFullYear() }}&nbsp;Curtis' Spot
+        <span style="margin: 0 5px;">•</span>
+        <cs-color-slogan class="cs-footer__slogan" />
       </div>
     </div>
   </footer>
@@ -95,7 +89,7 @@ export default {
     cursor: pointer;
     > a {
       margin-right: 5px;
-      color: #20f1b4;
+      color: var(--main);
       box-shadow: 0 1px 0 0 currentColor;
     }
     @media (max-width: 500px) {
@@ -106,9 +100,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: 40px;
-    @media (max-width: 500px) {
-      justify-content: center;
-    }
+    overflow: hidden;
   }
   @include e(logo) {
     margin-right: 10px;
@@ -117,8 +109,11 @@ export default {
   }
   @include e(slogan) {
     @media (max-width: 500px) {
-      display: block;
-      margin-top: 2px;
+      ::v-deep {
+        .cs-color-slogan__start-text {
+          display: none;
+        }
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 <template>
   <div class="cs-color-slogan">
     <span
+      class="cs-color-slogan__start-text"
       ref="startText"
       v-show="startText"
     >{{ startText }}</span>

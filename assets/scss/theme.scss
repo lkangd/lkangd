@@ -3,6 +3,7 @@ $high-light-color: rgba(34, 241, 179, 0.6);
 
 body {
   --main: #1cc794;
+  --main-convert: #fff;
   --text-title: #222;
   --bg: #fff;
   --bg-secondary: rgb(249, 250, 251);
@@ -27,6 +28,7 @@ body {
 body {
   &.dark {
     --main: #20f1b4;
+    --main-convert: #20f1b4;
     --text-title: #fff;
     --bg: #282c35;
     --bg-secondary: rgb(54, 60, 72);

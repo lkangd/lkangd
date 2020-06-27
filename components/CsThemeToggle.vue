@@ -28,7 +28,7 @@ export default {
   },
   mounted() {
     const body = document.querySelector('body');
-    this.isDark = !body.classList.contains('dark');
+    this.isDark = body.classList.contains('dark');
   },
   methods: {
     handleClick() {
@@ -38,7 +38,7 @@ export default {
       body.classList.toggle('light');
       body.classList.toggle('dark');
       localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
-      this.isDark = !body.classList.contains('dark');
+      this.isDark = body.classList.contains('dark');
     },
   },
 };
@@ -66,13 +66,14 @@ export default {
     left: 1px;
     width: 22px;
     height: 22px;
-    background-color: #fff;
+    background-color: var(--main-convert);
     border-radius: 100%;
     transition: all 0.2s ease;
   }
   @include when(dark) {
     @include e(thumb) {
       transform: translateX(26px);
+      box-shadow: 0 0 4px 2px var(--main);
     }
   }
 }
