@@ -121,7 +121,6 @@ export default {
     }
   }
   @include e(article) {
-    font-family: 'Noto Serif SC', Lusitana, serif;
     a {
       padding: 0 4px;
       text-decoration: underline;
