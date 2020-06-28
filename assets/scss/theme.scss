@@ -23,6 +23,10 @@ body {
 
   color: var(--text-normal);
   background-color: var(--bg);
+
+  a {
+    font-weight: bold;
+  }
 }
 
 body {
@@ -45,6 +49,10 @@ body {
     --blockquote-bl: #ccc;
     --form-shadow: rgba(26, 26, 27, 0.635) 0px 2px 15px 0px;
     -webkit-font-smoothing: antialiased;
+
+    a {
+      font-weight: normal;
+    }
   }
 }
 
