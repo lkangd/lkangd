@@ -28,6 +28,21 @@
           target="_blank"
         >{{ hobby.text }}</a>
         <span v-else>{{ hobby.text }}</span>
+        <template v-if="hobby.remarks">
+          (
+          <span
+            class="cs-about__remark"
+            v-for="(remark, index) in hobby.remarks"
+            :key="index"
+          >
+            <span v-show="index !== 0">&nbsp;|</span>
+            <a
+              :href="remark.value"
+              target="_blank"
+            >{{ remark.key }}</a>
+          </span>
+          )
+        </template>
       </li>
     </ul>
     <p class="cs-text">
@@ -64,7 +79,11 @@ export default {
         },
         {
           text: '📚 Reading',
-          link: 'https://book.douban.com/people/204029818/do',
+          link: '',
+          remarks: [
+            { key: '在读', value: 'https://book.douban.com/people/204029818/do' },
+            { key: '读过', value: 'https://book.douban.com/people/204029818/collect' },
+          ],
         },
         {
           text: '☕️ Coffee',
@@ -79,3 +98,16 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+// @include B(about) {
+//   @include e(remark) {
+//     & + & {
+//       margin-left: 5px;
+//       @include pseudo(before) {
+//         content: '|';
+//       }
+//     }
+//   }
+// }
+</style>

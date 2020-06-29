@@ -66,7 +66,8 @@ export default {
     left: 1px;
     width: 22px;
     height: 22px;
-    background-color: var(--main-convert);
+    // background-color: var(--main-convert);
+    background-color: #fff;
     border-radius: 100%;
     transition: all 0.2s ease;
   }
