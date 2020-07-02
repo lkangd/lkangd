@@ -13,7 +13,7 @@ app.all('*', (req, res, next) => {
   next();
 });
 
-postPayload.processed.forEach(({ route, payload }) => {
+postPayload.processing().forEach(({ route, payload }) => {
   app.get(route, async (req, res) => {
     try {
       res.json(payload);

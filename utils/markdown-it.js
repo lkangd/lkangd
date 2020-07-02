@@ -1,6 +1,6 @@
 const markdownItAttrs = require('markdown-it-attrs');
 const markdownItAnchor = require('markdown-it-anchor');
-const md = require('markdown-it')({ html: true, linkify: true, breaks: true });
+let md = require('markdown-it')({ html: true, linkify: true, breaks: true });
 md.use(markdownItAttrs);
 md.use(markdownItAnchor, {
   level: 2,
@@ -97,5 +97,7 @@ md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
 
   return `<pre${slf.renderAttrs(token)}><code${slf.renderAttrs(token)}>${highlighted}</code></pre>`;
 };
+
+md = Object.assign({}, md, Object.getPrototypeOf(md));
 
 export default md;

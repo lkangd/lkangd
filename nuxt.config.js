@@ -1,5 +1,6 @@
 const appConfig = require('./config/app.config');
 const postPayload = require('./post-payload');
+import md from './utils/markdown-it';
 
 export default {
   mode: 'universal',
@@ -74,6 +75,7 @@ export default {
     '@/api',
     '@/api/static',
   ],
+  watch: ['@/posts/**/*.md'],
   /*
    ** Customize the loading component
    */
@@ -106,6 +108,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/sitemap',
     '@nuxtjs/svg-sprite',
+    '@nuxtjs/markdownit',
     '@nuxtjs/style-resources',
     [
       'nuxt-payload-extractor',
@@ -120,6 +123,7 @@ export default {
       },
     ],
   ],
+  markdownit: md,
   sitemap: {
     hostname: appConfig.meta.url,
     routes() {

@@ -56,10 +56,9 @@ const postPayload = dirPath => {
   return result;
 };
 
-const raw = postPayload('./posts');
-// 路由化处理
-const processed = (() => {
-  const posts = raw;
+let raw;
+const processing = () => {
+  const posts = (raw = postPayload('./posts'));
   const result = [];
   const allPosts = [];
   const featuredPosts = [];
@@ -95,9 +94,11 @@ const processed = (() => {
   });
   result['/'] = rootPayload;
   return result;
-})();
+};
+// 路由化处理
+const processed = processing();
 
-module.exports = { raw, processed, afterHooks };
+module.exports = { raw, processing, processed, afterHooks };
 
 function updateImgPath(target, fillPath) {
   const regExp = /src="(.*?(([^\/]*)\.(gif|jpe?g|png|svg)))/gim;
