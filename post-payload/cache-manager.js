@@ -5,7 +5,10 @@ const getCachePath = filename => path.resolve(__dirname, `./.cache/${filename ? 
 
 export default class CacheManager {
   constructor() {
-    this.nameMap = fs.readdirSync(getCachePath()).reduce((res, item) => {
+    const cachePath = getCachePath();
+    !fs.existsSync(cachePath) && fs.mkdirSync(cachePath);
+
+    this.nameMap = fs.readdirSync(cachePath).reduce((res, item) => {
       res[item] = false;
       return res;
     }, Object.create(null));
