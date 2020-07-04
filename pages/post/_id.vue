@@ -14,21 +14,21 @@
       class="cs-post__article"
       v-html="post.body"
     />
+    <hr />
     <div
-      class="cs-post__wrapper"
+      class="cs-post__link-wrapper"
       v-if="post.next || post.prev"
     >
-      <hr />
-      <nuxt-link
-        :to="post.next.link"
-        class="cs-outside-link fr"
-        v-if="post.next"
-      >{{ post.next.title }} →</nuxt-link>
       <nuxt-link
         :to="post.prev.link"
-        class="cs-outside-link fl"
+        class="cs-outside-link"
         v-if="post.prev"
       >← {{ post.prev.title }}</nuxt-link>
+      <nuxt-link
+        :to="post.next.link"
+        class="cs-outside-link"
+        v-if="post.next"
+      >{{ post.next.title }} →</nuxt-link>
     </div>
     <hr />
     <cs-subscribe />
@@ -75,7 +75,7 @@ export default {
 <style lang="scss">
 @include B(post) {
   position: relative;
-  padding: 42px 21px;
+  padding: 42px 21px !important;
   background-color: transparent;
   @include e(toggle) {
     position: absolute;
@@ -114,8 +114,12 @@ export default {
     border: 0;
     border-bottom: 1px solid var(--hr);
   }
-  @include e(wrapper) {
-    overflow: hidden;
+  @include e(link-wrapper) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    // overflow: hidden;
     > a {
       margin: 20px 0;
     }
@@ -127,32 +131,32 @@ export default {
     }
     h1 {
       margin: 50px 0 24px;
-      font-size: 22px;
+      font-size: 28px;
       font-weight: bold;
     }
     h2 {
       margin: 50px 0 24px;
-      font-size: 20px;
+      font-size: 25px;
       font-weight: bold;
     }
     h3 {
       margin: 50px 0 24px;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: bold;
     }
     h4 {
       margin: 30px 0 24px;
-      font-size: 16px;
+      font-size: 19px;
       font-weight: bold;
     }
     h5 {
       margin: 30px 0 24px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
     }
     h6 {
       margin: 30px 0 24px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: bold;
     }
     p,
@@ -168,7 +172,8 @@ export default {
     }
     code:not([class*='language-']) {
       padding: 0 4px;
-      font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
+      font-family: inherit;
+      font-weight: bold;
       color: var(--inline-code-fg);
       background-color: var(--inline-code-bg);
       border-radius: 3px;
@@ -221,7 +226,9 @@ export default {
       }
     }
     img {
-      width: 100%;
+      display: block;
+      margin: 50px auto;
+      max-width: 80%;
       height: auto;
     }
     table {

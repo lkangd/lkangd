@@ -5,11 +5,11 @@
     @click="handleClick"
   >
     <img
-      class="cs-theme-toggle__icon"
+      class="cs-theme-toggle__icon theme-ignore"
       src="~@/assets/images/moon.png"
     />
     <img
-      class="cs-theme-toggle__icon"
+      class="cs-theme-toggle__icon theme-ignore"
       src="~@/assets/images/sun.png"
     />
     <button class="cs-theme-toggle__thumb"></button>

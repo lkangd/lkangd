@@ -11,7 +11,7 @@
     <p class="cs-statement__text">通过支付宝 lkangd@foxmail.com 或赞赏码赞助此文</p>
     <img
       alt="reward-code"
-      class="cs-statement__reward-code"
+      class="cs-statement__reward-code theme-ignore"
       src="~@/assets/images/wechat-reward-code.jpg"
     />
   </section>
@@ -28,7 +28,6 @@ export default {
 <style scoped lang="scss">
 @include B(statement) {
   text-align: center;
-  font-family: 'Noto Serif SC', Lusitana, serif;
   font-size: 14px;
   hr {
     margin: 64px 0;

@@ -53,6 +53,9 @@ body {
     a {
       font-weight: normal;
     }
+    img:not([class*='theme-ignore']) {
+      filter: brightness(75%);
+    }
   }
 }
 

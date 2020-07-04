@@ -2,7 +2,7 @@
   <div class="cs-index cs-container">
     <cs-article-item
       :article="post"
-      v-for="(post, index) in [...postList, ...featuredList]"
+      v-for="(post, index) in [...featuredList, ...postList]"
       :key="index"
     />
   </div>
