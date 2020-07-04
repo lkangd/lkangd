@@ -98,3 +98,6 @@ static/feed.xml
 
 # Example Artilces
 posts/example
+
+# vscode setting json
+.vscode

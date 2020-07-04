@@ -193,6 +193,8 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    cache: true,
+    parallel: true,
     babel: {
       plugins: [
         [

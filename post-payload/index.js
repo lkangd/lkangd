@@ -1,10 +1,12 @@
-import { min2read, wordcount } from './utils/wordcount';
-import md from './utils/markdown-it';
+import { min2read, wordcount } from '../utils/wordcount';
+import CacheManager from './cache-manager';
+import md from '../utils/markdown-it';
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const frontMatter = require('front-matter');
 
+const cachedManager = new CacheManager();
 const isGenerateMode = process.argv.pop() === 'generate';
 const afterHooks = {
   run() {
@@ -40,6 +42,12 @@ const postPayload = dirPath => {
         return;
       } else if (path.extname(fileName) === '.md') {
         const file = fs.readFileSync(subDirPath, 'utf8');
+        const cacheName = `${dirPath.split('/').pop()}.${getCacheFilename(subDirPath, file)}`;
+        if (cachedManager.has(cacheName)) {
+          cachedManager.activate(cacheName);
+          result.push(cachedManager.readCache(cacheName));
+          return;
+        }
         const post = frontMatter(file);
 
         post.body = updateImgPath(String(md.render(post.body)), dirPath);
@@ -48,7 +56,12 @@ const postPayload = dirPath => {
         }`;
         post.attributes.min2read = min2read(post.body);
         post.attributes.wordcount = wordcount(post.body);
-        result.push(post);
+        cachedManager.writeCache(cacheName, post);
+        if (isGenerateMode) {
+          !post.attributes.draft && result.push(post);
+        } else {
+          result.push(post);
+        }
       }
     });
   };
@@ -60,6 +73,12 @@ let raw;
 const processing = () => {
   const posts = (raw = postPayload('./posts'));
   const result = [];
+  const cacheName = `post-payload.${getCacheFilename(undefined, JSON.stringify(posts))}`;
+  if (cachedManager.has(cacheName)) {
+    cachedManager.activate(cacheName);
+    cachedManager.clearInactive();
+    return cachedManager.readCache(cacheName);
+  }
   const allPosts = [];
   const featuredPosts = [];
   for (const key in posts) {
@@ -68,10 +87,15 @@ const processing = () => {
       result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes) } });
       result[`/${key}`] = { postList: category.map(({ attributes }) => attributes) };
       category.forEach((post, index) => {
-        if (post.attributes.featured) {
-          featuredPosts.push(post.attributes);
-        } else {
-          allPosts.push(post.attributes);
+        try {
+          if (post.attributes.featured) {
+            featuredPosts.push(post.attributes);
+          } else {
+            allPosts.push(post.attributes);
+          }
+        } catch (error) {
+          console.log('error :>> ', error);
+          console.log('posts :>> ', Object.keys(category));
         }
 
         const next = category[index + 1] && category[index + 1].attributes;
@@ -93,6 +117,8 @@ const processing = () => {
     payload: rootPayload,
   });
   result['/'] = rootPayload;
+  cachedManager.writeCache(cacheName, result);
+  cachedManager.clearInactive();
   return result;
 };
 // 路由化处理
@@ -109,11 +135,11 @@ function updateImgPath(target, fillPath) {
     }
     if (isGenerateMode) {
       try {
-        const resourcePath = path.resolve(__dirname, fillPath, fileUrl);
-        const hex = genFileHex(resourcePath);
+        const resourcePath = path.resolve(__dirname, '..', fillPath, fileUrl);
+        const hex = genHex(resourcePath);
         fileUrl = `_nuxt/img/${w[3]}.${hex}.${w[4]}`;
         afterHooks.add(function() {
-          copyFile(resourcePath, path.join(__dirname, `./dist/${fileUrl}`));
+          copyFile(resourcePath, path.join(__dirname, `../dist/${fileUrl}`));
         });
       } catch (error) {
         console.log('replace file error :>> ', error);
@@ -125,10 +151,10 @@ function updateImgPath(target, fillPath) {
   });
 }
 
-function genFileHex(file, length = 7) {
+function genHex(file, source, length = 7) {
   let md5;
   try {
-    const buffer = fs.readFileSync(file);
+    const buffer = source || fs.readFileSync(file);
     const fsHash = crypto.createHash('md5');
     fsHash.update(buffer);
     md5 = fsHash.digest('hex');
@@ -138,4 +164,10 @@ function genFileHex(file, length = 7) {
 
 function copyFile(src, dist) {
   fs.writeFileSync(dist, fs.readFileSync(src));
+}
+
+function getCacheFilename(dir, source, suffix = 'json') {
+  const filename = genHex(dir, source);
+
+  return filename ? `${filename}.${suffix}` : '';
 }
