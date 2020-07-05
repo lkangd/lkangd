@@ -20,6 +20,10 @@ body {
   --blockquote-bg: #f9f9f9;
   --blockquote-bl: #ccc;
   --form-shadow: rgba(210, 214, 220, 0.5) 0px 2px 15px 0px;
+  --article-nav-text-color: #655e5e;
+  --article-nav-text-active-color: #292525;
+  --article-nav-dot-color: #e5e5e5;
+  --article-nav-dot-active-color: #8e8787;
 
   color: var(--text-normal);
   background-color: var(--bg);
@@ -48,6 +52,10 @@ body {
     --blockquote-bg: #242830;
     --blockquote-bl: #ccc;
     --form-shadow: rgba(26, 26, 27, 0.635) 0px 2px 15px 0px;
+    --article-nav-text-color: #d0d0d0;
+    --article-nav-text-active-color: #fff;
+    --article-nav-dot-color: #8e8787;
+    --article-nav-dot-active-color: #e5e5e5;
     -webkit-font-smoothing: antialiased;
 
     a {
@@ -141,4 +149,8 @@ h6 {
       opacity: 1;
     }
   }
+}
+
+.cs-toc-dom {
+  display: none;
 }

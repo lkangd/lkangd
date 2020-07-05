@@ -5,6 +5,8 @@ spoiler: JavaScript语言环境下的树学习
 featured: true
 ---
 
+[[toc]]
+
 ## 什么是树？
 
 ### 定义

@@ -22,6 +22,7 @@
     "lodash": "^4.17.15",
     "markdown-it": "^11.0.0",
     "markdown-it-anchor": "^5.3.0",
+    "markdown-it-table-of-contents": "^0.4.4",
     "marked": "^1.1.0",
     "nuxt": "^2.13.2",
     "nuxt-payload-extractor": "^1.1.0",
@@ -40,6 +41,7 @@
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
     "npm": "^6.14.5",
+    "pinyin": "^2.9.1",
     "push-dir": "^0.4.1",
     "sass-loader": "^8.0.2",
     "striptags": "^3.1.1"

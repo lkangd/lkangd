@@ -33,6 +33,7 @@
     <hr />
     <cs-subscribe />
     <cs-statement />
+    <cs-toc />
   </section>
 </template>
 
@@ -42,12 +43,13 @@ import Prism from 'prismjs';
 import CsThemeToggle from '@/components/CsThemeToggle';
 import CsStatement from '@/components/CsStatement';
 import CsSubscribe from '@/components/CsSubscribe';
+import CsToc from '@/components/CsToc';
 import appConfig from '@/config/app.config';
 
 export default {
   name: 'cs-post',
   layout: 'post',
-  components: { CsThemeToggle, CsStatement, CsSubscribe },
+  components: { CsThemeToggle, CsStatement, CsSubscribe, CsToc },
   head() {
     return {
       title: `${(this.post.attributes && this.post.attributes.title) || 'Article'} - ${appConfig.meta.title}`,

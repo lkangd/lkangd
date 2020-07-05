@@ -4,6 +4,8 @@ date: '2019-07-07'
 spoiler: 博客文章的编写利器
 ---
 
+[[toc]]
+
 记录Markdown基本的和扩展的语法, 主要用于博客样式实时调整和备忘.
 
 内容来自[这里(基本语法)](https://www.markdownguide.org/basic-syntax/#code){target=_blank}和[这里(扩展语法)](https://www.markdownguide.org/extended-syntax/#alignment){target=_blank}.

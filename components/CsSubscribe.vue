@@ -63,7 +63,8 @@ export default {
   align-items: top;
   margin: 40px auto;
   padding: 0;
-  font-family: un-serif;
+  font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Hiragino Sans GB, Microsoft YaHei, '\5FAE\8F6F\96C5\9ED1', helvetica neue, helvetica,
+    ubuntu, roboto, noto, segoe ui, Arial, sans-serif;
   background-color: var(--bg);
   box-shadow: var(--form-shadow);
   border-radius: 6px;

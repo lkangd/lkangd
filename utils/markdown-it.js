@@ -1,9 +1,20 @@
+const toPinyin = require('pinyin');
 const markdownItAttrs = require('markdown-it-attrs');
 const markdownItAnchor = require('markdown-it-anchor');
+const markdownItTOC = require('markdown-it-table-of-contents');
+
+const slugify = slug =>
+  toPinyin(slug, {
+    style: toPinyin.STYLE_NORMAL,
+  })
+    .join('')
+    .replace(/[^\w]/g, '');
+
 let md = require('markdown-it')({ html: true, linkify: true, breaks: true });
 md.use(markdownItAttrs);
 md.use(markdownItAnchor, {
   level: 2,
+  slugify,
   permalink: true,
   permalinkClass: 'cs-header-anchor',
   permalinkSymbol: '¶',
@@ -12,6 +23,12 @@ md.use(markdownItAnchor, {
   permalinkAttrs: slug => ({
     onclick: `!this.getAttribute('href') && this.setAttribute('href', window.location.origin+window.location.pathname+'#'+'${slug}')`,
   }),
+});
+md.use(markdownItTOC, {
+  includeLevel: [2, 3],
+  containerClass: 'cs-toc-dom',
+  forceFullToc: true,
+  slugify,
 });
 
 const HTML_ESCAPE_TEST_RE = /[&<>"]/;
