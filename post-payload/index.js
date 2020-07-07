@@ -95,7 +95,6 @@ const processing = () => {
           }
         } catch (error) {
           console.log('error :>> ', error);
-          console.log('posts :>> ', Object.keys(category));
         }
 
         const next = category[index + 1] && category[index + 1].attributes;
@@ -109,8 +108,8 @@ const processing = () => {
     }
   }
   const rootPayload = {
-    postList: allPosts.sort((a, b) => b.date - a.date),
-    featuredList: featuredPosts.sort((a, b) => b.date - a.date),
+    postList: allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)),
+    featuredList: featuredPosts.sort((a, b) => new Date(b.date) - new Date(a.date)),
   };
   result.push({
     route: '/',
