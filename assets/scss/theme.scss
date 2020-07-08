@@ -4,7 +4,6 @@ $high-light-color: rgba(34, 241, 179, 0.6);
 body {
   --main: #1cc794;
   --main-convert: #fff;
-  --text-title: #222;
   --bg: #fff;
   --bg-secondary: #f9fafb;
   --text-normal: #000;
@@ -131,15 +130,26 @@ body {
   float: right;
 }
 
+a {
+  color: var(--main);
+  text-decoration: none !important;
+  box-shadow: 0 1px 0 0 currentColor;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
+  font-family: 'Montserrat', serif;
+  a {
+    color: var(--text-title);
+  }
   .cs-header-anchor {
     float: left;
     margin-left: -30px;
+    color: var(--main);
     box-shadow: none;
     opacity: 0;
     transition: opacity 0.3s;

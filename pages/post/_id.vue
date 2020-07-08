@@ -91,8 +91,8 @@ export default {
     font-size: 23px;
     font-weight: 900;
     line-height: 2.625rem;
-    color: var(--main);
     > a {
+      color: var(--main) !important;
       box-shadow: none;
     }
   }
