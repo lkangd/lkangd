@@ -183,7 +183,7 @@ function getElementTop(element) {
   }
   @include e(item) {
     height: 16px;
-    // line-height: 16px;
+    overflow: hidden;
     & + & {
       margin-top: 10px;
     }
@@ -201,11 +201,15 @@ function getElementTop(element) {
       }
     }
     @include e(text) {
+      position: relative;
+      top: -2px;
       display: inline-block;
       padding-left: 16px;
       max-width: 200px;
       overflow: hidden;
+      // background-color: red;
       vertical-align: middle;
+      line-height: 1.4;
       font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Hiragino Sans GB, Microsoft YaHei, '\5FAE\8F6F\96C5\9ED1', helvetica neue,
         helvetica, ubuntu, roboto, noto, segoe ui, Arial, sans-serif;
       font-size: 13px;
@@ -218,6 +222,8 @@ function getElementTop(element) {
       transition: opacity 0.5s;
     }
     @include pseudo(before) {
+      position: relative;
+      top: -2px;
       content: '';
       vertical-align: middle;
       display: inline-block;
