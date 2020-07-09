@@ -3,7 +3,6 @@ title: Git Commit 规范提交指南
 date: '2020-05-15'
 spoiler: 项目「脸面工程」优化实践
 featured: true
-draft: true
 ---
 
 [[TOC]]
