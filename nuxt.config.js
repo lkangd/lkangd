@@ -200,7 +200,7 @@ export default {
         [
           'prismjs',
           {
-            languages: ['javascript', 'jsx', 'css', 'markup', 'bash'],
+            languages: ['javascript', 'jsx', 'json', 'css', 'markup', 'bash'],
             plugins: ['line-numbers', 'line-highlight', 'show-language'],
             css: true,
           },
