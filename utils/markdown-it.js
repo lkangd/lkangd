@@ -95,7 +95,7 @@ md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
     tmpAttrs = token.attrs ? token.attrs.slice() : [];
     // fix code line highlight: ['1,2,3,4', ''] => ['data-line', '1,2,3,4']
     tmpAttrs.forEach(attr => {
-      if (/^(\d,?)+$/.test(attr[0]) && !attr[1]) {
+      if (/^((\d|\d\-\d),?)+$/.test(attr[0]) && !attr[1]) {
         [attr[0], attr[1]] = ['data-line', attr[0]];
       }
     });
