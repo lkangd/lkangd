@@ -15,22 +15,21 @@
       v-html="post.body"
     />
     <hr />
-    <div
-      class="cs-post__link-wrapper"
-      v-if="post.next || post.prev"
-    >
-      <nuxt-link
-        :to="post.prev.link"
-        class="cs-outside-link"
-        v-if="post.prev"
-      >← {{ post.prev.title }}</nuxt-link>
-      <nuxt-link
-        :to="post.next.link"
-        class="cs-outside-link"
-        v-if="post.next"
-      >{{ post.next.title }} →</nuxt-link>
-    </div>
-    <hr />
+    <template v-if="post.next || post.prev">
+      <div class="cs-post__link-wrapper">
+        <nuxt-link
+          :to="post.prev.link"
+          class="cs-outside-link"
+          v-if="post.prev"
+        >← {{ post.prev.title }}</nuxt-link>
+        <nuxt-link
+          :to="post.next.link"
+          class="cs-outside-link"
+          v-if="post.next"
+        >{{ post.next.title }} →</nuxt-link>
+      </div>
+      <hr />
+    </template>
     <cs-subscribe />
     <cs-statement />
     <cs-toc />
