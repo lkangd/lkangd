@@ -328,7 +328,7 @@ npm i commitizen cz-conventional-changelog -D
 ~/FE-Project/git-test>git push # 推送分支，此时如果又有人更新代码的话，需要重新拉取解决冲突后才能推送
 ```
 
-此时，按照 git 的默认策略，如果远程分支和本地分支之间的提交线图有分叉的话（即不是 fast-forwarded），git 会执行一次 merge 操作，因此产生一次没意义的提交记录，从而产生了下面所以的混乱。
+此时，按照 git 的默认策略，如果远程分支和本地分支之间的提交线图有分叉的话（即不是 fast-forwarded），git 会执行一次 merge 操作，因此产生一次没意义的提交记录，从而产生了下面所示的混乱。
 
 ```bash{2}
 | * | | | | | | e63cdb7f htmlPlugin baseConf 中引入 - lisi, 8 months ago
