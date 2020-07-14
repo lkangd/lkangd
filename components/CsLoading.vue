@@ -54,9 +54,9 @@ export default {
       setTimeout(() => {
         this.$refs.csLoading && this.$refs.csLoading.classList.add('loaded');
         setTimeout(() => {
-          this.$refs.main.classList && this.$refs.main.classList.add('out-of-window');
-          this.$refs.csLoading && this.$refs.csLoading.classList.remove('loaded');
+          this.$refs.main && this.$refs.main.classList.add('out-of-window');
           setTimeout(() => {
+            this.$refs.csLoading && this.$refs.csLoading.classList.remove('loaded');
             this.loading = false;
             this._revertScrollBehavior();
           }, 50);
