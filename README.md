@@ -1,22 +1,11 @@
-# curtis-spot
+### Hi, I'm Curtis 👉🧑‍💻
 
-> My riveting Nuxt.js project
+I was born in 1992 and started programming 4 years ago. I used to be an operation and maintenance engineer, but now I focus on JavaScript and wanna create something cool.
 
-## Build Setup
+🤔I am now looking for a job, if you are interested in me, please
 
-``` bash
-# install dependencies
-$ npm run install
+### Contact me:
 
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+- 💬WeChat: lkangd
+- ✉️E-mail: lkangd@gmail.com
+- ✍️Blog: https://lkangd.com
