@@ -233,10 +233,11 @@ export default {
       height: auto;
     }
     table {
+      display: block;
       margin: 24px 0;
-      width: 100%;
       max-width: 100%;
       border: 1px solid #dee2e6;
+      overflow: scroll;
       thead {
         tr {
           th {
