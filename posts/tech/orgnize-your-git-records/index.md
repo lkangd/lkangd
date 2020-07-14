@@ -312,6 +312,34 @@ npm i commitizen cz-conventional-changelog -D
 
 「commitizen」提供了一个交互式的 git 提交流程，保证了提交者不会因为一时疏忽而做出违反规范的提交行为。
 
+### 强制校验提交格式
+
+上面提到 vue 会在「commit-msg」钩子校验提交格式是否合格。如果你也想更进一步，可以使用[「commitlint」](https://github.com/conventional-changelog/commitlint#readme){target=\_blank}结合 [「husky」](https://github.com/typicode/husky#readme){target=\_blank}来进行强制校验提交格式。
+
+1. 安装依赖：
+
+```bash
+npm i @commitlint/cli @commitlint/config-conventional husky -D
+```
+
+2. 在项目根目录创建 commitlint 配置文件：commitlint.config.js：
+
+```javascript
+module.exports = {
+  extends: ['@commitlint/config-conventional'], // @commitlint/config-conventional Angular 规范
+};
+```
+
+3. 在项目根目录创建 husky 配置文件：husky.config.js：
+
+```javascript
+module.exports = {
+  hooks: {
+    'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS', // 在 commit-msg 钩子校验提交格式
+  },
+};
+```
+
 ---
 
 ## 规范合并推送流程
