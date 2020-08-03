@@ -1,7 +1,7 @@
 ---
-title: 使用 SCSS + BEM 组合武器
+title: SCSS 环境下的 BEM 优雅实践
 date: '2020-04-12'
-spoiler: 如何编写易维护和具语义化的样式代码？
+spoiler: 如何优雅地编写易维护和具语义化的样式代码？
 ---
 
 [[TOC]]

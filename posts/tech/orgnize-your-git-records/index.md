@@ -1,7 +1,7 @@
 ---
-title: Git Commit 规范提交指南
+title: 创造高价值的「Git Commit」
 date: '2020-05-15'
-spoiler: 项目「脸面工程」优化实践
+spoiler: 让你的每一个「Git Commit」更有价值，而不是形式主义下的流水账
 featured: true
 ---
 
