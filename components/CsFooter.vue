@@ -6,22 +6,22 @@
     <div class="cs-footer__wrapper">
       <nuxt-link
         class="fl"
-        to="/about"
+        to="/about/"
       >About</nuxt-link>
       <span class="fl">•&nbsp;</span>
       <nuxt-link
         class="fl"
-        to="/tech"
+        to="/tech/"
       >Tech</nuxt-link>
       <span class="fl">•&nbsp;</span>
       <nuxt-link
         class="fl"
-        to="/think"
+        to="/think/"
       >Think</nuxt-link>
       <span class="fl">•&nbsp;</span>
       <nuxt-link
         class="fl"
-        to="/fun"
+        to="/fun/"
       >Fun</nuxt-link>
       <a
         class="fr"

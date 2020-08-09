@@ -53,7 +53,7 @@ const postPayload = dirPath => {
         post.body = updateImgPath(String(md.render(post.body)), dirPath);
         post.attributes.link = post.link = `/post/${
           path.basename(subDirPath, '.md') === 'index' ? path.basename(dirPath) : fileName.replace(/\..*$/, '')
-        }`;
+        }/`;
         post.attributes.min2read = min2read(post.body);
         post.attributes.wordcount = wordcount(post.body);
         cachedManager.writeCache(cacheName, post);
