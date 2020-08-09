@@ -16,9 +16,15 @@ app.all('*', (req, res, next) => {
 });
 
 if (port) {
+  let exitTimer = null;
+  const updateExitTimer = () => {
+    exitTimer && clearTimeout(exitTimer);
+    exitTimer = setTimeout(() => process.exit(), 1000 * 60);
+  };
   postPayload.processed.forEach(({ route, payload }) => {
     app.get(`/api${route}`, async (req, res) => {
       try {
+        updateExitTimer();
         res.json(payload);
       } catch (e) {
         console.log('e :', e);
