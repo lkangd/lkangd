@@ -3,7 +3,7 @@ const path = require('path');
 
 const getCachePath = filename => path.resolve(__dirname, `./.cache/${filename ? '/' + filename : ''}`);
 
-export default class CacheManager {
+class CacheManager {
   constructor() {
     const cachePath = getCachePath();
     !fs.existsSync(cachePath) && fs.mkdirSync(cachePath);
@@ -46,3 +46,5 @@ export default class CacheManager {
     } catch (e) {}
   }
 }
+
+module.exports = CacheManager;

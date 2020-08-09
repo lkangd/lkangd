@@ -1,13 +1,13 @@
-import { min2read, wordcount } from '../utils/wordcount';
-import CacheManager from './cache-manager';
-import md from '../utils/markdown-it';
+const { min2read, wordcount } = require('../utils/wordcount');
+const CacheManager = require('./cache-manager');
+const md = require('../utils/markdown-it');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const frontMatter = require('front-matter');
 
 const cachedManager = new CacheManager();
-const isGenerateMode = process.argv.pop() === 'generate';
+const isGenerateMode = process.env.GENERATE_MODE === 'deploy' || process.env.GENERATE_MODE === 'normal';
 const afterHooks = {
   run() {
     for (let i = 0; i < this.fns.length; i++) {

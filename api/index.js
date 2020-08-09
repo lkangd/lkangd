@@ -1,6 +1,8 @@
 const express = require('express');
 const postPayload = require('../post-payload');
 
+const port = process.env.API_PORT;
+
 // Create express instance
 const app = express();
 
@@ -13,15 +15,30 @@ app.all('*', (req, res, next) => {
   next();
 });
 
-postPayload.processed.forEach(({ route, payload }) => {
-  app.get(route, async (req, res) => {
-    try {
-      res.json(payload);
-    } catch (e) {
-      console.log('e :', e);
-    }
+if (port) {
+  postPayload.processed.forEach(({ route, payload }) => {
+    app.get(`/api${route}`, async (req, res) => {
+      try {
+        res.json(payload);
+      } catch (e) {
+        console.log('e :', e);
+      }
+    });
   });
-});
+  app.listen(port, () => {
+    console.log(`API listening at http://localhost:${port}`);
+  });
+} else {
+  postPayload.processed.forEach(({ route, payload }) => {
+    app.get(route, async (req, res) => {
+      try {
+        res.json(payload);
+      } catch (e) {
+        console.log('e :', e);
+      }
+    });
+  });
+}
 
 // Export the server middleware
 module.exports = {

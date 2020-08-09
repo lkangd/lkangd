@@ -3,6 +3,7 @@ const postPayload = require('./post-payload');
 import md from './utils/markdown-it';
 
 export default {
+  target: 'static',
   mode: 'universal',
   /*
    ** Headers of the page
@@ -57,7 +58,7 @@ export default {
   generate: {
     // subFolders: false,
     routes(callback) {
-      callback(null, postPayload.processed);
+      callback(null, []);
       setTimeout(() => {
         postPayload.afterHooks.run();
       }, 0);
@@ -112,12 +113,6 @@ export default {
     '@nuxtjs/markdownit',
     '@nuxtjs/style-resources',
     [
-      'nuxt-payload-extractor',
-      {
-        versioning: true,
-      },
-    ],
-    [
       '@nuxtjs/google-analytics',
       {
         id: 'UA-106568709-1',
@@ -134,9 +129,9 @@ export default {
         for (const key in posts) {
           if (posts.hasOwnProperty(key)) {
             const category = posts[key];
-            result.push(`/${key}`);
+            result.push(`/${key}/`);
             category.forEach(post => {
-              result.push(post.link);
+              result.push(`${post.link}/`);
             });
           }
         }

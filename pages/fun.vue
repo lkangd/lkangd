@@ -21,16 +21,8 @@ export default {
       title: `Fun - ${appConfig.meta.title}`,
     };
   },
-  async asyncData({ $axios, $payloadURL, route, payload }) {
-    try {
-      if (process.static && process.client) {
-        return await $axios.$get($payloadURL(route));
-      } else {
-        return await $axios.$get(`/api${route.path}`);
-      }
-    } catch (e) {
-      return { postList: (payload && payload.postList) || [] };
-    }
+  async asyncData({ $axios, route }) {
+    return await $axios.$get(`http://localhost:8080/api${route.path}`);
   },
 };
 </script>

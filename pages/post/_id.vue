@@ -55,17 +55,8 @@ export default {
       // script: [{ src: 'https://lkangd.ck.page/51a87aa3a3/index.js', body: true, 'data-uid': '51a87aa3a3', async: true }],
     };
   },
-  async asyncData({ $axios, $payloadURL, route, payload, redirect }) {
-    try {
-      if (process.static && process.client) {
-        return await $axios.$get($payloadURL(route));
-      } else {
-        return await $axios.$get(`/api${route.path}`);
-      }
-    } catch (e) {
-      redirect('/404');
-      return { post: (payload && payload.post) || {} };
-    }
+  async asyncData({ $axios, route }) {
+    return await $axios.$get(`http://localhost:8080/api${route.path}`);
   },
   mounted() {
     Prism.highlightAll();

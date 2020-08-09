@@ -15,16 +15,8 @@ import CsArticleItem from '@/components/CsArticleItem';
 export default {
   name: 'index',
   components: { CsArticleItem },
-  async asyncData({ $axios, $payloadURL, route, payload }) {
-    try {
-      if (process.static && process.client) {
-        return await $axios.$get($payloadURL(route));
-      } else {
-        return await $axios.$get(`/api/`);
-      }
-    } catch (e) {
-      return { postList: (payload && payload.postList) || [], featuredList: (payload && payload.featuredList) || [] };
-    }
+  async asyncData({ $axios, route }) {
+    return await $axios.$get(`http://localhost:8080/api/`);
   },
   methods: {
     toggleTheme() {

@@ -117,4 +117,4 @@ md.renderer.rules.fence = function(tokens, idx, options, env, slf) {
 
 md = Object.assign({}, md, Object.getPrototypeOf(md));
 
-export default md;
+module.exports = md;

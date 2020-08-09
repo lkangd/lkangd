@@ -9,7 +9,9 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "cross-env GENERATE_MODE=normal nuxt generate",
+    "pregenerate:ci": "cross-env GENERATE_MODE=deploy API_PORT=8080 node ./api &",
     "generate:ci": "cross-env GENERATE_MODE=deploy nuxt generate",
+    "postgenerate:ci": "xl_close_port -p 8080",
     "deploy": "cross-env GENERATE_MODE=deploy nuxt generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
@@ -18,19 +20,18 @@
     "dayjs": "^1.8.28",
     "express": "^4.17.1",
     "front-matter": "^4.0.2",
-    "highlight.js": "^10.1.1",
-    "lodash": "^4.17.15",
+    "highlight.js": "^10.1.2",
+    "lodash": "^4.17.19",
     "markdown-it": "^11.0.0",
     "markdown-it-anchor": "^5.3.0",
     "markdown-it-table-of-contents": "^0.4.4",
-    "marked": "^1.1.0",
-    "nuxt": "^2.13.2",
-    "nuxt-payload-extractor": "^1.1.0",
-    "prismjs": "^1.20.0"
+    "marked": "^1.1.1",
+    "nuxt": "^2.14.1",
+    "prismjs": "^1.21.0"
   },
   "devDependencies": {
     "@nuxtjs/feed": "^2.0.0",
-    "@nuxtjs/google-analytics": "^2.3.0",
+    "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/svg-sprite": "^0.4.11",
@@ -40,10 +41,10 @@
     "markdown-it-attrs": "^3.0.3",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
-    "npm": "^6.14.5",
+    "npm": "^6.14.7",
     "pinyin": "^2.9.1",
     "push-dir": "^0.4.1",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^9.0.3",
     "striptags": "^3.1.1"
   }
 }
