@@ -84,8 +84,8 @@ const processing = () => {
   for (const key in posts) {
     if (posts.hasOwnProperty(key)) {
       const category = posts[key];
-      result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes) } });
-      result[`/${key}`] = { postList: category.map(({ attributes }) => attributes) };
+      result.push({ route: `/${key}`, payload: { postList: category.map(({ attributes }) => attributes).sort(sortArticleByDate) } });
+      result[`/${key}`] = { postList: category.map(({ attributes }) => attributes).sort(sortArticleByDate) };
       category.forEach((post, index) => {
         try {
           if (post.attributes.featured) {
@@ -108,8 +108,8 @@ const processing = () => {
     }
   }
   const rootPayload = {
-    postList: allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)),
-    featuredList: featuredPosts.sort((a, b) => new Date(b.date) - new Date(a.date)),
+    postList: allPosts.sort(sortArticleByDate),
+    featuredList: featuredPosts.sort(sortArticleByDate),
   };
   result.push({
     route: '/',
@@ -169,4 +169,8 @@ function getCacheFilename(dir, source, suffix = 'json') {
   const filename = genHex(dir, source);
 
   return filename ? `${filename}.${suffix}` : '';
+}
+
+function sortArticleByDate(a, b) {
+  return new Date(b.date) - new Date(a.date);
 }
