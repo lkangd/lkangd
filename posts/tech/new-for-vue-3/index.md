@@ -7,7 +7,9 @@ featured: true
 
 [[TOC]]
 
-昨天(2020-07-18)，Vue 宣布 3.X 版本正式进入 [RC](https://github.com/vuejs/rfcs/issues/189){target=\_blank}阶段，进入 RC 阶段以为着 Vue 3.x 的核心实现已经趋于稳定，原则上在最终发布前不会再引入新的主要特性和破坏性更改，所以现在正是开始学习 Vue 3.x 的最好时机，在通读了 Vue 3.x 最新的[官方文档](https://v3.vuejs.org/){target=\_blank}后，我总结了一下 Vue 3.x 对于 Vue 2.x 的一些主要变化，分别从新功能、破坏性更改和废弃特性三个方面进行汇总，方便在开发基于 Vue 3.x 新版本应用的时候进行快速查阅。可点击右侧 TOC 导航栏进行快速查看（PC 端）。
+昨天(2020-07-18)，Vue 宣布 3.X 版本正式进入 [RC](https://github.com/vuejs/rfcs/issues/189){target=\_blank}阶段，进入 RC 阶段意味着 Vue 3.x 的核心实现已经趋于稳定，原则上在最终发布前不会再引入新的主要特性和破坏性更改，所以现在正是开始学习 Vue 3.x 的最好时机。
+
+在通读了 Vue 3.x 最新的[官方文档](https://v3.vuejs.org/){target=\_blank}后，我总结了一下 Vue 3.x 对于 Vue 2.x 的一些主要变化，分别从新功能、破坏性更改和废弃特性三个方面进行汇总，方便在开发基于 Vue 3.x 新版本应用的时候进行快速查阅。可点击右侧 TOC 导航栏进行快速查看（PC 端）。
 
 ## NEW | 新增功能特性
 
