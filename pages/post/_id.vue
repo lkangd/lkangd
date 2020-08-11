@@ -163,8 +163,9 @@ export default {
       margin-bottom: 24px;
     }
     code:not([class*='language-']) {
+      margin: 0 4px;
       padding: 0 4px;
-      font-family: inherit;
+      font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
       font-weight: bold;
       color: var(--inline-code-fg);
       background-color: var(--inline-code-bg);
@@ -208,6 +209,11 @@ export default {
         text-align: -webkit-match-parent;
         line-height: 28px;
         list-style: disc;
+        ul {
+          li {
+            list-style: circle;
+          }
+        }
       }
     }
     ol {
@@ -224,8 +230,9 @@ export default {
       height: auto;
     }
     table {
-      display: block;
-      margin: 24px 0;
+      display: inline-block;
+      margin: 0;
+      margin-bottom: 24px;
       max-width: 100%;
       border: 1px solid #dee2e6;
       overflow: scroll;
