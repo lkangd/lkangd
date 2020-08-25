@@ -202,6 +202,9 @@ export default {
         }
       }
     }
+    li + li {
+      margin-top: 10px;
+    }
     ul {
       margin: 24px 0;
       padding-left: 30px;
