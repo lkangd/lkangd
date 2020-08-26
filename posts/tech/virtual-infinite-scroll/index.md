@@ -536,7 +536,7 @@ export function fetchData(count = 30) {
 
 最后，在`mounted`钩子内使用 [resize-observer-polyfill](https://github.com/que-etc/resize-observer-polyfill){target=\_blank} 监听元素高度变化：
 
-```js{11}
+```js{10}
 import ResizeObserver from 'resize-observer-polyfill';
 
 export default {
@@ -706,7 +706,7 @@ export default {
 
 ### 修正滚动条
 
-当用户快速拖动滚动条，因为「滚动差值」很大，所以会略过中间元素的渲染，此时这些略过的元素在`cachedHeight`中用`ESTIMATED_HEIGHT`进行存储，因此会出现两种情况：
+到这一步，这个「动态高度虚拟列表」已经大致可用了，但是还有一个问题，就是当用户快速拖动滚动条，因为「滚动差值」很大，所以会略过中间元素的渲染，此时这些略过的元素在`cachedHeight`中用`ESTIMATED_HEIGHT`进行存储，因此会出现两种情况：
 
 1. **估算的「可滚动高度」小于实际的「可滚动高度」**。比如略过了中间 20 个元素，这些略过元素的估算高度总值为 ESTIMATED_HEIGHT(180) \* 20 = 3600，而假设实际元素真正渲染时的平均高度为 300，即略过元素的实际高度总值为 300 \* 20 = 6000。可以得知差值为 3600 - 6000 = -2400，滚动到顶部时，无法滚动到第一个元素。
 2. **估算的「可滚动高度」大于实际的「可滚动高度」**。比如略过了中间 20 个元素，这些略过元素的估算高度总值为 ESTIMATED_HEIGHT(180) \* 20 = 3600，而假设实际元素真正渲染时的平均高度为 100，即略过元素的实际高度总值为 100 \* 20 = 2000。可以得知差值为 3600 - 2000 = 1600，滚动到顶部时会有空白部分。
