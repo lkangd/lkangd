@@ -36,9 +36,9 @@ export default {
   },
   mounted() {
     this.getLayout();
-  },
-  beforeDestroy() {
-    window.onscroll = null;
+    if (window.location.hash && document.querySelector(window.location.hash)) {
+      document.querySelector(window.location.hash).scrollIntoView();
+    }
   },
   methods: {
     handleClick(parentIndex, index) {
@@ -108,6 +108,7 @@ export default {
           }
         }
       };
+      this.$on('hook:beforeDestroy', () => (window.onscroll = null));
     },
   },
 };
