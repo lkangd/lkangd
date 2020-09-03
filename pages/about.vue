@@ -45,7 +45,38 @@
         </template>
       </li>
     </ul>
-    <p class="cs-text">
+    <h2 class="cs-title">和我聊聊</h2>
+    <p class="cs-text">我目前正在寻找新的工作机会，如果你对我有兴趣，可以和我聊聊。🖖</p>
+    <ul class="cs-list">
+      <li
+        :key="index"
+        class="cs-list__item cs-text"
+        v-for="(contact, index) in contacts"
+      >
+        <a
+          v-if="contact.link"
+          :href="contact.link"
+          target="_blank"
+        >{{ contact.text }}</a>
+        <span v-else>{{ contact.text }}</span>
+        <template v-if="contact.remarks">
+          (
+          <span
+            class="cs-about__remark"
+            v-for="(remark, index) in contact.remarks"
+            :key="index"
+          >
+            <span v-show="index !== 0">&nbsp;|</span>
+            <a
+              :href="remark.value"
+              target="_blank"
+            >{{ remark.key }}</a>
+          </span>
+          )
+        </template>
+      </li>
+    </ul>
+    <p class="cs-text" style="margin-top: 50px">
       <small>[1] 康德在《实用人类学》中对“人是什么”作答: “人具有一种自己创造自己的特性。”，在复杂多变的环境和人际关系中总结并奉行良好的原则有助于创造独特且向完美不断趋近的自我。</small>
     </p>
   </section>
@@ -75,11 +106,9 @@ export default {
       hobbies: [
         {
           text: '🎸 Guitar',
-          link: '',
         },
         {
           text: '📚 Reading',
-          link: '',
           remarks: [
             { key: '在读', value: 'https://book.douban.com/people/204029818/do' },
             { key: '读过', value: 'https://book.douban.com/people/204029818/collect' },
@@ -87,11 +116,22 @@ export default {
         },
         {
           text: '☕️ Coffee',
-          link: '',
         },
         {
           text: '🏃 Running',
-          link: '',
+        },
+      ],
+      contacts: [
+        {
+          text: '💬 WeChat: lkangd',
+        },
+        {
+          text: '✉️ E-mail: lkangd@gmail.com',
+          remarks: [{ key: '发邮件', value: 'mailto:lkangd@gmail.com' }],
+        },
+        {
+          text: '🤖 Github: github.com/lkangd',
+          remarks: [{ key: '去看看', value: 'https://github.com/lkangd' }],
         },
       ],
     };
