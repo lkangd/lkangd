@@ -1,8 +1,7 @@
 ---
-title: 谈谈写博客的几个初衷
+title: 我为何写博客
 date: '2019-06-06'
 spoiler: 满足一项名为“表达”的原始欲望
-featured: true
 ---
 
 [[TOC]]

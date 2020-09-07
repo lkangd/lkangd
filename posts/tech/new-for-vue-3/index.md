@@ -2,7 +2,6 @@
 title: 一文看全 Vue 3.X 带来的新变化
 date: '2020-07-19'
 spoiler: 只关注区别于 Vue 2.x 实现，助力快速过渡到 Vue 3.x
-featured: true
 ---
 
 [[TOC]]

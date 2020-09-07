@@ -2,6 +2,7 @@
 title: 剖析无限滚动虚拟列表的实现原理
 date: '2020-08-26'
 spoiler: 长列表渲染的终极优化手段
+featured: true
 ---
 
 [[TOC]]
@@ -791,8 +792,6 @@ export default {
 如果有不正确或难以理解的地方，欢迎通过邮件和留言进行指正讨论。
 
 > **重要提示：** 本文所有代码及示例项目只用于探讨虚拟列表的实现原理，请勿直接使用于生产。
-
-戳这里访问[原文地址](https://lkangd.com/post/virtual-infinite-scroll/){target=\_blank}，以获得更好的阅读体验。
 
 #### 参考
 

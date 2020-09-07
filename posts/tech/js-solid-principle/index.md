@@ -1,8 +1,7 @@
 ---
-title: 代码整洁之道：js 中的 S.O.L.I.D 原则
+title: 代码整洁之道：JS 中的 S.O.L.I.D 原则
 date: '2019-11-11'
 spoiler: 【译】Clean Code concepts adapted for JavaScript：S.O.L.I.D
-featured: true
 ---
 
 [[TOC]]

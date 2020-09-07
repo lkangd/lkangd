@@ -1,5 +1,5 @@
 ---
-title: 养成良好的「Git Commit」习惯
+title: 何为「Git Commit」最佳姿势？
 date: '2020-05-15'
 spoiler: 让你的每一个「Git Commit」更有价值，而不是形式主义下的流水账
 featured: true
