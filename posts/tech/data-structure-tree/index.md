@@ -2,7 +2,7 @@
 title: 树数据结构的原理及JS实现
 date: '2019-06-29'
 spoiler: JavaScript语言环境下的树学习
-featured: true
+featured: false
 ---
 
 [[TOC]]
