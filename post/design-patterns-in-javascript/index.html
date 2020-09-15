@@ -1,0 +1,1157 @@
+<!doctype html>
+<html data-n-head-ssr>
+  <head>
+    <title>Design Patterns In Javascript - Curtis' Spot</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="google-site-verification" content="kfF1FRzuuywPcdFndPOA2Lc_CY77xywarjgy_EHl-h8"><meta data-n-head="ssr" name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"><meta data-n-head="ssr" data-hid="description" name="description" content="Front-end Engineer. Blogging about life, tech & everything I love."><base href="/"><link data-n-head="ssr" rel="icon" type="image/x-icon" href="/favicon.png"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:900&display=swap"><link rel="preload" href="/_nuxt/runtime.2b486dc.js" as="script"><link rel="preload" href="/_nuxt/node_modules/commons.82dad87.js" as="script"><link rel="preload" href="/_nuxt/app.ab1a4d4.js" as="script"><link rel="preload" href="/_nuxt/pages/post/_id.293b655.js" as="script"><style data-vue-ssr-id="27366e46:0 563f3fe6:0 bd3e5fbe:0 3d8525fc:0 b59d545e:0 44ce5391:0 1728c230:0 66187182:0 7e4cdd9a:0 2aeaee0a:0 6c57b7be:0">a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,input,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{box-sizing:border-box;margin:0;padding:0;border:0;font-size:100%;font-weight:400;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,menu,nav,section{display:block}body{line-height:1}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:none}table{border-collapse:collapse;border-spacing:0}a,button,input{background-color:transparent;text-decoration:none;border:none;outline:0;-webkit-tap-highlight-color:transparent}a:active,a:focus,button:active,button:focus,input:active,input:focus{outline:0!important}li{list-style:none}body,html{font-family:"PingFang SC",STHeitiSC-Light,Helvetica-Light,arial,sans-serif,"Droid Sans Fallback"}body{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}html{font-size:14px!important}body,html{height:100%;line-height:1;font-family:Merriweather,Georgia,serif;-webkit-tap-highlight-color:transparent;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}body{margin:0 auto;scroll-behavior:smooth}strong{font-weight:700}a,button{color:inherit;outline:0;border:none;background-color:transparent;-webkit-tap-highlight-color:transparent;transition:text-shadow .3s;white-space:pre-wrap;word-break:break-all;cursor:pointer}a:active,a:focus,button:active,button:focus{outline:0!important}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}code[class*=language-],pre[class*=language-]{color:#fff;background:0 0;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-feature-settings:normal;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;margin-bottom:0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{overflow:auto;padding:1.3125rem}pre[class*=language-]::-moz-selection{background:#27292a}pre[class*=language-]::selection{background:#27292a}pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:hsla(0,0%,100%,.15)}pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:hsla(0,0%,100%,.15)}:not(pre)>code[class*=language-]{border-radius:.3em;background:var(--inline-code-bg);color:var(--inline-code-fg);padding:.15em .2em .05em;white-space:normal}.token{position:relative;z-index:1}.token.attr-name{color:#addb67;font-style:italic}.token.comment{color:#809393}.token.string,.token.url{color:#addb67}.token.variable{color:#d6deeb}.token.number{color:#f78c6c}.token.builtin,.token.char,.token.constant,.token.function{color:#82aaff}.token.punctuation{color:#c792ea}.token.doctype,.token.selector{color:#c792ea;font-style:italic}.token.class-name{color:#ffcb8b}.token.keyword,.token.operator,.token.tag{color:var(--main)}.token.boolean{color:#ff5874}.token.property{color:#80cbc4}.token.namespace{color:#b2ccd6}pre[data-line]{padding:1em 0 1em 3em;position:relative}.gatsby-highlight-code-line{background-color:#022a4b;display:block;padding-right:1em;padding-left:1.25em;border-left:.25em solid var(--main)}.gatsby-highlight,.gatsby-highlight-code-line{margin-right:-1.3125rem;margin-left:-1.3125rem}.gatsby-highlight{margin-bottom:1.75rem;border-radius:10px;-webkit-overflow-scrolling:touch;overflow:auto}@media (max-width:672px){.gatsby-highlight{border-radius:0}}.gatsby-highlight pre[class*=language-]{float:left;min-width:100%}.line-highlight{z-index:-1;border-left:4px solid var(--main);background:rgba(2,42,75,.8)!important}.line-highlight:after,.line-highlight:before{display:none}body[data-v-377fcad6]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-377fcad6]{font-weight:700}body.dark[data-v-377fcad6]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-377fcad6]{font-weight:400}body.dark img[data-v-377fcad6]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-377fcad6]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-377fcad6]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-377fcad6]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-377fcad6]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-377fcad6],.cs-title sup[data-v-377fcad6]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-377fcad6]{position:relative;top:-12px}.cs-text[data-v-377fcad6]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-377fcad6]{text-decoration:underline}.cs-text small[data-v-377fcad6]{font-size:.6em}.cs-list[data-v-377fcad6]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-377fcad6]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-377fcad6]{float:left}.fr[data-v-377fcad6]{float:right}a[data-v-377fcad6]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-377fcad6],h2[data-v-377fcad6],h3[data-v-377fcad6],h4[data-v-377fcad6],h5[data-v-377fcad6],h6[data-v-377fcad6]{font-family:Montserrat,serif}h1 a[data-v-377fcad6],h2 a[data-v-377fcad6],h3 a[data-v-377fcad6],h4 a[data-v-377fcad6],h5 a[data-v-377fcad6],h6 a[data-v-377fcad6]{color:var(--text-title)}h1 .cs-header-anchor[data-v-377fcad6],h2 .cs-header-anchor[data-v-377fcad6],h3 .cs-header-anchor[data-v-377fcad6],h4 .cs-header-anchor[data-v-377fcad6],h5 .cs-header-anchor[data-v-377fcad6],h6 .cs-header-anchor[data-v-377fcad6]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-377fcad6],h2:hover .cs-header-anchor[data-v-377fcad6],h3:hover .cs-header-anchor[data-v-377fcad6],h4:hover .cs-header-anchor[data-v-377fcad6],h5:hover .cs-header-anchor[data-v-377fcad6],h6:hover .cs-header-anchor[data-v-377fcad6]{opacity:1}.cs-toc-dom[data-v-377fcad6]{display:none}.cs-loading[data-v-377fcad6]{position:fixed;top:0;left:0;z-index:100;width:100%;height:100%;background-color:var(--bg);will-change:opacity;transition:opacity .5s .4s}.cs-loading.loaded[data-v-377fcad6]{opacity:0}.cs-loading .main[data-v-377fcad6]{position:absolute;top:calc(50% - 63px);left:calc(50% - 63px);z-index:1;width:126px;height:126px}.cs-loading .main.out-of-window .line1-2[data-v-377fcad6],.cs-loading .main.out-of-window .line1[data-v-377fcad6],.cs-loading .main.out-of-window .line3-2[data-v-377fcad6],.cs-loading .main.out-of-window .line3[data-v-377fcad6],.cs-loading .main.out-of-window .line5[data-v-377fcad6],.cs-loading .main.out-of-window .line7[data-v-377fcad6],.cs-loading .main.out-of-window .line9[data-v-377fcad6]{transform:rotate(45deg) translateY(100vh)}.cs-loading .main.out-of-window .line10[data-v-377fcad6],.cs-loading .main.out-of-window .line2-2[data-v-377fcad6],.cs-loading .main.out-of-window .line2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-3[data-v-377fcad6],.cs-loading .main.out-of-window .line4[data-v-377fcad6],.cs-loading .main.out-of-window .line6[data-v-377fcad6],.cs-loading .main.out-of-window .line8-1[data-v-377fcad6],.cs-loading .main.out-of-window .line8[data-v-377fcad6]{transform:rotate(45deg) translateY(-100vh)}.cs-loading .main.out-of-window .text[data-v-377fcad6]{opacity:0;transition:opacity .5s}.cs-loading .main .line[data-v-377fcad6]{position:absolute;z-index:3;width:7px;background:var(--text-normal);will-change:transform;transform:rotate(45deg)}.cs-loading .main .line.line1[data-v-377fcad6]{top:51px;left:5px;height:17px;transition:transform .5s}.cs-loading .main .line.line1-2[data-v-377fcad6]{top:-3px;left:50px;height:36px;transition:transform .5s}.cs-loading .main .line.line2[data-v-377fcad6]{top:55px;left:9px;height:27px;transition:transform .5s}.cs-loading .main .line.line2-2[data-v-377fcad6]{top:-5px;left:56px;height:53px;transition:transform .5s}.cs-loading .main .line.line3[data-v-377fcad6]{top:58px;left:15px;height:35px;transition:transform .5s .1s}.cs-loading .main .line.line3-2[data-v-377fcad6]{top:-2px;left:63px;height:59px;transition:transform .5s .1s}.cs-loading .main .line.line4[data-v-377fcad6]{top:55px;left:24px;height:48px;transition:transform .5s .1s}.cs-loading .main .line.line4-2[data-v-377fcad6]{top:27px;left:60px;height:33px;transition:transform .5s .1s}.cs-loading .main .line.line4-3[data-v-377fcad6]{top:9px;left:84px;height:21px;transition:transform .5s .1s}.cs-loading .main .line.line5[data-v-377fcad6]{top:4px;left:54px;height:117px;transition:transform .5s .2s}.cs-loading .main .line.line6[data-v-377fcad6]{top:15px;left:59px;height:111px;transition:transform .5s .2s}.cs-loading .main .line.line7[data-v-377fcad6]{top:16px;left:69px;height:115px;transition:transform .5s .3s}.cs-loading .main .line.line8[data-v-377fcad6]{top:56px;left:63px;height:72px;transition:transform .5s .3s}.cs-loading .main .line.line8-1[data-v-377fcad6]{top:30px;left:116px;height:18px;transition:transform .5s .3s}.cs-loading .main .line.line9[data-v-377fcad6]{top:67px;left:70px;height:61px;transition:transform .5s .4s}.cs-loading .main .line.line10[data-v-377fcad6]{top:82px;left:78px;height:40px;transition:transform .5s .4s}.cs-loading .main .text[data-v-377fcad6]{position:absolute;bottom:-18%;left:0;width:100%;font-size:16px;font-weight:700;color:var(--text-normal);text-align:center;will-change:opacity;transition:opacity .5s .5s}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}.cs-post{position:relative;padding:42px 21px!important;background-color:transparent}.cs-post__toggle{position:absolute;top:52px;right:21px}.cs-post__blog-name{margin-bottom:42px;height:42px;font-family:Montserrat,sans-serif;font-size:23px;font-weight:900;line-height:2.625rem}.cs-post__blog-name>a{color:var(--main)!important;box-shadow:none}.cs-post__title{margin-top:56px;line-height:44px;font-size:40px;font-family:Montserrat,serif;font-weight:900;color:var(--text-title)}.cs-post__info{margin-bottom:28px;line-height:2;font-size:14px;font-family:Merriweather,Georgia,serif;word-spacing:2px}.cs-post hr{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__link-wrapper{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.cs-post__link-wrapper>a{margin:20px 0}.cs-post__article a{padding:0 4px;text-decoration:underline}.cs-post__article h1{margin:50px 0 24px;font-size:28px;font-weight:700}.cs-post__article h2{margin:50px 0 24px;font-size:25px;font-weight:700}.cs-post__article h3{margin:50px 0 24px;font-size:22px;font-weight:700}.cs-post__article h4{margin:30px 0 24px;font-size:19px;font-weight:700}.cs-post__article h5{margin:30px 0 24px;font-size:16px;font-weight:700}.cs-post__article h6{margin:30px 0 24px;font-size:13px;font-weight:700}.cs-post__article li,.cs-post__article p,.cs-post__article td{margin:0;font-size:14px;line-height:28px;color:var(--text-normal)}.cs-post__article p{margin-bottom:24px}.cs-post__article code:not([class*=language-]){margin:0 4px;padding:0 4px;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-weight:700;color:var(--inline-code-fg);background-color:var(--inline-code-bg);border-radius:3px}.cs-post__article strong em{margin:0 6px;font-weight:700}.cs-post__article hr{margin:30px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__article em{margin:0 6px}.cs-post__article pre{margin:24px 0;font-size:12px;border-radius:10px;background-color:#011627;opacity:.99}.cs-post__article blockquote{background:var(--blockquote-bg);border-left:6px solid var(--blockquote-bl);margin:24px 6px;padding:16px 10px;quotes:"“" "”" "‘" "’"}.cs-post__article blockquote p:last-child{margin-bottom:0}.cs-post__article li+li{margin-top:10px}.cs-post__article ul{margin:24px 0;padding-left:30px}.cs-post__article ul li{text-align:-webkit-match-parent;line-height:28px;list-style:disc}.cs-post__article ul li ul li{list-style:circle}.cs-post__article ol{margin:24px 0;padding-left:40px}.cs-post__article ol li{list-style:decimal}.cs-post__article img{display:block;margin:50px auto;max-width:80%;height:auto}.cs-post__article table{display:inline-block;margin:0 0 24px;max-width:100%;border:1px solid #dee2e6;overflow:scroll}.cs-post__article table thead tr th{padding:12px;font-weight:700;color:#495057;background-color:#e9ecef;border-bottom:2px solid #dee2e6}.cs-post__article table thead tr th+th{border-left:1px solid #dee2e6}.cs-post__article table tbody tr td{padding:12px}.cs-post__article table tbody tr td+td{border-left:1px solid #dee2e6}.cs-post__article table tbody tr+tr{border-top:1px solid #dee2e6}body[data-v-447e03ac]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-447e03ac]{font-weight:700}body.dark[data-v-447e03ac]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-447e03ac]{font-weight:400}body.dark img[data-v-447e03ac]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-447e03ac]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-447e03ac]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-447e03ac]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-447e03ac]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-447e03ac],.cs-title sup[data-v-447e03ac]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-447e03ac]{position:relative;top:-12px}.cs-text[data-v-447e03ac]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-447e03ac]{text-decoration:underline}.cs-text small[data-v-447e03ac]{font-size:.6em}.cs-list[data-v-447e03ac]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-447e03ac]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-447e03ac]{float:left}.fr[data-v-447e03ac]{float:right}a[data-v-447e03ac]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-447e03ac],h2[data-v-447e03ac],h3[data-v-447e03ac],h4[data-v-447e03ac],h5[data-v-447e03ac],h6[data-v-447e03ac]{font-family:Montserrat,serif}h1 a[data-v-447e03ac],h2 a[data-v-447e03ac],h3 a[data-v-447e03ac],h4 a[data-v-447e03ac],h5 a[data-v-447e03ac],h6 a[data-v-447e03ac]{color:var(--text-title)}h1 .cs-header-anchor[data-v-447e03ac],h2 .cs-header-anchor[data-v-447e03ac],h3 .cs-header-anchor[data-v-447e03ac],h4 .cs-header-anchor[data-v-447e03ac],h5 .cs-header-anchor[data-v-447e03ac],h6 .cs-header-anchor[data-v-447e03ac]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-447e03ac],h2:hover .cs-header-anchor[data-v-447e03ac],h3:hover .cs-header-anchor[data-v-447e03ac],h4:hover .cs-header-anchor[data-v-447e03ac],h5:hover .cs-header-anchor[data-v-447e03ac],h6:hover .cs-header-anchor[data-v-447e03ac]{opacity:1}.cs-toc-dom[data-v-447e03ac]{display:none}.cs-theme-toggle[data-v-447e03ac]{position:absolute;display:flex;align-items:center;justify-content:space-between;padding:0 4px;width:50px;height:24px;background-color:#0f1114;border-radius:500px;cursor:pointer}.cs-theme-toggle__icon[data-v-447e03ac]{width:16px;height:16px}.cs-theme-toggle__thumb[data-v-447e03ac]{position:absolute;top:1px;left:1px;width:22px;height:22px;background-color:#fff;border-radius:100%;transition:all .2s ease}.cs-theme-toggle.is-dark .cs-theme-toggle__thumb[data-v-447e03ac]{transform:translateX(26px);box-shadow:0 0 4px 2px var(--main)}body[data-v-011cff22]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-011cff22]{font-weight:700}body.dark[data-v-011cff22]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-011cff22]{font-weight:400}body.dark img[data-v-011cff22]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-011cff22]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-011cff22]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-011cff22]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-011cff22]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-011cff22],.cs-title sup[data-v-011cff22]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-011cff22]{position:relative;top:-12px}.cs-text[data-v-011cff22]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-011cff22]{text-decoration:underline}.cs-text small[data-v-011cff22]{font-size:.6em}.cs-list[data-v-011cff22]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-011cff22]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-011cff22]{float:left}.fr[data-v-011cff22]{float:right}a[data-v-011cff22]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-011cff22],h2[data-v-011cff22],h3[data-v-011cff22],h4[data-v-011cff22],h5[data-v-011cff22],h6[data-v-011cff22]{font-family:Montserrat,serif}h1 a[data-v-011cff22],h2 a[data-v-011cff22],h3 a[data-v-011cff22],h4 a[data-v-011cff22],h5 a[data-v-011cff22],h6 a[data-v-011cff22]{color:var(--text-title)}h1 .cs-header-anchor[data-v-011cff22],h2 .cs-header-anchor[data-v-011cff22],h3 .cs-header-anchor[data-v-011cff22],h4 .cs-header-anchor[data-v-011cff22],h5 .cs-header-anchor[data-v-011cff22],h6 .cs-header-anchor[data-v-011cff22]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-011cff22],h2:hover .cs-header-anchor[data-v-011cff22],h3:hover .cs-header-anchor[data-v-011cff22],h4:hover .cs-header-anchor[data-v-011cff22],h5:hover .cs-header-anchor[data-v-011cff22],h6:hover .cs-header-anchor[data-v-011cff22]{opacity:1}.cs-toc-dom[data-v-011cff22]{display:none}.cs-subscribe[data-v-011cff22]{display:flex;align-items:top;margin:40px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;background-color:var(--bg);box-shadow:var(--form-shadow);border-radius:6px;overflow:hidden}@media (max-width:500px){.cs-subscribe[data-v-011cff22]{flex-direction:column}}.cs-subscribe__wrapper[data-v-011cff22]{flex:1;padding:40px;background-color:var(--bg)}.cs-subscribe__wrapper[data-v-011cff22]:first-child{background-color:var(--bg-secondary)}.cs-subscribe__title[data-v-011cff22]{margin-bottom:20px;line-height:1.2;font-size:20px;font-weight:700}.cs-subscribe__describe[data-v-011cff22]{line-height:1.8;font-size:14px;font-weight:400}.cs-subscribe__icon[data-v-011cff22]{margin-top:20px;width:46px;height:46px}.cs-subscribe__input[data-v-011cff22]{display:block;padding:12px;width:100%;background-color:#fff;border:1px solid #e3e3e3;border-radius:4px}.cs-subscribe__input+.cs-subscribe__input[data-v-011cff22]{margin-top:10px}.cs-subscribe__input[data-v-011cff22]::-moz-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]:-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::placeholder{color:#bdbdbd}.cs-subscribe__submit-btn[data-v-011cff22]{margin:14px 0;padding:12px 24px;color:#fff;border-radius:500px;background-color:var(--main)}.cs-subscribe__submit-btn>span[data-v-011cff22]{font-weight:700}.cs-subscribe__tips[data-v-011cff22]{line-height:2;font-size:12px}body[data-v-08ff1539]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-08ff1539]{font-weight:700}body.dark[data-v-08ff1539]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-08ff1539]{font-weight:400}body.dark img[data-v-08ff1539]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-08ff1539]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-08ff1539]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-08ff1539]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-08ff1539]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-08ff1539],.cs-title sup[data-v-08ff1539]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-08ff1539]{position:relative;top:-12px}.cs-text[data-v-08ff1539]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-08ff1539]{text-decoration:underline}.cs-text small[data-v-08ff1539]{font-size:.6em}.cs-list[data-v-08ff1539]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-08ff1539]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-08ff1539]{float:left}.fr[data-v-08ff1539]{float:right}a[data-v-08ff1539]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-08ff1539],h2[data-v-08ff1539],h3[data-v-08ff1539],h4[data-v-08ff1539],h5[data-v-08ff1539],h6[data-v-08ff1539]{font-family:Montserrat,serif}h1 a[data-v-08ff1539],h2 a[data-v-08ff1539],h3 a[data-v-08ff1539],h4 a[data-v-08ff1539],h5 a[data-v-08ff1539],h6 a[data-v-08ff1539]{color:var(--text-title)}h1 .cs-header-anchor[data-v-08ff1539],h2 .cs-header-anchor[data-v-08ff1539],h3 .cs-header-anchor[data-v-08ff1539],h4 .cs-header-anchor[data-v-08ff1539],h5 .cs-header-anchor[data-v-08ff1539],h6 .cs-header-anchor[data-v-08ff1539]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-08ff1539],h2:hover .cs-header-anchor[data-v-08ff1539],h3:hover .cs-header-anchor[data-v-08ff1539],h4:hover .cs-header-anchor[data-v-08ff1539],h5:hover .cs-header-anchor[data-v-08ff1539],h6:hover .cs-header-anchor[data-v-08ff1539]{opacity:1}.cs-toc-dom[data-v-08ff1539]{display:none}.cs-statement[data-v-08ff1539]{text-align:center;font-size:14px}.cs-statement hr[data-v-08ff1539]{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-statement__text[data-v-08ff1539]{margin:8px 0;line-height:1.7;color:var(--text-normal)}.cs-statement__reward-code[data-v-08ff1539]{margin-top:50px;max-width:30%;height:auto}@media (max-width:375px){.cs-statement .cs-statement__reward-code[data-v-08ff1539]{max-width:76%!important}}body[data-v-2002d74b]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-2002d74b]{font-weight:700}body.dark[data-v-2002d74b]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-2002d74b]{font-weight:400}body.dark img[data-v-2002d74b]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-2002d74b]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-2002d74b]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-2002d74b]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-2002d74b]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-2002d74b],.cs-title sup[data-v-2002d74b]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-2002d74b]{position:relative;top:-12px}.cs-text[data-v-2002d74b]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-2002d74b]{text-decoration:underline}.cs-text small[data-v-2002d74b]{font-size:.6em}.cs-list[data-v-2002d74b]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-2002d74b]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-2002d74b]{float:left}.fr[data-v-2002d74b]{float:right}a[data-v-2002d74b]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-2002d74b],h2[data-v-2002d74b],h3[data-v-2002d74b],h4[data-v-2002d74b],h5[data-v-2002d74b],h6[data-v-2002d74b]{font-family:Montserrat,serif}h1 a[data-v-2002d74b],h2 a[data-v-2002d74b],h3 a[data-v-2002d74b],h4 a[data-v-2002d74b],h5 a[data-v-2002d74b],h6 a[data-v-2002d74b]{color:var(--text-title)}h1 .cs-header-anchor[data-v-2002d74b],h2 .cs-header-anchor[data-v-2002d74b],h3 .cs-header-anchor[data-v-2002d74b],h4 .cs-header-anchor[data-v-2002d74b],h5 .cs-header-anchor[data-v-2002d74b],h6 .cs-header-anchor[data-v-2002d74b]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-2002d74b],h2:hover .cs-header-anchor[data-v-2002d74b],h3:hover .cs-header-anchor[data-v-2002d74b],h4:hover .cs-header-anchor[data-v-2002d74b],h5:hover .cs-header-anchor[data-v-2002d74b],h6:hover .cs-header-anchor[data-v-2002d74b]{opacity:1}.cs-toc-dom[data-v-2002d74b]{display:none}.cs-toc[data-v-2002d74b]{display:inline-block;position:fixed;top:50%;left:50%;transform:translate3d(315px,-50%,0);max-height:550px;overflow-y:scroll}.cs-toc:hover .cs-toc__text[data-v-2002d74b]{opacity:1}.cs-toc__item[data-v-2002d74b]{height:16px;overflow:hidden}.cs-toc__item+.cs-toc__item[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor[data-v-2002d74b]{display:block;box-shadow:none}.cs-toc__anchor.is-active[data-v-2002d74b]:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor.is-active .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color);opacity:1}.cs-toc__text[data-v-2002d74b]{padding-left:16px;max-width:200px;overflow:hidden;line-height:1.4;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;font-size:13px;font-weight:700;color:var(--article-nav-text-color);white-space:nowrap;text-overflow:ellipsis;opacity:0;transition:opacity .5s}.cs-toc__anchor[data-v-2002d74b]:before,.cs-toc__text[data-v-2002d74b]{position:relative;top:-2px;display:inline-block;vertical-align:middle}.cs-toc__anchor[data-v-2002d74b]:before{content:"";width:16px;height:4px;border-radius:20px;background:var(--article-nav-dot-color);transition:background .5s}.cs-toc__anchor[data-v-2002d74b]:hover:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor:hover .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color)}.cs-toc__anchor+.cs-toc__anchor[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor--sub[data-v-2002d74b]:before{width:10px}.cs-toc__anchor--sub .cs-toc__text[data-v-2002d74b]{margin-left:6px;font-size:12px;font-weight:400}#__nuxt{position:relative;min-height:100%}body[data-v-11bea6b1]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-11bea6b1]{font-weight:700}body.dark[data-v-11bea6b1]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-11bea6b1]{font-weight:400}body.dark img[data-v-11bea6b1]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-11bea6b1]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-11bea6b1]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-11bea6b1]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-11bea6b1]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-11bea6b1],.cs-title sup[data-v-11bea6b1]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-11bea6b1]{position:relative;top:-12px}.cs-text[data-v-11bea6b1]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-11bea6b1]{text-decoration:underline}.cs-text small[data-v-11bea6b1]{font-size:.6em}.cs-list[data-v-11bea6b1]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-11bea6b1]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-11bea6b1]{float:left}.fr[data-v-11bea6b1]{float:right}a[data-v-11bea6b1]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-11bea6b1],h2[data-v-11bea6b1],h3[data-v-11bea6b1],h4[data-v-11bea6b1],h5[data-v-11bea6b1],h6[data-v-11bea6b1]{font-family:Montserrat,serif}h1 a[data-v-11bea6b1],h2 a[data-v-11bea6b1],h3 a[data-v-11bea6b1],h4 a[data-v-11bea6b1],h5 a[data-v-11bea6b1],h6 a[data-v-11bea6b1]{color:var(--text-title)}h1 .cs-header-anchor[data-v-11bea6b1],h2 .cs-header-anchor[data-v-11bea6b1],h3 .cs-header-anchor[data-v-11bea6b1],h4 .cs-header-anchor[data-v-11bea6b1],h5 .cs-header-anchor[data-v-11bea6b1],h6 .cs-header-anchor[data-v-11bea6b1]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-11bea6b1],h2:hover .cs-header-anchor[data-v-11bea6b1],h3:hover .cs-header-anchor[data-v-11bea6b1],h4:hover .cs-header-anchor[data-v-11bea6b1],h5:hover .cs-header-anchor[data-v-11bea6b1],h6:hover .cs-header-anchor[data-v-11bea6b1]{opacity:1}.cs-toc-dom[data-v-11bea6b1]{display:none}.cs-footer[data-v-11bea6b1]{position:absolute;bottom:0;left:0;right:0;margin:0 auto}.cs-footer__wrapper[data-v-11bea6b1]{margin:50px auto 0;padding:28px 21px;max-width:630px;font-family:Merriweather,Georgia,serif;font-size:14px;cursor:pointer}.cs-footer__wrapper>a[data-v-11bea6b1]{margin-right:5px;color:var(--main);box-shadow:0 1px 0 0 currentColor}@media (max-width:500px){.cs-footer__wrapper[data-v-11bea6b1]{text-align:center}}.cs-footer__bottom[data-v-11bea6b1]{display:flex;align-items:center;margin-top:40px;overflow:hidden}.cs-footer__logo[data-v-11bea6b1]{margin-right:10px;width:20px;height:20px}@media (max-width:500px){.cs-footer__slogan[data-v-11bea6b1] .cs-color-slogan__start-text{display:none}}body[data-v-a8c8150c]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-a8c8150c]{font-weight:700}body.dark[data-v-a8c8150c]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-a8c8150c]{font-weight:400}body.dark img[data-v-a8c8150c]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-a8c8150c]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-a8c8150c]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-a8c8150c]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-a8c8150c]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-a8c8150c],.cs-title sup[data-v-a8c8150c]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-a8c8150c]{position:relative;top:-12px}.cs-text[data-v-a8c8150c]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-a8c8150c]{text-decoration:underline}.cs-text small[data-v-a8c8150c]{font-size:.6em}.cs-list[data-v-a8c8150c]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-a8c8150c]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-a8c8150c]{float:left}.fr[data-v-a8c8150c]{float:right}a[data-v-a8c8150c]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-a8c8150c],h2[data-v-a8c8150c],h3[data-v-a8c8150c],h4[data-v-a8c8150c],h5[data-v-a8c8150c],h6[data-v-a8c8150c]{font-family:Montserrat,serif}h1 a[data-v-a8c8150c],h2 a[data-v-a8c8150c],h3 a[data-v-a8c8150c],h4 a[data-v-a8c8150c],h5 a[data-v-a8c8150c],h6 a[data-v-a8c8150c]{color:var(--text-title)}h1 .cs-header-anchor[data-v-a8c8150c],h2 .cs-header-anchor[data-v-a8c8150c],h3 .cs-header-anchor[data-v-a8c8150c],h4 .cs-header-anchor[data-v-a8c8150c],h5 .cs-header-anchor[data-v-a8c8150c],h6 .cs-header-anchor[data-v-a8c8150c]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-a8c8150c],h2:hover .cs-header-anchor[data-v-a8c8150c],h3:hover .cs-header-anchor[data-v-a8c8150c],h4:hover .cs-header-anchor[data-v-a8c8150c],h5:hover .cs-header-anchor[data-v-a8c8150c],h6:hover .cs-header-anchor[data-v-a8c8150c]{opacity:1}.cs-toc-dom[data-v-a8c8150c]{display:none}.cs-color-slogan[data-v-a8c8150c]{display:inline-block;position:relative;font-family:Merriweather,Georgia,serif;color:var(--text-normal);background-color:transparent}.cs-color-slogan__placeholder[data-v-a8c8150c]{opacity:0}.cs-color-slogan__wrapper[data-v-a8c8150c]{position:absolute;top:0;white-space:nowrap}</style><link rel="preload" href="/_nuxt/static/1600180271/post/design-patterns-in-javascript/payload.js" as="script">
+  </head>
+  <body>
+    <div data-server-rendered="true" id="__nuxt"><!----><div id="__layout"><div><section class="cs-post cs-container"><div class="cs-theme-toggle cs-post__toggle is-dark" data-v-447e03ac><img src="/_nuxt/img/moon.b276b99.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <img src="/_nuxt/img/sun.9e5c5e6.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <button class="cs-theme-toggle__thumb" data-v-447e03ac></button></div> <h3 class="cs-post__blog-name"><a href="/" class="nuxt-link-active">Curtis' Spot</a></h3> <h2 class="cs-post__title">Design Patterns In Javascript</h2> <p class="cs-post__info">03, Sep, 2019 • 7.6k words • 🍱🍱 31 min read</p> <article class="cs-post__article"><p></p><div class="cs-toc-dom"><ul><li><a href="#danlimoshi">单例模式</a></li><li><a href="#celvemoshi">策略模式</a></li><li><a href="#dailimoshi">代理模式</a></li><li><a href="#diedaiqimoshi">迭代器模式</a></li><li><a href="#fabudingyuemoshi">发布订阅模式</a></li><li><a href="#minglingmoshi">命令模式</a></li><li><a href="#zuhemoshi">组合模式</a></li><li><a href="#mobanfangfamoshi">模板方法模式</a></li><li><a href="#xiangyuanmoshi">享元模式</a></li><li><a href="#zhizelianmoshi">职责链模式</a></li><li><a href="#zhongjiezhemoshi">中介者模式</a></li><li><a href="#zhuangshizhemoshi">装饰者模式</a></li><li><a href="#zhuangtaimoshi">状态模式</a></li><li><a href="#shipeiqimoshi">适配器模式</a></li><li><a href="#jieyan">结言</a></li></ul></div><p></p>
+<blockquote>
+<p>设计模式：在面向对象软件设计过程中针对特定问题的简洁而优雅的解决方案。</p>
+</blockquote>
+<p>设计模式这个术语是上个世纪 90 年代由 Erich Gamma、Richard Helm、Raplh Johnson 和 Jonhn Vlissides 四个人总结提炼出来的，并且写了一本叫 <a href="https://book.douban.com/subject/1052241/" target="_blank">《Design Patterns》</a> 的书。这四人也被称为四人帮（GoF）。</p>
+<p>为什么要使用设计模式？根本原因还是软件开发要实现可维护、可扩展，就必须尽量复用代码，并且降低代码的耦合度。</p>
+<p>在 JavaScript 这种类型模糊的语言中，对象多态性是天生的，一个变量既可以指向一个类，又可以随时指向另一个类，并且可以将函数作为参数随意传递，所以在 JavaScript 里很多设计模式的实现与传统的静态类型语言不尽相同。</p>
+<h2 id="danlimoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#danlimoshi")'>¶</a> 单例模式</h2>
+<blockquote>
+<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+</blockquote>
+<p>单例模式（Singleton）的目的很简单，就是为了保证某个「类」在全局范围内有且仅有一个实例。在 JavaScript 开发中，单例模式用途也非常广泛，比如用户界面中的登录浮窗、全局的状态管理实例等。</p>
+<p>单例模式在 JavaScript 中的实现方式很简单：</p>
+<ol>
+<li>通过静态属性<code>instance</code>变量持有唯一属性，保证全局唯一性；</li>
+<li>通过静态方法<code>getInstance</code>返回这个唯一实例，使外部调用方法能获取到实例；</li>
+<li>限制构造函数的返回结果，以保证使用<code>new SomeClass</code>方式时仍能返回唯一实例。</li>
+</ol>
+<pre class="language-js"><code class="language-js">class Singleton {
+  static instance = null; // 记录单实例
+  // 返回已存在的实例，否则创建一个实例
+  static getInstance(name) {
+    return Singleton.instance || new Singleton(name);
+  }
+  constructor(name) {
+    this.name = name;
+    return Singleton.instance || (Singleton.instance = this);
+  }
+  showName() {
+    return this.name;
+  }
+}
+
+const s1 = Singleton.getInstance('s1');
+const s2 = Singleton.getInstance('s2');
+
+console.log(s1 === s2); // true
+</code></pre><p>仔细观察上面的代码不难发现，单例限制部分其实与构造函数本身要实现的行为没有太大的关联，因此可以将单例限制的部分抽取出来作为公共的单例化函数。此函数接收一个构造函数，返回一个经过包装后的<strong>单例化构造函数</strong>，实现如下。</p>
+<pre class="language-js"><code class="language-js">function getSingleton(ctor) {
+  return class Singleton extends ctor {
+    static instance = null; // 记录单实例
+    // 返回已存在的实例，否则创建一个实例
+    static getInstance(...args) {
+      return Singleton.instance || new Singleton(...args);
+    }
+    constructor(...args) {
+      super(...args);
+      return Singleton.instance || (Singleton.instance = this);
+    }
+  };
+}
+
+class SomeClass {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+const SingleSomeClass = getSingleton(SomeClass);
+
+const s1 = SingleSomeClass.getInstance('s1');
+const s2 = SingleSomeClass.getInstance('s2');
+
+console.log(s1 === s2); // true
+</code></pre><p>也可以使用 JavaScript 闭包和高阶函数的特性来达到目的，注意使用此方式时，输入的构造函数只能为<strong>函数声明</strong>形式，因为<code>class</code>只能用<code>new SomeClass</code>的方式进行实例化。</p>
+<pre class="language-js"><code class="language-js">function getSingleton(ctor) {
+  function Singleton(...args) {
+    if (Singleton.instance) return Singleton.instance;
+    ctor.apply(this, args); // 借用构造函数逻辑
+    return (Singleton.instance = this);
+  }
+  Singleton.prototype = Object.create(ctor.prototype); // 维持原型链
+  Singleton.instance = null;
+  Singleton.getInstance = function(...args) {
+    return Singleton.instance || new Singleton(...args);
+  };
+  return Singleton;
+}
+</code></pre><hr>
+<h2 id="celvemoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#celvemoshi")'>¶</a> 策略模式</h2>
+<blockquote>
+<p>定义一系列的算法，把它们一个个封装起来，并且使它们可相互替换。此模式使得算法和逻辑可独立于使用它的消费者而变化。</p>
+</blockquote>
+<p>策略模式在 JavaScript 应用非常广泛，最常见的就是表单校验，常见的数组的高阶函数 api <code>Array.prototype.sort</code>、<code>Array.prototype.map</code>等也是其中一种典型的体现。</p>
+<pre class="language-js"><code class="language-js">const arr = [1, 3, 5, 7, 9, 2, 4, 6, 8, 10];
+
+arr.sort((a, b) => a - b); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+arr.sort((a, b) => b - a); // [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+</code></pre><p>通过不同的回调函数，将数组进行正向排序和反向排序，而两个回调函数就是独立的策略。</p>
+<p>一个基于策略模式的程序至少由两部分组成：</p>
+<ol>
+<li>定义一组策略类，策略类封装了具体的算法，并负责具体的计算过程。</li>
+<li>定义一个环境类 Context，Context 接受客户的请求，随后将请求委托给某一个策略类。</li>
+</ol>
+<p>策略模式在 JavaScript 中经常用于解决多重条件选择语句带来的强耦合问题。</p>
+<pre class="language-js"><code class="language-js">// 优化前
+function func(condition) {
+  if (condition === 'A') {
+    // do some stuff ...
+  } else if (condition === 'B') {
+    // do some stuff ...
+  } else if (condition === 'C') {
+    // do some stuff ...
+  } else if (condition === 'D') {
+    // do some stuff ...
+  }
+}
+
+// 优化后
+const strategies = {
+  A() {
+    // do some stuff ...
+  },
+  B() {
+    // do some stuff ...
+  },
+  C() {
+    // do some stuff ...
+  },
+  D() {
+    // do some stuff ...
+  },
+};
+
+strategies[condition]();
+</code></pre><h5 id="moshiyoudian"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#moshiyoudian")'>¶</a> 模式优点：</h5>
+<ul>
+<li>利用组合、委托和多态等技术和思想，可有效避免多重条件选择语句。</li>
+<li>提供了对开放-封闭原则的完美支持，将算法封装在独立的 strategy 中，使得策略易于切换，易于理解，易于扩展。</li>
+<li>算法可复用在其它地方，从而避免了许多重复的复制黏贴工作。</li>
+<li>利用组合和委托来让 Context 拥有执行算法的能力，相对传统的继承来说更加轻便。</li>
+</ul>
+<h5 id="moshiquedian"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#moshiquedian")'>¶</a> 模式缺点：</h5>
+<ul>
+<li>会在程序中增加许多策略类或者策略对象，存在额外开销。</li>
+<li>strategy 需要向消费者暴露所有实现，违反了最少知识原则。</li>
+</ul>
+<hr>
+<h2 id="dailimoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#dailimoshi")'>¶</a> 代理模式</h2>
+<blockquote>
+<p>为一个对象提供一个代用品或占位符，以便控制对这个对象的访问。</p>
+</blockquote>
+<p>使用代理模式的主要目的是，当客户不方便直接访问一个对象或者不满足需要的时候，提供一个替身对象来控制对这个对象的访问，客户实际上访问的是替身对象。替身对象对请求作出一些处理之后，再把请求转交给本体对象。</p>
+<pre class="language-text"><code class="language-text">客户 ====> 本体 // 不使用代理模式
+客户 ====> 代理 ====> 本体 // 使用代理模式
+</code></pre><p>代理模式可以理解成，在目标对象之前架设一层「拦截」，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写。因为代理对象对客户是透明的，所以代理对象必须实现与本体一致的接口。在最新的 ES6 语法中，已经实现了原生的<code>Proxy</code>，直接在“元编程”（meta programming）的层面对本体行为增加拦截。</p>
+<pre class="language-js"><code class="language-js">// 使用get拦截，实现数组读取负数的索引。
+const arr = ['a', 'b', 'c'];
+
+function createArray(arr) {
+  const handler = {
+    get(target, propKey, receiver) {
+      const index = Number(propKey);
+      if (index &lt; 0) {
+        propKey = String(target.length + index);
+      }
+      return Reflect.get(target, propKey, receiver);
+    },
+  };
+
+  return new Proxy(arr, handler);
+}
+
+let arrProxy = createArray(arr);
+arrProxy[-1]; // c
+arr[-1]; // undefined
+</code></pre><hr>
+<h2 id="diedaiqimoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#diedaiqimoshi")'>¶</a> 迭代器模式</h2>
+<blockquote>
+<p>提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。</p>
+</blockquote>
+<p>迭代器模式可以把迭代的过程从业务逻辑中分离出来，在使用迭代器模式后，即使不关心对象的内部构造，也可以按顺序访问其中的每个元素。</p>
+<p>迭代器可以分为外部迭代器和内部迭代器。</p>
+<h5 id="neibudiedaiqi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#neibudiedaiqi")'>¶</a> 内部迭代器</h5>
+<p>内部迭代器的特点是外界跟迭代器的交互仅仅只是一次初始调用。</p>
+<p>常见的数组的高阶函数 api <code>Array.prototype.forEach</code>、<code>Array.prototype.map</code>等就已经很好地实现了迭代器模式。</p>
+<pre class="language-js"><code class="language-js">const arr = [1, 2, 3];
+
+arr.forEach((item, index) => {
+  // do some stuff ...
+});
+
+// 手动实现内部迭代器
+function each(arr, callback) {
+  for (let i = 0; i &lt; arr.length; i++) {
+    callback(arr[i], i, arr);
+  }
+}
+
+each(arr, (item, index) => {
+  // do some stuff ...
+});
+</code></pre><h5 id="waibudiedaiqi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#waibudiedaiqi")'>¶</a> 外部迭代器</h5>
+<p>外部迭代器的特点是必须显式地请求迭代下一个元素。它的迭代过程一般遵循下面四个步骤：</p>
+<ol>
+<li>创建一个指针对象，指向当前数据结构的起始位置。也就是说，迭代器对象本质上，就是一个指针对象。</li>
+<li>第一次调用指针对象的 next 方法，可以将指针指向数据结构的第一个成员。</li>
+<li>第二次调用指针对象的 next 方法，指针就指向数据结构的第二个成员。</li>
+<li>不断调用指针对象的 next 方法，直到它指向数据结构的结束位置。</li>
+</ol>
+<pre class="language-js"><code class="language-js">const it = makeIterator(['hello', 'world', 'ending']);
+
+it.next(); // { value: "hello", done: false }
+it.next(); // { value: "world", done: false }
+it.next(); // { value: "ending", done: false }
+it.next(); // { value: undefined, done: true }
+
+function makeIterator(array) {
+  let nextIndex = 0;
+  return {
+    next: function() {
+      return nextIndex &lt; array.length ? { value: array[nextIndex++], done: false } : { value: undefined, done: true };
+    },
+  };
+}
+</code></pre><p>ES6 已经对外部迭代器进行了原生实现，它就是<code>Generator</code>。</p>
+<pre class="language-js"><code class="language-js">function* itGenerator() {
+  yield 'hello';
+  yield 'world';
+  return 'ending';
+}
+
+const it = itGenerator();
+it.next(); // { value: 'hello', done: false }
+it.next(); // { value: 'world', done: false }
+it.next(); // { value: 'ending', done: true }
+it.next(); // { value: undefined, done: true }
+
+// 可以很方便地使用 for...of 进行迭代
+for (let l of it) {
+  console.log(l);
+}
+// hello world ending
+</code></pre><hr>
+<h2 id="fabudingyuemoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#fabudingyuemoshi")'>¶</a> 发布订阅模式</h2>
+<blockquote>
+<p>定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都将得到通知。</p>
+</blockquote>
+<p>发布-订阅模式（Publish-Subscribe：Pub/Sub），它是一种通知机制，让发送通知的一方（被观察方）和接收通知的一方（观察者）能彼此分离，互不影响。又称为「观察者模式」。</p>
+<p>它的特点是：</p>
+<ul>
+<li>可广泛应用于异步编程中，是一种替代传递回调函数的解决方案。</li>
+<li>可取代对象之间硬编码的通知机制，一个对象不用再显式地调用另外一个对象的某个接口。</li>
+</ul>
+<p>在 JavaScript 开发中，一般使用事件模型来替代传统的发布订阅模式。</p>
+<pre class="language-js"><code class="language-js">let i = 0;
+document.body.addEventListener('click', () => {
+  i++;
+  console.log(`点击了 ${i} 次。`);
+});
+
+document.body.click(); // 点击了 1 次。
+document.body.click(); // 点击了 2 次。
+document.body.click(); // 点击了 3 次。
+</code></pre><p>在 JavaScript 中实现一个自定义的发布订阅模式一般需要下面三个步骤：</p>
+<ol>
+<li>创建一个发布者；</li>
+<li>在发布者内部创建一个缓存列表，用于存放回调函数以便通知订阅者；</li>
+<li>在发布者内部创建一个遍历执行器函数，在发布消息（发生了指定的变化）时，依次触发缓存列表内订阅者的回调函数。</li>
+</ol>
+<pre class="language-js"><code class="language-js">const event = {
+  clientList: [], // 收集订阅回调
+  // 订阅回调
+  listen(key, fn) {
+    if (!this.clientList[key]) {
+      this.clientList[key] = [];
+    }
+  },
+  // 取消订阅
+  remove(key, fn) {
+    const fns = this.clientList[key];
+    if (!fns || fns.length === 0) {
+      return false;
+    }
+    if (!fn) {
+      fns && (fns.length = 0);
+      return;
+    }
+    const targetIndex = fns.findIndex(fnI => fnI === fn);
+    ~targetIndex && fns.splice(targetIndex, 1);
+  },
+  // 触发回调
+  trigger(...args) {
+    const key = args.shift();
+    const fns = this.clientList[key];
+    if (!fns || fns.length === 0) {
+      return false;
+    }
+    fns.forEach(fn => fn.apply(null, args));
+  },
+};
+
+// 动态安装发布订阅功能
+const installEvent = function(obj) {
+  for (let key in event) {
+    obj[key] = event[key];
+  }
+};
+
+// 使用
+const source = {};
+installEvent(source);
+
+const typeACb = arg => console.log('typeA', arg);
+const typeBCb = arg => console.log('typeB', arg);
+
+source.listen('typeA', typeACb);
+source.listen('typeB', typeBCb);
+
+source.trigger('typeA', ' is trigger'); // typeA is trigger
+source.trigger('typeB', ' is trigger'); // typeB is trigger
+source.trigger('typeC', 'may cause error'); // false
+
+source.remove('typeA', typeACb);
+source.remove('typeB');
+source.trigger('typeA', ' is trigger'); // false
+source.trigger('typeB', ' is trigger'); // false
+</code></pre><p>Nodes.js 中的 EventEmitter 就是一个经典的发布订阅模式的实现，它实质上是将发布订阅的逻辑抽离出来作为复用的通用函数，使发布者和订阅者呈松散耦合。</p>
+<pre class="language-js"><code class="language-js">class EventBus {
+  constructor(evtMap = new Map()) {
+    this.evtMap = evtMap;
+  }
+  // 添加订阅
+  on(type, handler) {
+    const handlers = this.evtMap.get(type);
+    const added = handlers && handlers.push(handler);
+    !added && this.evtMap.set(type, [handler]);
+  }
+  // 取消订阅
+  off(type, handler) {
+    const handlers = this.evtMap.get(type);
+    if (!handlers) return false;
+    if (!handler) {
+      handlers.length = 0;
+      return;
+    }
+    handlers.splice(handlers.indexOf(handler) >>> 0, 1);
+  }
+  // 触发回调
+  emit(type, evt) {
+    (this.evtMap || []).forEach(handler => handler(evt));
+  }
+}
+
+// 使用
+const eventBus = EventBus();
+
+eventBus.on('foo', e => console.log('foo', e)); // 订阅事件
+eventBus.emit('foo', { a: 'b' }); // 触发事件
+eventBus.evtMap.clear(); // 清除所有订阅
+
+function onFoo() {}
+eventBus.on('foo', onFoo); // 订阅
+eventBus.off('foo', onFoo); // 取消订阅
+</code></pre><h5 id="moshiyoudian-2"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#moshiyoudian-2")'>¶</a> 模式优点</h5>
+<ul>
+<li>时间上进行了解耦。</li>
+<li>对象之间进行了解耦。</li>
+</ul>
+<h5 id="moshiquedian-2"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#moshiquedian-2")'>¶</a> 模式缺点</h5>
+<ul>
+<li>需要额外消耗一定的时间和内存。</li>
+<li>当订阅一个消息后，如果这个消息最后都未发生，这个订阅者却会一直存在于内存当中。</li>
+</ul>
+<hr>
+<h2 id="minglingmoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#minglingmoshi")'>¶</a> 命令模式</h2>
+<blockquote>
+<p>将一个请求封装为一个对象，从而使你可用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。</p>
+</blockquote>
+<p>从代码结构分析命令模式，其实它与策略模式很类似，都定义一系列的算法，把它们一个个封装起来，再根据实际的类型去调用它们。但是从行为分析会发现它们大大不同，命令模式会将所有发出的命令收集到一个命令队列，记录了这些命令的执行类型和顺序，必要时可对指定命令执行撤销操作或者对整个命令队列进行重放等。</p>
+<p>下面是一个典型的编辑器例子：</p>
+<pre class="language-js"><code class="language-js">class TextEditor {
+  constructor() {}
+  copy() {
+    console.log('editor copy!');
+    // do some stuff...
+  }
+  paste() {
+    console.log('editor paste!');
+    // do some stuff...
+  }
+  delete() {
+    console.log('editor delete!');
+    // do some stuff...
+  }
+  insert() {
+    console.log('editor insert!');
+    // do some stuff...
+  }
+}
+
+class CommandCollector {
+  constructor(commandList = []) {
+    this.commandList = commandList;
+  }
+  add(command) {
+    this.commandList.push(command);
+  }
+  execute() {
+    this.commandList.forEach(command => command.execute());
+  }
+}
+
+function noop() {}
+
+class Command {
+  constructor(receiver = {}, commandType) {
+    this.receiver = receiver;
+    this.callback = receiver[commandType] || noop;
+  }
+  execute(...args) {
+    this.callback(...args);
+  }
+}
+
+const editor = new TextEditor();
+const commandCollector = new CommandCollector();
+const commands = ['copy', 'paste', 'delete', 'insert'];
+
+commands.forEach(commandType => {
+  const command = new Command(editor, commandType);
+  command.execute(); // editor copy!
+  // editor paste!
+  // editor delete!
+  // editor insert!
+  commandCollector.add(command);
+});
+
+// 重播命令
+commandCollector.execute(); // editor copy!
+// editor paste!
+// editor delete!
+// editor insert!
+</code></pre><hr>
+<h2 id="zuhemoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zuhemoshi")'>¶</a> 组合模式</h2>
+<blockquote>
+<p>将对象组合成树形结构以表示「部分-整体」的层次结构，使得用户对单个对象和组合对象的使用具有一致性。</p>
+</blockquote>
+<p>从上面的定义可以知道组合模式的两个特点：</p>
+<ol>
+<li><strong>表示树形结构</strong>。组合模式的「组合对象」由「叶对象」组成，形成一种特殊的树形结构，并提供了一种遍历树形结构的方案，通过调用组合对象的指定方法，递归调用下游「叶对象」同名方法。</li>
+<li><strong>利用对象多态统一对待组合对象和单一对象</strong>。利用对象的多态表现，可以使客户端忽略组合对象和叶对象的不同。在组合模式中，客户将统一地使用组合结构中的所有对象，而不需要关心它是组合对象还是叶对象。</li>
+</ol>
+<pre class="language-text"><code class="language-text">             ┌───────────┐
+             │ Composite │ // 组合对象
+             └───────────┘
+                   ▲
+      ┌────────────┼────────────┐
+      │            │            │
+┌───────────┐┌───────────┐┌───────────┐
+│   leaf    ││   leaf    ││ Composite │
+└───────────┘└───────────┘└───────────┘
+                                ▲
+                   ┌────────────┼────────────┐
+                   │            │            │
+             ┌───────────┐┌───────────┐┌───────────┐
+             │   leaf    ││   leaf    ││   leaf    │ // 叶对象
+             └───────────┘└───────────┘└───────────┘
+</code></pre><p>关键的一点就是「组合对象」和「叶对象」具有统一的接口，并且「组合对象」由「叶对象」组成，下面是实现方式。</p>
+<pre class="language-js"><code class="language-js">class Composite {
+  constructor(leavesMap = []) {
+    if (new.target === Composite) {
+      this.leavesMap = leavesMap;
+    }
+  }
+  add(leaf) {
+    this.leavesMap.push(leaf);
+  }
+  execute() {
+    this.leavesMap.forEach(leaf => leaf.execute());
+  }
+}
+
+function noop() {}
+
+class Leaf extends Composite {
+  constructor(callback = noop) {
+    super();
+    this.callback = callback;
+  }
+  add() {
+    throw new Error('叶对象不能添加子结点'); // 统一接口，但需要限制叶结点不能调用 add 方法
+  }
+  execute() {
+    this.callback();
+  }
+}
+
+// 使用组合模式表示上图的树形结构
+const com1 = new Composite();
+const leaf1 = new Leaf(() => {
+  console.log('leaf1 execute!');
+});
+const leaf2 = new Leaf(() => {
+  console.log('leaf2 execute!');
+});
+const com2 = new Composite();
+const leaf3 = new Leaf(() => {
+  console.log('leaf3 execute!');
+});
+const leaf4 = new Leaf(() => {
+  console.log('leaf4 execute!');
+});
+const leaf5 = new Leaf(() => {
+  console.log('leaf5 execute!');
+});
+
+com1.add(leaf1);
+com1.add(leaf2);
+com1.add(com2);
+com2.add(leaf3);
+com2.add(leaf4);
+com2.add(leaf5);
+
+com1.execute(); // leaf1 execute!
+// leaf2 execute!
+// leaf3 execute!
+// leaf4 execute!
+// leaf5 execute!
+</code></pre><hr>
+<h2 id="mobanfangfamoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#mobanfangfamoshi")'>¶</a> 模板方法模式</h2>
+<blockquote>
+<p>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中，使得子类可以不改变一个算法的结构即可重新定义该算法的某些特定步骤。</p>
+</blockquote>
+<p>模板方法模式的主要思想是，定义一个操作的一系列步骤，对于某些暂时确定不下来的步骤，就留给子类去实现，也即：<strong>父类定义骨架，子类实现某些细节</strong>。由此可知此模式主要由两部分结构构成：</p>
+<ol>
+<li><strong>抽象父类</strong>。通常在抽象父类中封装了子类的算法框架，包括实现了一些公共方法以及封装子类中所有方法的执行顺序。</li>
+<li><strong>具体的实现子类</strong>。子类通过继承抽象父类的方式继承整个算法框架，并且可重写除公共方法以外的父类方法。</li>
+</ol>
+<p>传统 OOP 抽象类的主要作用是为它的子类定义公共接口，需要注意的是 JavaScript 不存在抽象类的概念（Typescript 实现了），所以没有办法从语言层面去强制子类重写一些细节方法。因此，必须使用在父类的细节方法定义里以抛出异常的方式去强制子类重写细节方法。</p>
+<pre class="language-js"><code class="language-js">class SuperClass {
+  // 公共方法
+  stepStart() {
+    console.log('start');
+  }
+  // 细节方法
+  stepSecond() {
+    throw new Error('子类必须重写 stepSecond 方法');
+  }
+  // 细节方法
+  stepThird() {
+    throw new Error('子类必须重写 stepThird 方法');
+  }
+  // 公共方法
+  stepEnd() {
+    console.log('end');
+  }
+  // 定义算法
+  run() {
+    this.stepStart();
+    this.stepSecond();
+    this.stepThird();
+    this.stepEnd();
+  }
+}
+
+class SubClassA extends SuperClass {
+  constructor() {
+    super();
+  }
+  // 重写细节方法
+  stepSecond() {
+    console.log('subClassA step second');
+  }
+  // 重写细节方法
+  stepThird() {
+    console.log('subClassA step third');
+  }
+}
+
+class SubClassB extends SuperClass {
+  constructor() {
+    super();
+  }
+  // 重写细节方法
+  stepSecond() {
+    console.log('subClassB step second');
+  }
+  // 重写细节方法
+  stepThird() {
+    console.log('subClassB step third');
+  }
+}
+
+const subA = new SubClassA();
+subA.run(); // start
+// subClassA step second
+// subClassA step third
+// end
+
+const subB = new SubClassB();
+subB.run(); // start
+// subClassA step second
+// subClassA step third
+// end
+</code></pre><hr>
+<h2 id="xiangyuanmoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xiangyuanmoshi")'>¶</a> 享元模式</h2>
+<blockquote>
+<p>运用共享技术有效地支持大量细粒度的对象。</p>
+</blockquote>
+<p>享元模式（Flyweight）是一种性能优化方案，当程序中需要用到大量相似的对象，而这些对象又可以区分出「内部状态」和「外部状态」的时候，就可以使用享元模式来共享单一实例。在实际使用具体对象的时候，通过将「外部状态」与单一实例进行实时组装，从而获得短暂可用的目标对象，在使用完目标对象后再还原成原来的单一实例（视实际情况）。</p>
+<p>具体来说，判断一个业务场景时候适合使用享元模式来进行优化，一般需要满足以下几点：</p>
+<ul>
+<li>一个程序中使用了大量相似的对象。</li>
+<li>由于使用了大量对象，造成很大的内存开销。</li>
+<li>对象的大多数状态可以变为外部状态。</li>
+<li>剥离出对象的外部状态之后，可以用相对较少的共享对象取代大量对象。</li>
+</ul>
+<p>下面是一个文件上传功能的例子，这个文件上传功能具有多个上传类型，用户可以根据实际情况选择不同的上传类型。</p>
+<pre class="language-js"><code class="language-js">class Upload {
+  constructor(uploadType) {
+    this.uploadType = uploadType;
+  }
+  delFile(id) {
+    uploadManager.setExternalState(id, this);
+    if (this.fileSize &lt; 3000) {
+      return this.dom.parentNode.removeChild(this.dom);
+    }
+    if (window.confirm(`Are sure to delete this file: ${this.dom}?`)) {
+      return this.dom.parentNode.removeChild(this.dom);
+    }
+  }
+}
+
+const UploadFactory = {
+  createdFlyweightObjs: {},
+  create(uploadType) {
+    if (this.createdFlyweightObjs[uploadType]) {
+      return this.createdFlyweightObjs[uploadType];
+    }
+    return (this.createdFlyweightObjs[uploadType] = new Upload(uploadType));
+  },
+};
+
+const UploadManager = {
+  uploadDatabase: {},
+  add(id, uploadType, filename, fileSize) {
+    const flyweightObj = UploadFactory.create(uploadType);
+    const dom = document.createElement('div');
+    dom.innerHTML = `&lt;span>File name: ${filename},File size: ${fileSize}&lt;/span>
+    &lt;button class="delFile">Delete&lt;/button>`;
+    document.querySelector('.delFile').onclick = () => flyweightObj.delFile(id);
+    document.body.appendChild(dom);
+    uploadDatabase[id] = { filename, fileSize, dom };
+    return flyweightObj;
+  },
+  setExternalState(id, flyweightObj) {
+    const uploadData = this.database[id];
+    for (let key in uploadData) {
+      flyweightObj[key] = uploadData[key];
+    }
+  }
+};
+
+// 使用
+let id = 0;
+const startUpload = (uploadType, files) => {
+  for(let i = 0, file; file = files[i++]) {
+    uploadManager.add(++id, uploadType, file.filename, file.fileSize);
+  }
+}
+
+startUpload('plugin', [{
+  filename: '1.txt',
+  fileSize: 1000,
+},{
+  filename: '2.txt',
+  fileSize: 3000,
+},{
+  filename: '3.txt',
+  fileSize: 5000,
+}]);
+
+startUpload('flash', [{
+  filename: '4.txt',
+  fileSize: 1000,
+},{
+  filename: '5.txt',
+  fileSize: 3000,
+},{
+  filename: '6.txt',
+  fileSize: 5000,
+}]);
+</code></pre><p>对于使用大量相似对象还有一种与享元模式类似的优化方案，它就是「对象池」。对象池维护了一个装载空闲对象的池子，如果需要对象的时候，不是直接创建新对象，而是先从对象池里获取，如果对象池里没有空闲对象，再去创建新对象，当创建的新对象完成了它的职责之后，再放入对象池等待被下次获取。这里需要注意的是，对象池没有分离内部状态和外部状态。</p>
+<pre class="language-js"><code class="language-js">function noop() {
+  return {};
+}
+
+class ObjectPool {
+  constructor(creator = noop, pool = []) {
+    this.pool = pool;
+    this.creator = creator;
+  }
+  getObject(...args) {
+    return this.pool.shift() || this.creator(...args);
+  }
+  recoverObject(poolItem) {
+    this.pool.push(poolItem);
+  }
+}
+
+function createIframe() {
+  const iframe = document.createElement('iframe');
+  document.body.appendChild(iframe);
+
+  iframe.onload = () => {
+    iframe.onload = null;
+    iframePool.recoverObject(iframe); // 加载完成后回收
+  };
+
+  return iframe;
+}
+
+const iframePool = new ObjectPool(createIframe);
+
+const iframe1 = iframePool.getObject();
+iframe1.src = 'https://lkangd.com/';
+
+const iframe2 = iframePool.getObject();
+iframe2.src = 'https://github.com/';
+
+setTimeout(() => {
+  const iframe3 = iframePool.getObject();
+  iframe3.src = 'https://google.com/';
+}, 3000);
+</code></pre><hr>
+<h2 id="zhizelianmoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhizelianmoshi")'>¶</a> 职责链模式</h2>
+<blockquote>
+<p>使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系。将这些对象炼成一条链，并沿着这条链传递改请求，知道有一个对象处理它为止。</p>
+</blockquote>
+<p>责任链模式（Chain of Responsibility）是一种处理请求的模式，它让多个处理器都有机会处理该请求，直到其中某个处理成功为止。责任链模式把多个处理器串成链，然后让请求在链上传递。</p>
+<p>职责链模式的最大优点：请求发送者只需要知道链中的第一个节点，从而弱化了发送者和一组接受者之间的强联系。</p>
+<pre class="language-text"><code class="language-text">     ┌─────────┐
+     │ Request │
+     └─────────┘
+          │
+┌ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ┐ ─ ─ ─ ─┐
+          ▼
+│  ┌─────────────┐  │        │
+   │ ProcessorA  │
+│  └─────────────┘  │        │
+          │
+│         ▼         │        │
+   ┌─────────────┐
+│  │ ProcessorB  │  │   HandlerChain
+   └─────────────┘
+│         │         │        │
+          ▼
+│  ┌─────────────┐  │        │
+   │ ProcessorC  │
+│  └─────────────┘  │        │
+          │
+└ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ┘ ─ ─ ─ ─┘
+          │
+          ▼
+</code></pre><p>使用代码现实上图。</p>
+<pre class="language-js"><code class="language-js">class Request {
+  constructor(amount = 0) {
+    this.amount = amount;
+  }
+  getAmount() {
+    return this.amount;
+  }
+}
+
+class HandlerChain {
+  constructor(handlers = []) {
+    this.handlers = [];
+  }
+  addHandler(handler) {
+    this.handlers.push(handler);
+  }
+  process(...args) {
+    for (let i = 0, handler; (handler = this.handlers[i++]); ) {
+      const result = handler.process(...args);
+      if (result !== null) {
+        return result;
+      }
+    }
+    throw new Error(`Could not handle request: ${args}`);
+  }
+}
+
+class ProcessorA {
+  constructor() {}
+  process(request) {
+    if (request.getAmount() > 1000) return null; // 设置职责门槛
+    console.log('ProcessorA success!');
+  }
+}
+class ProcessorB {
+  constructor() {}
+  process(request) {
+    if (request.getAmount() > 2000) return null; // 设置职责门槛
+    console.log('ProcessorB success!');
+  }
+}
+class ProcessorC {
+  constructor() {}
+  process(request) {
+    if (request.getAmount() > 3000) return null; // 设置职责门槛
+    console.log('ProcessorC success!');
+  }
+}
+
+// 使用
+const chain = new HandlerChain();
+// 设置职责链，注意顺序
+chain.addHandler(new ProcessorA());
+chain.addHandler(new ProcessorB());
+chain.addHandler(new ProcessorC());
+
+const req1 = new Request(999);
+const req2 = new Request(1999);
+const req3 = new Request(2999);
+const req4 = new Request(3001); // 超出职责范围
+
+chain.process(req1); // ProcessorA success!
+chain.process(req2); // ProcessorB success!
+chain.process(req3); // ProcessorC success!
+chain.process(req4); // Uncaught Error: Could not handle request: [object Object]
+</code></pre><hr>
+<h2 id="zhongjiezhemoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhongjiezhemoshi")'>¶</a> 中介者模式</h2>
+<blockquote>
+<p>用一个中介对象来封装一系列的对象交互。中介者使各个对象不需要显式地相互作用，从而使其耦合松散，而且可以独立地改变他们之间的交互。</p>
+</blockquote>
+<p>中介者模式（Mediator）的作用是解除对象与对象之间的紧耦合关系。增加一个中介者对象后，所有的相关对象都通过中介者对象来通信，而不是相互作用，所以当一个对象发生改变时，只需要通知中介者即可。</p>
+<p>使用中介者之前对象间相互影响。</p>
+<pre class="language-text"><code class="language-text">┌─────────────────┐     ┌─────────────────┐
+│        A        │&lt;───>│        B        │
+└─────────────────┘     └─────────────────┘
+         ▲ ▲                     ▲
+         │ └─────────────────────┤
+         ▼                       │
+┌─────────────────┐     ┌────────┴────────┐
+│        C        │&lt;────│        D        │
+└─────────────────┘     └─────────────────┘
+</code></pre><p>使用中介者后对象只与中介者交互，从而解除了对象间的强耦合关系。</p>
+<pre class="language-text"><code class="language-text">            ┌─────────────────┐
+     ┌─────>│        A        │
+     │      └─────────────────┘
+     │      ┌─────────────────┐
+     │ ┌───>│        B        │
+     ▼ ▼    └─────────────────┘
+┌─────────┐
+│  中介者  │
+└─────────┘
+     ▲ ▲    ┌─────────────────┐
+     │ └───>│        C        │
+     │      └─────────────────┘
+     │      ┌─────────────────┐
+     └─────>│        D        │
+            └─────────────────┘
+</code></pre><p>使用代码现实上图。</p>
+<pre class="language-js"><code class="language-js">// 使用中介者模式前
+class Node {
+  constructor(status = true, influenceNodes = []) {
+    this.status = status;
+    this.influenceNodes = influenceNodes;
+  }
+  addInfluence(node) {
+    this.influenceNodes.push(node);
+  }
+  change(status) {
+    const newStatus = status === undefined ? !this.status : status;
+    this.status = newStatus;
+    this.influenceNodes.forEach(node => (node.status = !newStatus));
+  }
+}
+
+const A = new Node(false);
+const B = new Node();
+const C = new Node();
+const D = new Node();
+
+// A 影响 B, C
+A.addInfluence(B);
+A.addInfluence(C);
+// B 影响 A
+B.addInfluence(A);
+// C 影响 A
+C.addInfluence(A);
+// D 影响 A, B, C
+D.addInfluence(A);
+D.addInfluence(B);
+D.addInfluence(C);
+
+A.change();
+console.log(A.status, B.status, C.status, D.status); // true, false, false, true
+
+D.change();
+console.log(A.status, B.status, C.status, D.status); // true, true, true, false
+</code></pre><pre class="language-js"><code class="language-js">// 引入中介者
+class Node {
+  constructor(type, status = true) {
+    this.status = status;
+    this.type = type;
+  }
+  change(status) {
+    const newStatus = status === undefined ? !this.status : status;
+    this.status = newStatus;
+  }
+}
+
+const A = new Node('A', false);
+const B = new Node('B');
+const C = new Node('C');
+const D = new Node('D');
+
+// 将对象间影响的逻辑封装到中介者
+const mediator = function(node) {
+  const newStatus = !node.status;
+  switch (node.type) {
+    case 'A': // A 影响 B, C
+      B.change(newStatus);
+      C.change(newStatus);
+      break;
+    case 'B': // B 影响 A
+      A.change(newStatus);
+      break;
+    case 'C': // C 影响 A
+      A.change(newStatus);
+      break;
+    case 'D': // D 影响 A, B, C
+      A.change(newStatus);
+      B.change(newStatus);
+      C.change(newStatus);
+      break;
+    default:
+      console.log('unsupported type!', node.type);
+  }
+};
+
+A.change();
+mediator(A);
+console.log(A.status, B.status, C.status, D.status); // true, false, false, true
+
+D.change();
+mediator(D);
+console.log(A.status, B.status, C.status, D.status); // true, true, true, false
+</code></pre><hr>
+<h2 id="zhuangshizhemoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhuangshizhemoshi")'>¶</a> 装饰者模式</h2>
+<blockquote>
+<p>在不改变对象的基础上，动态地给对象添加一些额外的职责。就增加功能而言，相比生成子类更加灵活。</p>
+</blockquote>
+<p>装饰器（Decorator）模式的核心思想与流行的 AOP（面向切面）编程方法论是一致的，目的都是为了在不改变对象本身的前提上，在对象方法的出入口去改变方法的行为。</p>
+<pre class="language-js"><code class="language-js">// 入口切面
+Function.prototype.before = function(beforeFn) {
+  const originFn = this;
+  return function(...args) {
+    beforeFn.apply(this, args);
+    return originFn.apply(this, args);
+  };
+};
+
+// 出口切面
+Function.prototype.after = function(afterFn) {
+  const originFn = this;
+  return function(...args) {
+    const ret = originFn.apply(this, args);
+    afterFn.call(this, ret);
+    return ret;
+  };
+};
+
+function execute(number) {
+  console.log('execute!');
+  return number * number;
+}
+
+execute(10); // execute! 100
+
+function logBefore(number) {
+  console.log('before fn log, number is:', number);
+}
+function logAfter(result) {
+  console.log('after fn log, result is:', result);
+}
+
+execute.before(logBefore)(10); // before fn log, number is: 10
+// execute!
+
+execute.after(logAfter)(10); // execute!
+// after fn log, result is: 100
+
+execute.before(logBefore).after(logAfter)(10); // before fn log, number is: 10
+// execute!
+// after fn log, result is: 100
+</code></pre><p>最新的 ES <a href="https://github.com/tc39/proposal-decorators" target="_blank">提案</a> 里已经实现了原生的装饰器语法，ES 的装饰器可以很便捷地修改类和类方法的行为。</p>
+<pre class="language-js"><code class="language-js">function log(target, name, descriptor) {
+  const oldValue = descriptor.value;
+
+  descriptor.value = function() {
+    console.log(`Calling ${name} with`, arguments);
+    return oldValue.apply(this, arguments);
+  };
+
+  return descriptor;
+}
+
+class Math {
+  @log
+  add(a, b) {
+    return a + b;
+  }
+}
+
+const math = new Math();
+
+math.add(2, 4); // Calling add with 2, 4
+</code></pre><hr>
+<h2 id="zhuangtaimoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhuangtaimoshi")'>¶</a> 状态模式</h2>
+<blockquote>
+<p>允许一个对象在其内部状态改变时改变它的行为，对象看起来似乎修改了它的类。</p>
+</blockquote>
+<p>状态模式（State）经常用在带有状态的对象中，可以按两个部分来理解上面的定义：</p>
+<ol>
+<li>将状态封装成独立的类，并将请求委托给当前的状态对象，当对象的内部状态改变时，会带来不同的行为变化。</li>
+<li>从客户的角度来看，使用对象时，在不同状态下具有截然不同的行为，这个对象看起来是从不同的类中实例化而来的，实际上这是使用了委托的效果。</li>
+</ol>
+<p>传统的面向对象语言的状态模式实现会为每种状态定义一个状态子类，然后在 Context 中持有这些状态对象的引用，以便把当前状态切换为当前的状态对象。但在 JavaScript 这种“无类”语言中，没有规定让状态对象一定要从类中创建出来。另外一点，JavaScript 可以非常方便地使用委托技术，并不需要事先让一个对象只有另一个对象。下面是 JavaScript 对状态模式的实现。</p>
+<pre class="language-js"><code class="language-js">// 一个使用状态模式的开关灯程序
+const delegate = function(client, delegation) {
+  return {
+    // 将客户的操作委托给 delegation 对象
+    buttonWasPressed() {
+      return delegation.buttonWasPressed.apply(client, arguments);
+    },
+  };
+};
+
+// 状态类封装
+const FSM = {
+  off: {
+    buttonWasPressed() {
+      console.log('关灯');
+      this.button.innerHTML = '下一次按我就是开灯。';
+      this.currentState = this.onState;
+    },
+  },
+  on: {
+    buttonWasPressed() {
+      console.log('开灯');
+      this.button.innerHTML = '下一次按我就是关灯。';
+      this.currentState = this.offState;
+    },
+  },
+};
+
+class Light {
+  constructor() {
+    this.offState = delegate(this, FSM.off);
+    this.onState = delegate(this, FSM.on);
+    this.currentState = this.offState; // 设置初始状态为关闭状态
+    this.button = null;
+  }
+  init() {
+    const button = document.createElement('button');
+    button.innerHTML = '已关灯';
+    this.button = document.body.appendChild(button);
+    this.button.onclick = function() {
+      this.currentState.buttonWasPressed();
+    }.bind(this);
+  }
+}
+
+const light = new Light();
+light.init();
+
+light.button.click(); // 开灯
+light.button.click(); // 关灯
+</code></pre><h5 id="moshiyoudian-3"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#moshiyoudian-3")'>¶</a> 模式优点</h5>
+<ul>
+<li>状态模式定义了状态与行为之间的关系，并将它们封装在一个类里。通过增加新的状态类，很容易增加新的状态和转换。</li>
+<li>避免 Context 无限膨胀，状态切换的逻辑被分布在状态类中，也去掉了 Context 中原本过于多的条件分支。</li>
+<li>用对象代替字符串记录当前状态，是的状态的切换更加一目了然。</li>
+<li>Context 中的请求动作和状态类中封装的行为可以非常容易地独立变化而不受影响。</li>
+</ul>
+<h5 id="moshiquedian-3"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#moshiquedian-3")'>¶</a> 模式缺点</h5>
+<ul>
+<li>定义了许多状态类，因此系统中会增加不少对象。</li>
+<li>虽然避开了不受欢迎的条件分支，但也造成了逻辑松散的问题，无法在一个地方就看出这个状态机的逻辑。</li>
+</ul>
+<hr>
+<h2 id="shipeiqimoshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shipeiqimoshi")'>¶</a> 适配器模式</h2>
+<blockquote>
+<p>将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
+</blockquote>
+<p>适配器（Adapter）模式的别名是包装器（wrapper），是一个相对简单的模式，它作用是解决两个软件之间接口不兼容的问题，使用适配器模式之后，原本由于接口不兼容而不能工作的两个软件实体可以一起工作。适配器模式是一种“亡羊补牢”的模式，一般不会在程序设计之初就是用它。</p>
+<pre class="language-js"><code class="language-js">class NormalProcessor {
+  constructor(action) {
+    this.action = action;
+  }
+  show() {
+    console.log('start doing ', this.action);
+  }
+}
+
+const makeAction = processor => processor.show(); // 原有逻辑
+const processors = [new NormalProcessor('stand'), new NormalProcessor('walk')];
+
+processors.forEach(p => makeAction(p)); // stand walk
+
+// 非兼容接口
+class IncompatibleProcessor {
+  constructor(action) {
+    this.action = action;
+  }
+  display() {
+    console.log('start doing ', this.action);
+  }
+}
+
+const runProcessor = new IncompatibleProcessor('run');
+
+processors.push(runProcessor);
+processors.forEach(p => makeAction(p)); // stand walk Uncaught TypeError: processor.show is not a function
+
+// 生成一个适配器对象
+const makeAdapter = (originObj, originFnName, adapterFnName) => {
+  return {
+    [adapterFnName](...args) {
+      return originObj[originFnName](...args);
+    },
+  };
+};
+
+const runProcessorAdapter = makeAdapter(runProcessor, 'display', 'show');
+processors.splice(processors.length - 1, 1, runProcessorAdapter);
+processors.forEach(p => makeAction(p)); // stand walk run
+</code></pre><hr>
+<h2 id="jieyan"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jieyan")'>¶</a> 结言</h2>
+<p>所有设计模式的实现都遵循一条原则，即“找出程序中变化的地方，并将变化封装起来”。一个程序的设计总是可以分为可变的部分和不变的部分。当我们找出可变的部分，并且把这些部分封装起来，那么剩下的就是不变和稳定的部分。这些不变和稳定的部分是非常容易复用的。这也是设计模式为什么描写的是可复用面向对象软件基础的原因。</p>
+<p>学习设计模式时不应该根据模式的名字去臆测该模式的一切，而是要理解模式具体能解决的问题和改模式的适用场景，才能避免对模式的滥用和误用，让模式为开发赋能。</p>
+<h4 id="cankao"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#cankao")'>¶</a> 参考</h4>
+<p><a href="https://book.douban.com/subject/26382780/" target="_blank">JavaScript 设计模式与开发实践</a><br>
+<a href="https://book.douban.com/subject/1436745/" target="_blank">Design Patterns</a><br>
+<a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1264742167474528" target="_blank">设计模式-廖雪峰</a><br>
+<a href="https://es6.ruanyifeng.com/" target="_blank">ES6入门教程-阮一峰</a></p>
+</article> <hr> <div class="cs-post__link-wrapper"><a href="/post/data-structure-tree/" class="cs-outside-link">← 树数据结构的原理及JS实现</a> <a href="/post/develop-good-git-commit-habits/" class="cs-outside-link">何为「Git Commit」最佳姿势？ →</a></div> <hr> <form action="https://app.convertkit.com/forms/1488259/subscriptions" method="post" data-sv-form="1488259" data-uid="51a87aa3a3" data-format="inline" data-version="5" min-width="400 500 600 700" class="cs-subscribe cs-container" data-v-011cff22><div class="cs-subscribe__wrapper" data-v-011cff22><h3 class="cs-subscribe__title" data-v-011cff22>订阅本博客的最新内容</h3> <p class="cs-subscribe__describe" data-v-011cff22>如果我有新的想法，会第一时间通过邮件与你分享.</p> <svg xmlns="http://www.w3.org/2000/svg" class="cs-subscribe__icon icon sprite-icons" data-v-011cff22 data-v-011cff22><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" data-v-011cff22 data-v-011cff22></use></svg></div> <div class="cs-subscribe__wrapper" data-v-011cff22><input aria-label="Your first name" name="fields[first_name]" placeholder="你的昵称" required class="cs-subscribe__input" data-v-011cff22> <input type="email" name="email_address" aria-label="Your email address" placeholder="你的邮件地址" required class="cs-subscribe__input" data-v-011cff22> <button data-element="submit" class="cs-subscribe__submit-btn" data-v-011cff22><span data-v-011cff22>立即订阅</span></button> <p class="cs-subscribe__tips" data-v-011cff22>请放心我不会发送任何辣鸡邮件给你.</p> <p class="cs-subscribe__tips" data-v-011cff22>
+      你可以
+      <em data-v-011cff22>随时</em> 取消订阅.
+    </p></div></form> <section class="cs-statement" data-v-08ff1539><p class="cs-statement__text" data-v-08ff1539>
+    讨论请发邮件到
+    <a href="mailto:lkangd@gmail.com" target="_blank" data-v-08ff1539>lkangd@gmail.com</a></p> <p class="cs-statement__text" data-v-08ff1539>未经授权，禁止转载</p> <p class="cs-statement__text" data-v-08ff1539>通过支付宝 lkangd@foxmail.com 或赞赏码赞助此文</p> <img alt="reward-code" src="/_nuxt/img/wechat-reward-code.3b0f29f.jpg" class="cs-statement__reward-code theme-ignore" data-v-08ff1539></section> <ul class="cs-toc" data-v-2002d74b></ul></section> <footer class="cs-footer" data-v-11bea6b1><div class="cs-footer__wrapper" data-v-11bea6b1><a href="/about/" class="fl" data-v-11bea6b1>About</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/tech/" class="fl" data-v-11bea6b1>Tech</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/think/" class="fl" data-v-11bea6b1>Think</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/fun/" class="fl" data-v-11bea6b1>Fun</a> <a href="/sitemap.xml" target="_blank" class="fr" data-v-11bea6b1>Sitemap</a> <span class="fr" data-v-11bea6b1>• </span> <a href="/feed.xml" target="_blank" class="fr" data-v-11bea6b1>RSS</a> <div class="cs-footer__bottom" data-v-11bea6b1><svg xmlns="http://www.w3.org/2000/svg" class="cs-footer__logo icon sprite-icons" data-v-11bea6b1 data-v-11bea6b1><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" data-v-11bea6b1 data-v-11bea6b1></use></svg>
+      2017-2020 Curtis' Spot
+      <span style="margin:0 5px" data-v-11bea6b1>•</span> <div class="cs-color-slogan cs-footer__slogan" data-v-a8c8150c data-v-11bea6b1><span class="cs-color-slogan__start-text" data-v-a8c8150c>Work With </span> <span class="cs-color-slogan__placeholder" data-v-a8c8150c></span> <span class="cs-color-slogan__wrapper" data-v-a8c8150c>
+     
+    <span data-v-a8c8150c></span></span></div></div></div></footer></div></div></div><script>window.__NUXT__={staticAssetsBase:"/_nuxt/static/1600180271",layout:"post",error:null,serverRendered:!0,routePath:"/post/design-patterns-in-javascript",config:{}}</script><script src="/_nuxt/runtime.2b486dc.js" defer></script><script src="/_nuxt/pages/post/_id.293b655.js" defer></script><script src="/_nuxt/node_modules/commons.82dad87.js" defer></script><script src="/_nuxt/app.ab1a4d4.js" defer></script><script data-n-head="ssr" type="text/javascript" data-body="true">!function(){function t(e){r=e,document.body.className=e}var r,a={light:"light",dark:"dark"};try{r=localStorage.getItem("theme")}catch(e){}window.__setPreferredTheme=function(e){t(e);try{localStorage.setItem("theme",e)}catch(e){}};var e=window.matchMedia("(prefers-color-scheme: dark)");e.addListener(function(e){window.__setPreferredTheme(a[r]||(e.matches?"dark":"light"))}),t(a[r]||(e.matches?"dark":"light"))}()</script>
+  </body>
+</html>

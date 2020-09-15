@@ -1,0 +1,551 @@
+<!doctype html>
+<html data-n-head-ssr>
+  <head>
+    <title>何为「Git Commit」最佳姿势？ - Curtis' Spot</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="google-site-verification" content="kfF1FRzuuywPcdFndPOA2Lc_CY77xywarjgy_EHl-h8"><meta data-n-head="ssr" name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"><meta data-n-head="ssr" data-hid="description" name="description" content="Front-end Engineer. Blogging about life, tech & everything I love."><base href="/"><link data-n-head="ssr" rel="icon" type="image/x-icon" href="/favicon.png"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:900&display=swap"><link rel="preload" href="/_nuxt/runtime.2b486dc.js" as="script"><link rel="preload" href="/_nuxt/node_modules/commons.82dad87.js" as="script"><link rel="preload" href="/_nuxt/app.ab1a4d4.js" as="script"><link rel="preload" href="/_nuxt/pages/post/_id.293b655.js" as="script"><style data-vue-ssr-id="27366e46:0 563f3fe6:0 bd3e5fbe:0 3d8525fc:0 b59d545e:0 44ce5391:0 1728c230:0 66187182:0 7e4cdd9a:0 2aeaee0a:0 6c57b7be:0">a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,input,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{box-sizing:border-box;margin:0;padding:0;border:0;font-size:100%;font-weight:400;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,menu,nav,section{display:block}body{line-height:1}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:none}table{border-collapse:collapse;border-spacing:0}a,button,input{background-color:transparent;text-decoration:none;border:none;outline:0;-webkit-tap-highlight-color:transparent}a:active,a:focus,button:active,button:focus,input:active,input:focus{outline:0!important}li{list-style:none}body,html{font-family:"PingFang SC",STHeitiSC-Light,Helvetica-Light,arial,sans-serif,"Droid Sans Fallback"}body{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}html{font-size:14px!important}body,html{height:100%;line-height:1;font-family:Merriweather,Georgia,serif;-webkit-tap-highlight-color:transparent;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}body{margin:0 auto;scroll-behavior:smooth}strong{font-weight:700}a,button{color:inherit;outline:0;border:none;background-color:transparent;-webkit-tap-highlight-color:transparent;transition:text-shadow .3s;white-space:pre-wrap;word-break:break-all;cursor:pointer}a:active,a:focus,button:active,button:focus{outline:0!important}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}code[class*=language-],pre[class*=language-]{color:#fff;background:0 0;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-feature-settings:normal;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;margin-bottom:0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{overflow:auto;padding:1.3125rem}pre[class*=language-]::-moz-selection{background:#27292a}pre[class*=language-]::selection{background:#27292a}pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:hsla(0,0%,100%,.15)}pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:hsla(0,0%,100%,.15)}:not(pre)>code[class*=language-]{border-radius:.3em;background:var(--inline-code-bg);color:var(--inline-code-fg);padding:.15em .2em .05em;white-space:normal}.token{position:relative;z-index:1}.token.attr-name{color:#addb67;font-style:italic}.token.comment{color:#809393}.token.string,.token.url{color:#addb67}.token.variable{color:#d6deeb}.token.number{color:#f78c6c}.token.builtin,.token.char,.token.constant,.token.function{color:#82aaff}.token.punctuation{color:#c792ea}.token.doctype,.token.selector{color:#c792ea;font-style:italic}.token.class-name{color:#ffcb8b}.token.keyword,.token.operator,.token.tag{color:var(--main)}.token.boolean{color:#ff5874}.token.property{color:#80cbc4}.token.namespace{color:#b2ccd6}pre[data-line]{padding:1em 0 1em 3em;position:relative}.gatsby-highlight-code-line{background-color:#022a4b;display:block;padding-right:1em;padding-left:1.25em;border-left:.25em solid var(--main)}.gatsby-highlight,.gatsby-highlight-code-line{margin-right:-1.3125rem;margin-left:-1.3125rem}.gatsby-highlight{margin-bottom:1.75rem;border-radius:10px;-webkit-overflow-scrolling:touch;overflow:auto}@media (max-width:672px){.gatsby-highlight{border-radius:0}}.gatsby-highlight pre[class*=language-]{float:left;min-width:100%}.line-highlight{z-index:-1;border-left:4px solid var(--main);background:rgba(2,42,75,.8)!important}.line-highlight:after,.line-highlight:before{display:none}body[data-v-377fcad6]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-377fcad6]{font-weight:700}body.dark[data-v-377fcad6]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-377fcad6]{font-weight:400}body.dark img[data-v-377fcad6]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-377fcad6]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-377fcad6]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-377fcad6]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-377fcad6]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-377fcad6],.cs-title sup[data-v-377fcad6]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-377fcad6]{position:relative;top:-12px}.cs-text[data-v-377fcad6]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-377fcad6]{text-decoration:underline}.cs-text small[data-v-377fcad6]{font-size:.6em}.cs-list[data-v-377fcad6]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-377fcad6]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-377fcad6]{float:left}.fr[data-v-377fcad6]{float:right}a[data-v-377fcad6]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-377fcad6],h2[data-v-377fcad6],h3[data-v-377fcad6],h4[data-v-377fcad6],h5[data-v-377fcad6],h6[data-v-377fcad6]{font-family:Montserrat,serif}h1 a[data-v-377fcad6],h2 a[data-v-377fcad6],h3 a[data-v-377fcad6],h4 a[data-v-377fcad6],h5 a[data-v-377fcad6],h6 a[data-v-377fcad6]{color:var(--text-title)}h1 .cs-header-anchor[data-v-377fcad6],h2 .cs-header-anchor[data-v-377fcad6],h3 .cs-header-anchor[data-v-377fcad6],h4 .cs-header-anchor[data-v-377fcad6],h5 .cs-header-anchor[data-v-377fcad6],h6 .cs-header-anchor[data-v-377fcad6]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-377fcad6],h2:hover .cs-header-anchor[data-v-377fcad6],h3:hover .cs-header-anchor[data-v-377fcad6],h4:hover .cs-header-anchor[data-v-377fcad6],h5:hover .cs-header-anchor[data-v-377fcad6],h6:hover .cs-header-anchor[data-v-377fcad6]{opacity:1}.cs-toc-dom[data-v-377fcad6]{display:none}.cs-loading[data-v-377fcad6]{position:fixed;top:0;left:0;z-index:100;width:100%;height:100%;background-color:var(--bg);will-change:opacity;transition:opacity .5s .4s}.cs-loading.loaded[data-v-377fcad6]{opacity:0}.cs-loading .main[data-v-377fcad6]{position:absolute;top:calc(50% - 63px);left:calc(50% - 63px);z-index:1;width:126px;height:126px}.cs-loading .main.out-of-window .line1-2[data-v-377fcad6],.cs-loading .main.out-of-window .line1[data-v-377fcad6],.cs-loading .main.out-of-window .line3-2[data-v-377fcad6],.cs-loading .main.out-of-window .line3[data-v-377fcad6],.cs-loading .main.out-of-window .line5[data-v-377fcad6],.cs-loading .main.out-of-window .line7[data-v-377fcad6],.cs-loading .main.out-of-window .line9[data-v-377fcad6]{transform:rotate(45deg) translateY(100vh)}.cs-loading .main.out-of-window .line10[data-v-377fcad6],.cs-loading .main.out-of-window .line2-2[data-v-377fcad6],.cs-loading .main.out-of-window .line2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-3[data-v-377fcad6],.cs-loading .main.out-of-window .line4[data-v-377fcad6],.cs-loading .main.out-of-window .line6[data-v-377fcad6],.cs-loading .main.out-of-window .line8-1[data-v-377fcad6],.cs-loading .main.out-of-window .line8[data-v-377fcad6]{transform:rotate(45deg) translateY(-100vh)}.cs-loading .main.out-of-window .text[data-v-377fcad6]{opacity:0;transition:opacity .5s}.cs-loading .main .line[data-v-377fcad6]{position:absolute;z-index:3;width:7px;background:var(--text-normal);will-change:transform;transform:rotate(45deg)}.cs-loading .main .line.line1[data-v-377fcad6]{top:51px;left:5px;height:17px;transition:transform .5s}.cs-loading .main .line.line1-2[data-v-377fcad6]{top:-3px;left:50px;height:36px;transition:transform .5s}.cs-loading .main .line.line2[data-v-377fcad6]{top:55px;left:9px;height:27px;transition:transform .5s}.cs-loading .main .line.line2-2[data-v-377fcad6]{top:-5px;left:56px;height:53px;transition:transform .5s}.cs-loading .main .line.line3[data-v-377fcad6]{top:58px;left:15px;height:35px;transition:transform .5s .1s}.cs-loading .main .line.line3-2[data-v-377fcad6]{top:-2px;left:63px;height:59px;transition:transform .5s .1s}.cs-loading .main .line.line4[data-v-377fcad6]{top:55px;left:24px;height:48px;transition:transform .5s .1s}.cs-loading .main .line.line4-2[data-v-377fcad6]{top:27px;left:60px;height:33px;transition:transform .5s .1s}.cs-loading .main .line.line4-3[data-v-377fcad6]{top:9px;left:84px;height:21px;transition:transform .5s .1s}.cs-loading .main .line.line5[data-v-377fcad6]{top:4px;left:54px;height:117px;transition:transform .5s .2s}.cs-loading .main .line.line6[data-v-377fcad6]{top:15px;left:59px;height:111px;transition:transform .5s .2s}.cs-loading .main .line.line7[data-v-377fcad6]{top:16px;left:69px;height:115px;transition:transform .5s .3s}.cs-loading .main .line.line8[data-v-377fcad6]{top:56px;left:63px;height:72px;transition:transform .5s .3s}.cs-loading .main .line.line8-1[data-v-377fcad6]{top:30px;left:116px;height:18px;transition:transform .5s .3s}.cs-loading .main .line.line9[data-v-377fcad6]{top:67px;left:70px;height:61px;transition:transform .5s .4s}.cs-loading .main .line.line10[data-v-377fcad6]{top:82px;left:78px;height:40px;transition:transform .5s .4s}.cs-loading .main .text[data-v-377fcad6]{position:absolute;bottom:-18%;left:0;width:100%;font-size:16px;font-weight:700;color:var(--text-normal);text-align:center;will-change:opacity;transition:opacity .5s .5s}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}.cs-post{position:relative;padding:42px 21px!important;background-color:transparent}.cs-post__toggle{position:absolute;top:52px;right:21px}.cs-post__blog-name{margin-bottom:42px;height:42px;font-family:Montserrat,sans-serif;font-size:23px;font-weight:900;line-height:2.625rem}.cs-post__blog-name>a{color:var(--main)!important;box-shadow:none}.cs-post__title{margin-top:56px;line-height:44px;font-size:40px;font-family:Montserrat,serif;font-weight:900;color:var(--text-title)}.cs-post__info{margin-bottom:28px;line-height:2;font-size:14px;font-family:Merriweather,Georgia,serif;word-spacing:2px}.cs-post hr{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__link-wrapper{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.cs-post__link-wrapper>a{margin:20px 0}.cs-post__article a{padding:0 4px;text-decoration:underline}.cs-post__article h1{margin:50px 0 24px;font-size:28px;font-weight:700}.cs-post__article h2{margin:50px 0 24px;font-size:25px;font-weight:700}.cs-post__article h3{margin:50px 0 24px;font-size:22px;font-weight:700}.cs-post__article h4{margin:30px 0 24px;font-size:19px;font-weight:700}.cs-post__article h5{margin:30px 0 24px;font-size:16px;font-weight:700}.cs-post__article h6{margin:30px 0 24px;font-size:13px;font-weight:700}.cs-post__article li,.cs-post__article p,.cs-post__article td{margin:0;font-size:14px;line-height:28px;color:var(--text-normal)}.cs-post__article p{margin-bottom:24px}.cs-post__article code:not([class*=language-]){margin:0 4px;padding:0 4px;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-weight:700;color:var(--inline-code-fg);background-color:var(--inline-code-bg);border-radius:3px}.cs-post__article strong em{margin:0 6px;font-weight:700}.cs-post__article hr{margin:30px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__article em{margin:0 6px}.cs-post__article pre{margin:24px 0;font-size:12px;border-radius:10px;background-color:#011627;opacity:.99}.cs-post__article blockquote{background:var(--blockquote-bg);border-left:6px solid var(--blockquote-bl);margin:24px 6px;padding:16px 10px;quotes:"“" "”" "‘" "’"}.cs-post__article blockquote p:last-child{margin-bottom:0}.cs-post__article li+li{margin-top:10px}.cs-post__article ul{margin:24px 0;padding-left:30px}.cs-post__article ul li{text-align:-webkit-match-parent;line-height:28px;list-style:disc}.cs-post__article ul li ul li{list-style:circle}.cs-post__article ol{margin:24px 0;padding-left:40px}.cs-post__article ol li{list-style:decimal}.cs-post__article img{display:block;margin:50px auto;max-width:80%;height:auto}.cs-post__article table{display:inline-block;margin:0 0 24px;max-width:100%;border:1px solid #dee2e6;overflow:scroll}.cs-post__article table thead tr th{padding:12px;font-weight:700;color:#495057;background-color:#e9ecef;border-bottom:2px solid #dee2e6}.cs-post__article table thead tr th+th{border-left:1px solid #dee2e6}.cs-post__article table tbody tr td{padding:12px}.cs-post__article table tbody tr td+td{border-left:1px solid #dee2e6}.cs-post__article table tbody tr+tr{border-top:1px solid #dee2e6}body[data-v-447e03ac]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-447e03ac]{font-weight:700}body.dark[data-v-447e03ac]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-447e03ac]{font-weight:400}body.dark img[data-v-447e03ac]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-447e03ac]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-447e03ac]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-447e03ac]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-447e03ac]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-447e03ac],.cs-title sup[data-v-447e03ac]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-447e03ac]{position:relative;top:-12px}.cs-text[data-v-447e03ac]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-447e03ac]{text-decoration:underline}.cs-text small[data-v-447e03ac]{font-size:.6em}.cs-list[data-v-447e03ac]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-447e03ac]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-447e03ac]{float:left}.fr[data-v-447e03ac]{float:right}a[data-v-447e03ac]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-447e03ac],h2[data-v-447e03ac],h3[data-v-447e03ac],h4[data-v-447e03ac],h5[data-v-447e03ac],h6[data-v-447e03ac]{font-family:Montserrat,serif}h1 a[data-v-447e03ac],h2 a[data-v-447e03ac],h3 a[data-v-447e03ac],h4 a[data-v-447e03ac],h5 a[data-v-447e03ac],h6 a[data-v-447e03ac]{color:var(--text-title)}h1 .cs-header-anchor[data-v-447e03ac],h2 .cs-header-anchor[data-v-447e03ac],h3 .cs-header-anchor[data-v-447e03ac],h4 .cs-header-anchor[data-v-447e03ac],h5 .cs-header-anchor[data-v-447e03ac],h6 .cs-header-anchor[data-v-447e03ac]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-447e03ac],h2:hover .cs-header-anchor[data-v-447e03ac],h3:hover .cs-header-anchor[data-v-447e03ac],h4:hover .cs-header-anchor[data-v-447e03ac],h5:hover .cs-header-anchor[data-v-447e03ac],h6:hover .cs-header-anchor[data-v-447e03ac]{opacity:1}.cs-toc-dom[data-v-447e03ac]{display:none}.cs-theme-toggle[data-v-447e03ac]{position:absolute;display:flex;align-items:center;justify-content:space-between;padding:0 4px;width:50px;height:24px;background-color:#0f1114;border-radius:500px;cursor:pointer}.cs-theme-toggle__icon[data-v-447e03ac]{width:16px;height:16px}.cs-theme-toggle__thumb[data-v-447e03ac]{position:absolute;top:1px;left:1px;width:22px;height:22px;background-color:#fff;border-radius:100%;transition:all .2s ease}.cs-theme-toggle.is-dark .cs-theme-toggle__thumb[data-v-447e03ac]{transform:translateX(26px);box-shadow:0 0 4px 2px var(--main)}body[data-v-011cff22]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-011cff22]{font-weight:700}body.dark[data-v-011cff22]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-011cff22]{font-weight:400}body.dark img[data-v-011cff22]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-011cff22]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-011cff22]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-011cff22]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-011cff22]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-011cff22],.cs-title sup[data-v-011cff22]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-011cff22]{position:relative;top:-12px}.cs-text[data-v-011cff22]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-011cff22]{text-decoration:underline}.cs-text small[data-v-011cff22]{font-size:.6em}.cs-list[data-v-011cff22]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-011cff22]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-011cff22]{float:left}.fr[data-v-011cff22]{float:right}a[data-v-011cff22]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-011cff22],h2[data-v-011cff22],h3[data-v-011cff22],h4[data-v-011cff22],h5[data-v-011cff22],h6[data-v-011cff22]{font-family:Montserrat,serif}h1 a[data-v-011cff22],h2 a[data-v-011cff22],h3 a[data-v-011cff22],h4 a[data-v-011cff22],h5 a[data-v-011cff22],h6 a[data-v-011cff22]{color:var(--text-title)}h1 .cs-header-anchor[data-v-011cff22],h2 .cs-header-anchor[data-v-011cff22],h3 .cs-header-anchor[data-v-011cff22],h4 .cs-header-anchor[data-v-011cff22],h5 .cs-header-anchor[data-v-011cff22],h6 .cs-header-anchor[data-v-011cff22]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-011cff22],h2:hover .cs-header-anchor[data-v-011cff22],h3:hover .cs-header-anchor[data-v-011cff22],h4:hover .cs-header-anchor[data-v-011cff22],h5:hover .cs-header-anchor[data-v-011cff22],h6:hover .cs-header-anchor[data-v-011cff22]{opacity:1}.cs-toc-dom[data-v-011cff22]{display:none}.cs-subscribe[data-v-011cff22]{display:flex;align-items:top;margin:40px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;background-color:var(--bg);box-shadow:var(--form-shadow);border-radius:6px;overflow:hidden}@media (max-width:500px){.cs-subscribe[data-v-011cff22]{flex-direction:column}}.cs-subscribe__wrapper[data-v-011cff22]{flex:1;padding:40px;background-color:var(--bg)}.cs-subscribe__wrapper[data-v-011cff22]:first-child{background-color:var(--bg-secondary)}.cs-subscribe__title[data-v-011cff22]{margin-bottom:20px;line-height:1.2;font-size:20px;font-weight:700}.cs-subscribe__describe[data-v-011cff22]{line-height:1.8;font-size:14px;font-weight:400}.cs-subscribe__icon[data-v-011cff22]{margin-top:20px;width:46px;height:46px}.cs-subscribe__input[data-v-011cff22]{display:block;padding:12px;width:100%;background-color:#fff;border:1px solid #e3e3e3;border-radius:4px}.cs-subscribe__input+.cs-subscribe__input[data-v-011cff22]{margin-top:10px}.cs-subscribe__input[data-v-011cff22]::-moz-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]:-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::placeholder{color:#bdbdbd}.cs-subscribe__submit-btn[data-v-011cff22]{margin:14px 0;padding:12px 24px;color:#fff;border-radius:500px;background-color:var(--main)}.cs-subscribe__submit-btn>span[data-v-011cff22]{font-weight:700}.cs-subscribe__tips[data-v-011cff22]{line-height:2;font-size:12px}body[data-v-08ff1539]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-08ff1539]{font-weight:700}body.dark[data-v-08ff1539]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-08ff1539]{font-weight:400}body.dark img[data-v-08ff1539]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-08ff1539]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-08ff1539]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-08ff1539]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-08ff1539]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-08ff1539],.cs-title sup[data-v-08ff1539]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-08ff1539]{position:relative;top:-12px}.cs-text[data-v-08ff1539]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-08ff1539]{text-decoration:underline}.cs-text small[data-v-08ff1539]{font-size:.6em}.cs-list[data-v-08ff1539]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-08ff1539]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-08ff1539]{float:left}.fr[data-v-08ff1539]{float:right}a[data-v-08ff1539]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-08ff1539],h2[data-v-08ff1539],h3[data-v-08ff1539],h4[data-v-08ff1539],h5[data-v-08ff1539],h6[data-v-08ff1539]{font-family:Montserrat,serif}h1 a[data-v-08ff1539],h2 a[data-v-08ff1539],h3 a[data-v-08ff1539],h4 a[data-v-08ff1539],h5 a[data-v-08ff1539],h6 a[data-v-08ff1539]{color:var(--text-title)}h1 .cs-header-anchor[data-v-08ff1539],h2 .cs-header-anchor[data-v-08ff1539],h3 .cs-header-anchor[data-v-08ff1539],h4 .cs-header-anchor[data-v-08ff1539],h5 .cs-header-anchor[data-v-08ff1539],h6 .cs-header-anchor[data-v-08ff1539]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-08ff1539],h2:hover .cs-header-anchor[data-v-08ff1539],h3:hover .cs-header-anchor[data-v-08ff1539],h4:hover .cs-header-anchor[data-v-08ff1539],h5:hover .cs-header-anchor[data-v-08ff1539],h6:hover .cs-header-anchor[data-v-08ff1539]{opacity:1}.cs-toc-dom[data-v-08ff1539]{display:none}.cs-statement[data-v-08ff1539]{text-align:center;font-size:14px}.cs-statement hr[data-v-08ff1539]{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-statement__text[data-v-08ff1539]{margin:8px 0;line-height:1.7;color:var(--text-normal)}.cs-statement__reward-code[data-v-08ff1539]{margin-top:50px;max-width:30%;height:auto}@media (max-width:375px){.cs-statement .cs-statement__reward-code[data-v-08ff1539]{max-width:76%!important}}body[data-v-2002d74b]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-2002d74b]{font-weight:700}body.dark[data-v-2002d74b]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-2002d74b]{font-weight:400}body.dark img[data-v-2002d74b]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-2002d74b]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-2002d74b]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-2002d74b]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-2002d74b]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-2002d74b],.cs-title sup[data-v-2002d74b]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-2002d74b]{position:relative;top:-12px}.cs-text[data-v-2002d74b]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-2002d74b]{text-decoration:underline}.cs-text small[data-v-2002d74b]{font-size:.6em}.cs-list[data-v-2002d74b]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-2002d74b]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-2002d74b]{float:left}.fr[data-v-2002d74b]{float:right}a[data-v-2002d74b]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-2002d74b],h2[data-v-2002d74b],h3[data-v-2002d74b],h4[data-v-2002d74b],h5[data-v-2002d74b],h6[data-v-2002d74b]{font-family:Montserrat,serif}h1 a[data-v-2002d74b],h2 a[data-v-2002d74b],h3 a[data-v-2002d74b],h4 a[data-v-2002d74b],h5 a[data-v-2002d74b],h6 a[data-v-2002d74b]{color:var(--text-title)}h1 .cs-header-anchor[data-v-2002d74b],h2 .cs-header-anchor[data-v-2002d74b],h3 .cs-header-anchor[data-v-2002d74b],h4 .cs-header-anchor[data-v-2002d74b],h5 .cs-header-anchor[data-v-2002d74b],h6 .cs-header-anchor[data-v-2002d74b]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-2002d74b],h2:hover .cs-header-anchor[data-v-2002d74b],h3:hover .cs-header-anchor[data-v-2002d74b],h4:hover .cs-header-anchor[data-v-2002d74b],h5:hover .cs-header-anchor[data-v-2002d74b],h6:hover .cs-header-anchor[data-v-2002d74b]{opacity:1}.cs-toc-dom[data-v-2002d74b]{display:none}.cs-toc[data-v-2002d74b]{display:inline-block;position:fixed;top:50%;left:50%;transform:translate3d(315px,-50%,0);max-height:550px;overflow-y:scroll}.cs-toc:hover .cs-toc__text[data-v-2002d74b]{opacity:1}.cs-toc__item[data-v-2002d74b]{height:16px;overflow:hidden}.cs-toc__item+.cs-toc__item[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor[data-v-2002d74b]{display:block;box-shadow:none}.cs-toc__anchor.is-active[data-v-2002d74b]:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor.is-active .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color);opacity:1}.cs-toc__text[data-v-2002d74b]{padding-left:16px;max-width:200px;overflow:hidden;line-height:1.4;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;font-size:13px;font-weight:700;color:var(--article-nav-text-color);white-space:nowrap;text-overflow:ellipsis;opacity:0;transition:opacity .5s}.cs-toc__anchor[data-v-2002d74b]:before,.cs-toc__text[data-v-2002d74b]{position:relative;top:-2px;display:inline-block;vertical-align:middle}.cs-toc__anchor[data-v-2002d74b]:before{content:"";width:16px;height:4px;border-radius:20px;background:var(--article-nav-dot-color);transition:background .5s}.cs-toc__anchor[data-v-2002d74b]:hover:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor:hover .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color)}.cs-toc__anchor+.cs-toc__anchor[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor--sub[data-v-2002d74b]:before{width:10px}.cs-toc__anchor--sub .cs-toc__text[data-v-2002d74b]{margin-left:6px;font-size:12px;font-weight:400}#__nuxt{position:relative;min-height:100%}body[data-v-11bea6b1]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-11bea6b1]{font-weight:700}body.dark[data-v-11bea6b1]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-11bea6b1]{font-weight:400}body.dark img[data-v-11bea6b1]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-11bea6b1]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-11bea6b1]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-11bea6b1]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-11bea6b1]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-11bea6b1],.cs-title sup[data-v-11bea6b1]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-11bea6b1]{position:relative;top:-12px}.cs-text[data-v-11bea6b1]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-11bea6b1]{text-decoration:underline}.cs-text small[data-v-11bea6b1]{font-size:.6em}.cs-list[data-v-11bea6b1]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-11bea6b1]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-11bea6b1]{float:left}.fr[data-v-11bea6b1]{float:right}a[data-v-11bea6b1]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-11bea6b1],h2[data-v-11bea6b1],h3[data-v-11bea6b1],h4[data-v-11bea6b1],h5[data-v-11bea6b1],h6[data-v-11bea6b1]{font-family:Montserrat,serif}h1 a[data-v-11bea6b1],h2 a[data-v-11bea6b1],h3 a[data-v-11bea6b1],h4 a[data-v-11bea6b1],h5 a[data-v-11bea6b1],h6 a[data-v-11bea6b1]{color:var(--text-title)}h1 .cs-header-anchor[data-v-11bea6b1],h2 .cs-header-anchor[data-v-11bea6b1],h3 .cs-header-anchor[data-v-11bea6b1],h4 .cs-header-anchor[data-v-11bea6b1],h5 .cs-header-anchor[data-v-11bea6b1],h6 .cs-header-anchor[data-v-11bea6b1]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-11bea6b1],h2:hover .cs-header-anchor[data-v-11bea6b1],h3:hover .cs-header-anchor[data-v-11bea6b1],h4:hover .cs-header-anchor[data-v-11bea6b1],h5:hover .cs-header-anchor[data-v-11bea6b1],h6:hover .cs-header-anchor[data-v-11bea6b1]{opacity:1}.cs-toc-dom[data-v-11bea6b1]{display:none}.cs-footer[data-v-11bea6b1]{position:absolute;bottom:0;left:0;right:0;margin:0 auto}.cs-footer__wrapper[data-v-11bea6b1]{margin:50px auto 0;padding:28px 21px;max-width:630px;font-family:Merriweather,Georgia,serif;font-size:14px;cursor:pointer}.cs-footer__wrapper>a[data-v-11bea6b1]{margin-right:5px;color:var(--main);box-shadow:0 1px 0 0 currentColor}@media (max-width:500px){.cs-footer__wrapper[data-v-11bea6b1]{text-align:center}}.cs-footer__bottom[data-v-11bea6b1]{display:flex;align-items:center;margin-top:40px;overflow:hidden}.cs-footer__logo[data-v-11bea6b1]{margin-right:10px;width:20px;height:20px}@media (max-width:500px){.cs-footer__slogan[data-v-11bea6b1] .cs-color-slogan__start-text{display:none}}body[data-v-a8c8150c]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-a8c8150c]{font-weight:700}body.dark[data-v-a8c8150c]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-a8c8150c]{font-weight:400}body.dark img[data-v-a8c8150c]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-a8c8150c]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-a8c8150c]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-a8c8150c]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-a8c8150c]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-a8c8150c],.cs-title sup[data-v-a8c8150c]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-a8c8150c]{position:relative;top:-12px}.cs-text[data-v-a8c8150c]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-a8c8150c]{text-decoration:underline}.cs-text small[data-v-a8c8150c]{font-size:.6em}.cs-list[data-v-a8c8150c]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-a8c8150c]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-a8c8150c]{float:left}.fr[data-v-a8c8150c]{float:right}a[data-v-a8c8150c]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-a8c8150c],h2[data-v-a8c8150c],h3[data-v-a8c8150c],h4[data-v-a8c8150c],h5[data-v-a8c8150c],h6[data-v-a8c8150c]{font-family:Montserrat,serif}h1 a[data-v-a8c8150c],h2 a[data-v-a8c8150c],h3 a[data-v-a8c8150c],h4 a[data-v-a8c8150c],h5 a[data-v-a8c8150c],h6 a[data-v-a8c8150c]{color:var(--text-title)}h1 .cs-header-anchor[data-v-a8c8150c],h2 .cs-header-anchor[data-v-a8c8150c],h3 .cs-header-anchor[data-v-a8c8150c],h4 .cs-header-anchor[data-v-a8c8150c],h5 .cs-header-anchor[data-v-a8c8150c],h6 .cs-header-anchor[data-v-a8c8150c]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-a8c8150c],h2:hover .cs-header-anchor[data-v-a8c8150c],h3:hover .cs-header-anchor[data-v-a8c8150c],h4:hover .cs-header-anchor[data-v-a8c8150c],h5:hover .cs-header-anchor[data-v-a8c8150c],h6:hover .cs-header-anchor[data-v-a8c8150c]{opacity:1}.cs-toc-dom[data-v-a8c8150c]{display:none}.cs-color-slogan[data-v-a8c8150c]{display:inline-block;position:relative;font-family:Merriweather,Georgia,serif;color:var(--text-normal);background-color:transparent}.cs-color-slogan__placeholder[data-v-a8c8150c]{opacity:0}.cs-color-slogan__wrapper[data-v-a8c8150c]{position:absolute;top:0;white-space:nowrap}</style><link rel="preload" href="/_nuxt/static/1600180271/post/develop-good-git-commit-habits/payload.js" as="script">
+  </head>
+  <body>
+    <div data-server-rendered="true" id="__nuxt"><!----><div id="__layout"><div><section class="cs-post cs-container"><div class="cs-theme-toggle cs-post__toggle is-dark" data-v-447e03ac><img src="/_nuxt/img/moon.b276b99.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <img src="/_nuxt/img/sun.9e5c5e6.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <button class="cs-theme-toggle__thumb" data-v-447e03ac></button></div> <h3 class="cs-post__blog-name"><a href="/" class="nuxt-link-active">Curtis' Spot</a></h3> <h2 class="cs-post__title">何为「Git Commit」最佳姿势？</h2> <p class="cs-post__info">15, May, 2020 • 6k words • ☕️☕️☕️☕️☕️ 26 min read</p> <article class="cs-post__article"><p></p><div class="cs-toc-dom"><ul><li><a href="#xiancongtijiaogeshirushou">先从提交格式入手</a><ul><li><a href="#Commitmessagedegeshi">Commit message 的格式</a></li><li><a href="#shiyongtijiaofuzhugongju">使用提交辅助工具</a></li><li><a href="#qiangzhixiaoyantijiaogeshi">强制校验提交格式</a></li></ul></li><li><a href="#guifanhebingtuisongliucheng">规范合并推送流程</a><ul><li><a href="#shiyongrebasehebing">使用 rebase 合并</a></li><li><a href="#yuanchengmasterfenzhiquanxiankongzhi">远程 master 分支权限控制</a></li><li><a href="#helifencha">合理分叉</a></li></ul></li><li><a href="#jieyan">结言</a></li></ul></div><p></p>
+<p>大部分技术团队都会选择 git 来作为代码库的版本管理工具，但是由于规范的缺失和技术人员 git 技能不达标的原因，很容易写出很敷衍潦草的「commit」描述和随意地合并推送到远程分支，导致「git log」日志看起来乱糟糟的。在项目工程化的角度而言，一个规范清晰的的「git log」日志是很重要的，因为它反映了项目是如何紧跟业务进行一步步迭代下来的，就像是软件开发的航海日志、黑匣子，在遇到「风浪」时，能快速定位问题和进行版本回退。</p>
+<p>首先来看一段 <a href="https://github.com/vuejs/vue" target="_blank">Vue</a> 的「git log」记录，它长这样：</p>
+<pre class="language-bash"><code class="language-bash">* 7721febc (tag: v2.6.0-beta.3) build: release 2.6.0-beta.3 - Evan You, 1 year, 5 months ago
+* 9f3cbafa build: build 2.6.0-beta.3 - Evan You, 1 year, 5 months ago
+* 2afa1d05 build: fix feature flags for esm builds - Evan You, 1 year, 5 months ago
+* c9e3a5d1 feat: detect and warn invalid dynamic argument expressions - Evan You, 1 year, 5 months ago
+* 624c7993 (tag: v2.6.0-beta.2) build: release 2.6.0-beta.2 - Evan You, 1 year, 5 months ago
+* 90f47d1b build: build 2.6.0-beta.2 - Evan You, 1 year, 5 months ago
+* dbc05825 feat: dynamic directive arguments for v-on, v-bind and custom directives (#9373) - Evan You, 1 year, 5 months ago
+* f219beda perf: improve scoped slots change detection accuracy (#9371) - Evan You, 1 year, 5 months ago
+| * 8b8921b2 (origin/dynamic-directive-arguments) feat: dynamic args for custom directives - Evan You, 1 year, 5 months ago
+| * 2910d401 test: test cases for v-on/v-bind dynamic arguments - Evan You, 1 year, 5 months ago
+| * 49c6f29f refactor: v-bind dynamic arguments use bind helper - Evan You, 1 year, 5 months ago
+| * 5b5f6663 test: fix tests, resolve helper conflict - Evan You, 1 year, 5 months ago
+| * 2ba897eb fix: fix middle modifier - Evan You, 1 year, 5 months ago
+| * 5cb59b1f feat: handle dynamic argument for v-bind.sync - Evan You, 1 year, 5 months ago
+| * c6f480ca feat: dynamic directive arguments for v-bind and v-on - Evan You, 1 year, 5 months ago
+|/
+| * d91a38ab (origin/slot-optimization) perf: improve scoped slots change detection accuracy - Evan You, 1 year, 5 months ago
+|/
+* 770c6ed6 refactor: extend dom-props update skip to more all keys except value - Evan You, 1 year, 5 months ago
+* 18685614 fix: fix checkbox event edge case in Firefox - Evan You, 1 year, 5 months ago
+* 8cb2069a test: fix tests in IE/Edge - Evan You, 1 year, 5 months ago
+* 32072e8a refactor: simplify timestamp check - Evan You, 1 year, 5 months ago
+* 60a277ca chore: update comment - Evan You, 1 year, 5 months ago
+* ba0ebd47 fix: async edge case fix should apply to more browsers - Evan You, 1 year, 5 months ago
+* ba9907c7 chore: update sponsor - Evan You, 1 year, 6 months ago
+* 8d845724 feat: warning for ambiguous v-slot usage - Evan You, 1 year, 6 months ago
+</code></pre><p>提交描述清晰，规范整洁。</p>
+<p>但是我们看过的大多数「git log」日志却是下面这样的：</p>
+<pre class="language-bash"><code class="language-bash">| * | | | | | | e63cdb7f htmlPlugin baseConf 中引入 - lisi, 8 months ago
+| * | | | | | |   d6481470 Merge remote-tracking branch 'origin/master' into build-merge - lisi, 8 months ago
+| |\ \ \ \ \ \ \
+| * | | | | | | | 551b601b 商品详情富文本图片懒加载 - lisi, 8 months ago
+| * | | | | | | |   804b8589 Merge branch 'master' into build-merge - lisi, 8 months ago
+| |\ \ \ \ \ \ \ \
+| * | | | | | | | | dd7b66b9 cacheLoader - lisi, 8 months ago
+| * | | | | | | | | 0e91b705 构建脚本 - lisi, 8 months ago
+| * | | | | | | | | 552d8576 sass 深度选择器 /deep/ => >>> - lisi, 8 months ago
+| * | | | | | | | | f29a0dbb 改目录结构 - lisi, 8 months ago
+* | | | | | | | | |   a930dda2 (tag: v20191119) Merge branch 'alipayFix' into 'master' - wangwu, 8 months ago
+|\ \ \ \ \ \ \ \ \ \
+| |_|_|/ / / / / / /
+|/| | | | | | | / /
+| | |_|_|_|_|_|/ /
+| |/| | | | | | |
+| * | | | | | | | 2d29a500 支付宝提示文案 - lisi, 8 months ago
+| | |_|_|_|_|/ /
+| |/| | | | | |
+| * | | | | | | a6313a9e 混合支付 支付宝提示框 - lisi, 8 months ago
+| | |_|_|_|/ /
+| |/| | | | |
+| * | | | | | 75b452e3 默认选中支付方式 - lisi, 8 months ago
+| | |_|_|/ /
+| |/| | | |
+| * | | | | a1d3de5e payTypeShow 隐藏支付宝 - lisi, 8 months ago
+| | |_|/ /
+| |/| | |
+| * | | | a0358dde 下线 支付宝支付 - lisi, 8 months ago
+|/ / / /
+* | | |   6be57861 Merge branch 'patch-1' into 'master' - zhangsan, 8 months ago
+|\ \ \ \
+| |_|/ /
+|/| | |
+| * | | 4e8f204b (origin/patch-1) 去营销 - zhangsan, 8 months ago
+|/ / /
+* | |   18ea26e4 Merge branch '20191114' into 'master' - zhangsan, 8 months ago
+|\ \ \
+| * | | d03b6d09 (origin/20191114) getKamiGoodsSpu - lisi, 8 months ago
+</code></pre><p>多个提交出现了类似 “cacheLoader” 这样看起来莫名其妙的描述，过期的分支没有及时删除，多分支合并扰乱视线，整个记录看起来就像是一张「蜘蛛网」，如果要回溯一个业务功能的迭代过程，会让人很抓狂。</p>
+<p>仔细观察 Vue 的「git log」日志，不难发现它的的优点主要有四个：</p>
+<ul>
+<li><strong>Commit 描述清晰，第一个单词说明此次提交的类别，后续描述第一个单词以 <strong><em>动词</em></strong>（一般现在时）开头；</strong></li>
+<li><strong>整个记录随合并时间呈 <strong><em>单支线性</em></strong> 向上累加，没有出现过期的，扰乱视线的分叉；</strong></li>
+<li>如果是 issue 相关，每个提交后面会紧跟 issue 的 hash tag（可选）；</li>
+<li>当需要发布版本时，以版本号打上 tag 标记（可选）；</li>
+<li>除了简短描述外，还有详细的描述（可选）；</li>
+</ul>
+<p>第三点到最后一点都是可选的，只要做到前面点就可以拥有一份整洁清晰的「git log」记录了，下面开始对实现这两点的方式进行探讨。</p>
+<h2 id="xiancongtijiaogeshirushou"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xiancongtijiaogeshirushou")'>¶</a> 先从提交格式入手</h2>
+<p>那么 vue 是怎么做到提交格式这么规范统一的呢？作为多人协作的开源库，靠约定和人为自觉肯定是不现实的。打开 vue 项目的 package.json 可以发现几个关键的地方，vue 使用了<a href="https://github.com/commitizen/cz-cli" target="_blank">「commitizen」</a>来代替「git commit」进行代码提交，使用<a href="https://github.com/commitizen/cz-conventional-changelog" traget="_blank">「cz-conventional-changelog」</a>来指定「commitizen」的 Adapter。最后，在 git 的<a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank">「commit-msg」钩子</a>指定了一个「commit」描述验证脚本<a href="https://github.com/vuejs/vue/blob/dev/scripts/verify-commit-msg.js" target="_blank">verify-commit-msg.js</a>，当脚本返回的值以非零值退出，就会提交失败，以一种强制的方式进行把关。</p>
+<pre class="language-json"><code class="language-json">{
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "conventional-changelog": "^1.1.3",
+    "cz-conventional-changelog": "^2.0.0"
+  },
+  "gitHooks": {
+    "commit-msg": "node scripts/verify-commit-msg.js"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
+</code></pre><h3 id="Commitmessagedegeshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Commitmessagedegeshi")'>¶</a> Commit message 的格式</h3>
+<p>首先来说说格式的规范，目前社区有很多「Commit message」的写法规范，从 vue 的 package.json 使用的<a href="https://github.com/commitizen/cz-conventional-changelog" traget="_blank">「cz-conventional-changelog」</a>可以得知，vue 使用的是<a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines" target="_blank">Angular 规范</a>。</p>
+<p>Angular 规范指定了「Commit message」包括三个部分：Header，Body 和 Footer。</p>
+<pre class="language-xml"><code class="language-xml">&lt;type>(&lt;scope>): &lt;subject>
+&lt;BLANK LINE>
+&lt;body>
+&lt;BLANK LINE>
+&lt;footer>
+</code></pre><h4 id="Header"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Header")'>¶</a> Header</h4>
+<p>Header 部分只有一行，包括三个字段：<code>type</code>（必需）、<code>scope</code>（可选）和<code>subject</code>（必需）。</p>
+<p><strong>1.<code>type</code>用于说明 commit 的类别，只允许使用下面 7 个标识:</strong></p>
+<pre class="language-bash"><code class="language-bash">- feat：新功能（feature）
+- fix：修补bug
+- docs：文档（documentation）
+- style： 格式（不影响代码运行的变动）
+- refactor：重构（即不是新增功能，也不是修改bug的代码变动）
+- perf: 性能优化
+- test：增加测试
+- chore：构建过程或辅助工具的变动
+</code></pre><p><strong>2.<code>scope</code>用于说明此次提交影响的范围，比如数据层、控制层、视图层等等，视项目而定。</strong></p>
+<p><strong>3.<code>subject</code>是 commit 目的的简短描述，不超过 <strong><em>100</em></strong> 个字符。</strong></p>
+<pre class="language-bash"><code class="language-bash">- 以动词开头，使用第一人称现在时，比如change，而不是changed或changes
+- 第一个字母小写
+- 结尾不加句号（.）
+</code></pre><h4 id="Body"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Body")'>¶</a> Body</h4>
+<p>Body 部分是对本次 commit 的详细描述，可以分成多行。取一个 vue 的提交作为例子：</p>
+<pre data-line="7-10,12-17" class="language-bash"><code data-line="7-10,12-17" class="language-bash">* commit b9de23b1008b52deca7e7df40843e318a42f3f53
+| Author: Evan You &lt;yyx990803@gmail.com>
+| Date:   Tue Feb 5 22:16:55 2019 -0500
+|
+|     fix: async component should use render owner as force update context
+|
+|     Previously, an async component uses its lexical owner as the force
+|     update context. This works when the async component is rendered in a
+|     scoped slot because in the past parent components always force update
+|     child components with any type of slots.
+|
+|     After the optimization in
+|     f219bed though, child components with only scoped slots are no longer
+|     force-updated, and this cause async components inside scoped slots to
+|     not trigger the proper update. Turns out they should have used the
+|     actual render owner (the component that invokes the scoped slot) as the
+|     force update context all along.
+|
+|     fix #9432
+</code></pre><p>这里有几个注意的点：</p>
+<ul>
+<li>动词使用第一人称现在时，使用 fix, add, change 而不是 fixed, added, changed</li>
+<li>第二行是空行</li>
+<li>用换行来分割提交信息</li>
+<li>说明代码变动的动机，以及与以前行为的对比</li>
+</ul>
+<h4 id="Footer"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Footer")'>¶</a> Footer</h4>
+<p>Footer 部分可能会存在两种情况。</p>
+<h6 id="1bujianrongbiandong"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#1bujianrongbiandong")'>¶</a> 1.不兼容变动</h6>
+<p>如果当前代码与上一个版本不兼容，则 Footer 部分以<code>BREAKING CHANGE</code>开头，后面是对变动的描述、以及变动理由和迁移方法。</p>
+<pre data-line="11" class="language-bash"><code data-line="11" class="language-bash">* commit 8bbd337eab7d54c82327159c41ac975f805e28f5 (HEAD -> master)
+| Author: CurtisLiong &lt;lkangd@gmail.com>
+| Date:   Thu Jul 9 19:13:49 2020 +0800
+|
+|     feat(scope): here is a short description
+|
+|     here is the first paragraph.
+|
+|     here is the second paragraph.
+|
+|     BREAKING CHANGE: here is a description about breaking changes
+|
+|     fix #123
+</code></pre><h6 id="2guanbiIssue"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#2guanbiIssue")'>¶</a> 2.关闭 Issue</h6>
+<p>如果当前 commit 针对某些 issue，那么可以在 Footer 部分关闭这些相关的 issue。</p>
+<pre data-line="13" class="language-bash"><code data-line="13" class="language-bash">* commit 8bbd337eab7d54c82327159c41ac975f805e28f5 (HEAD -> master)
+| Author: CurtisLiong &lt;lkangd@gmail.com>
+| Date:   Thu Jul 9 19:13:49 2020 +0800
+|
+|     feat(scope): here is a short description
+|
+|     here is the first paragraph.
+|
+|     here is the second paragraph.
+|
+|     BREAKING CHANGE: here is a description about breaking changes
+|
+|     fix #123, #456
+</code></pre><h4 id="teshuqingkuang"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#teshuqingkuang")'>¶</a> 特殊情况</h4>
+<p>「cz-conventional-changelog」的实现对前面 Header 的<code>type</code>部分增加了选项：</p>
+<pre class="language-bash"><code class="language-bash">- build：影响构建系统或外部依赖项的更改（如：gulp，webpack，npm）
+- ci：构建过程或辅助工具的变动
+- revert：恢复到之前的提交
+</code></pre><p>其中使用 revert 时以<code>Revert</code>开头，后面跟着被撤销的 commit 的 Header，在 Footer 部分添加恢复的 commit 的 hash 号。</p>
+<pre data-line="7" class="language-bash"><code data-line="7" class="language-bash">* commit 80cc0a1f176f4eb6186d482e578a87af69b22b6d (HEAD -> master)
+| Author: CurtisLiong &lt;lkangd@gmail.com>
+| Date:   Thu Jul 9 19:42:57 2020 +0800
+|
+|     Revert "feat(scope): here is a short description"
+|
+|     This reverts commit 8bbd337eab7d54c82327159c41ac975f805e28f5.
+</code></pre><h3 id="shiyongtijiaofuzhugongju"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shiyongtijiaofuzhugongju")'>¶</a> 使用提交辅助工具</h3>
+<p>了解了规范之后，接下来就是用工具来帮助我们提交时严格执行规范。这里主要介绍「commitizen」的使用。</p>
+<h4 id="Commitizen"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Commitizen")'>¶</a> Commitizen</h4>
+<p>先使用 npm 命令进行安装，可进行全局安装或者根据项目安装,</p>
+<p>全局安装：</p>
+<pre class="language-bash"><code class="language-bash"># 安装 commitizen 和 cz-conventional-changelog
+npm i -g commitizen cz-conventional-changelog
+</code></pre><p>在系统用户目录下创建.czrc 文件，并输入一下内容：</p>
+<pre class="language-json"><code class="language-json">{ "path": "cz-conventional-changelog" }
+</code></pre><p>项目安装：</p>
+<pre class="language-bash"><code class="language-bash"># 安装 commitizen 和 cz-conventional-changelog
+npm i commitizen cz-conventional-changelog -D
+</code></pre><p>然后在项目目录中的 package.json 文件内配置以下内容：</p>
+<pre class="language-json"><code class="language-json">{
+  "scripts": {
+    "commit": "git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
+</code></pre><p>提交的时候使用<code>git cz</code>（全局）或者<code>npm run commit</code>（项目）来代替<code>git commit</code>，效果如下：</p>
+<p><img src="_nuxt/img/pic-git-commitizen.b98d059.png" alt=""></p>
+<p>「commitizen」提供了一个交互式的 git 提交流程，保证了提交者不会因为一时疏忽而做出违反规范的提交行为。</p>
+<h3 id="qiangzhixiaoyantijiaogeshi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#qiangzhixiaoyantijiaogeshi")'>¶</a> 强制校验提交格式</h3>
+<p>上面提到 vue 会在「commit-msg」钩子校验提交格式是否合格。如果你也想更进一步，可以使用<a href="https://github.com/conventional-changelog/commitlint#readme" target="_blank">「commitlint」</a>结合 <a href="https://github.com/typicode/husky#readme" target="_blank">「husky」</a>来进行强制校验提交格式。</p>
+<ol>
+<li>安装依赖：</li>
+</ol>
+<pre class="language-bash"><code class="language-bash">npm i @commitlint/cli @commitlint/config-conventional husky -D
+</code></pre><ol start="2">
+<li>在项目根目录创建 commitlint 配置文件：commitlint.config.js：</li>
+</ol>
+<pre class="language-javascript"><code class="language-javascript">module.exports = {
+  extends: ['@commitlint/config-conventional'], // @commitlint/config-conventional Angular 规范
+};
+</code></pre><ol start="3">
+<li>在项目根目录创建 husky 配置文件：husky.config.js：</li>
+</ol>
+<pre class="language-javascript"><code class="language-javascript">module.exports = {
+  hooks: {
+    'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS', // 在 commit-msg 钩子校验提交格式
+  },
+};
+</code></pre><hr>
+<h2 id="guifanhebingtuisongliucheng"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#guifanhebingtuisongliucheng")'>¶</a> 规范合并推送流程</h2>
+<p>解决了「commit」格式规范的问题之后，接下来就是分支合并的事情了。一般情况下，开发者在本地进行新需求的开发或者 bug 修复之后，需要合并分支到测试分支或者远端主分支。常规会进行一下命令：</p>
+<pre class="language-bash"><code class="language-bash">~/FE-Project/git-test>git branch # 查看当前分支
+* feature-some
+  master
+~/FE-Project/git-test>git checkout master # 切换到 master 分支
+~/FE-Project/git-test>git merge feature-some # 合并功能分支，此时可能需要解决冲突
+~/FE-Project/git-test>git pull # 拉取最新的远端主分支代码，此时可能需要解决冲突
+~/FE-Project/git-test>git push # 推送分支，此时如果又有人更新代码的话，需要重新拉取解决冲突后才能推送
+</code></pre><p>此时，按照 git 的默认策略，如果远程分支和本地分支之间的提交线图有分叉的话（即不是 fast-forwarded），git 会执行一次 merge 操作，因此产生一次没意义的提交记录，从而产生了下面所示的混乱。</p>
+<pre data-line="2" class="language-bash"><code data-line="2" class="language-bash">| * | | | | | | e63cdb7f htmlPlugin baseConf 中引入 - lisi, 8 months ago
+| * | | | | | |   d6481470 Merge remote-tracking branch 'origin/master' into build-merge - lisi, 8 months ago
+| |\ \ \ \ \ \ \
+| * | | | | | | | 551b601b 商品详情富文本图片懒加载 - lisi, 8 months ago
+| * | | | | | | |   804b8589 Merge branch 'master' into build-merge - lisi, 8 months ago
+</code></pre><p>产生这个原因的本质原因是，<code>git pull</code>命令其实是一个组合命令，在你敲下回车时，这个命令会依次执行两个命令：</p>
+<pre class="language-bash"><code class="language-bash">git fetch # 拉取远程代码
+git merge # 将远程分支与本地分支合并
+</code></pre><p>用线图表示就像是这样的，其中<code>F'</code>就是类似<code>Merge remote-tracking branch 'origin/master' into ...</code>的记录：</p>
+<pre class="language-bash"><code class="language-bash"># after feature-some committed
+A---B---C origin/master
+
+A---B master
+     \
+      D---E feature-some
+
+# after feature-some merge to master
+A---B---C origin/master
+
+A---B---D---E master
+     \
+      D---E feature-some
+
+# after master pull
+      A---B---C origin/master
+         /     \
+A---B---D---E---F master
+     \
+      D---E feature-some
+
+# after master push
+      A---B---C---F' origin/master
+         /       /
+A---B---D---E---F master
+     \
+      D---E feature-some
+</code></pre><h3 id="shiyongrebasehebing"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shiyongrebasehebing")'>¶</a> 使用 rebase 合并</h3>
+<p>要解决这样的问题，唯一的做法就是使用<a href="https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%8F%98%E5%9F%BA" target="_blank"><code>变基</code></a>，也就是<code>rebase</code>来进行分支合并，使用变基分两种情况：</p>
+<p><strong>1.拉取时变基合并</strong><br>
+依旧是运行上面一系列命令，但是在「git pull」的时候加上「--rebase」选项：</p>
+<pre data-line="6" class="language-bash"><code data-line="6" class="language-bash">~/FE-Project/git-test>git branch # 查看当前分支
+* feature-some
+  master
+~/FE-Project/git-test>git checkout master # 切换到 master 分支
+~/FE-Project/git-test>git merge feature-some # 合并功能分支，此时可能需要解决冲突
+~/FE-Project/git-test>git pull --rebase # 拉取最新的远端主分支代码，使用“--rebase”选项，此时可能需要解决冲突
+~/FE-Project/git-test>git push # 推送分支，此时如果又有人更新代码的话，需要重新拉取解决冲突后才能推送
+</code></pre><p>这个时候 master 分支看起来就是线性的了：</p>
+<pre class="language-bash"><code class="language-bash"># after feature-some committed
+A---B---C origin/master
+
+A---B master
+     \
+      D---E feature-some
+
+# after feature-some merge to master
+A---B---C origin/master
+
+A---B---D---E master
+     \
+      D---E feature-some
+
+# after master pull --rebase
+A---B---C origin/master
+
+A---B---C---D'---E' master
+         \
+          D---E feature-some
+
+# after master push
+A---B---C---D'---E' origin/master
+
+A---B---C---D'---E' master
+         \
+          D---E feature-some
+</code></pre><p><strong>2.拉取后变基合并</strong><br>
+这个做法步骤会更多，操作顺序是先更新本地「master」分支，然后在「feature-some」分支以更新完最新状态的本地「master」分支为基点进行变基，解决完冲突后再合并回本地「master」分支进行推送：</p>
+<pre data-line="7" class="language-bash"><code data-line="7" class="language-bash">~/FE-Project/git-test>git branch # 查看当前分支
+* feature-some
+  master
+~/FE-Project/git-test>git checkout master # 切换到 master 分支
+~/FE-Project/git-test>git pull # 拉取最新的远端主分支代码
+~/FE-Project/git-test>git checkout feature-some # 切换到 feature-some 分支
+~/FE-Project/git-test>git rebase master #  对 feature-some 分支以 master 分支为目标变基，此时可能需要解决冲突
+~/FE-Project/git-test>git checkout master # 切换到 master 分支
+~/FE-Project/git-test>git merge feature-some # 合并功能分支
+~/FE-Project/git-test>git push # 推送分支，此时如果又有人更新代码的话，需要重新拉取解决冲突后才能推送
+</code></pre><p>流程分析结果：</p>
+<pre class="language-bash"><code class="language-bash"># after feature-some committed
+A---B---C origin/master
+
+A---B master
+     \
+      D---E feature-some
+
+# after master pull
+A---B---C origin/master
+
+A---B---C master
+     \
+      D---E feature-some
+
+# after feature-some rebase from master
+A---B---C origin/master
+
+A---B---C master
+         \
+          D'---E' feature-some
+
+# after feature-some merge to master
+A---B---C origin/master
+
+A---B---C---D'---E' master
+         \
+          D'---E' feature-some
+
+# after master push
+A---B---C---D'---E' origin/master
+
+A---B---C---D'---E' master
+         \
+          D'---E' feature-some
+</code></pre><p>推荐使用第二种做法，因为你不知道从远程分支拉取过来的代码会出现怎样的情况，当出现大量冲突时，处理起来比较棘手。相对来说，第二种做法更加可控，而且在切换回「master」分支去拉取代码之前，可以使用「git stash」进行代码的<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E8%B4%AE%E8%97%8F%E4%B8%8E%E6%B8%85%E7%90%86" target="_blank">贮藏</a>，贮藏之后的代码肯定是干净的，且和 「master」拉取前的状态是同步的，所以此时「git rebase master」不会有任何冲突。这时在「feature-some」分支应用刚刚的贮藏就可以达到上面同样的效果，此时如果有冲突的话还是需要解决，但是你可以根据冲突的原因决定是否修改你新增的代码或者预想的提交信息，这是一种更加灵活可控的方法。</p>
+<pre class="language-bash"><code class="language-bash">~/FE-Project/git-test>git branch # 查看当前分支
+* feature-some
+  master
+~/FE-Project/git-test>git add . # 添加所有变动文件到暂存区
+~/FE-Project/git-test>git stash # 贮藏暂存区的所有文件
+~/FE-Project/git-test>git checkout master # 切换到 master 分支
+~/FE-Project/git-test>git pull # 拉取最新的远端主分支代码
+~/FE-Project/git-test>git checkout feature-some # 切换到 feature-some 分支
+~/FE-Project/git-test>git rebase master #  对 feature-some 分支以 master 分支为目标变基，此时可能需要解决冲突
+~/FE-Project/git-test>git stash pop # 应用贮藏
+~/FE-Project/git-test>npm run commit # commit 提交
+~/FE-Project/git-test>git checkout master # 切换到 master 分支
+~/FE-Project/git-test>git merge feature-some # 合并功能分支
+~/FE-Project/git-test>git push # 推送分支，此时如果又有人更新代码的话，需要重新拉取解决冲突后才能推送
+</code></pre><h4 id="hebingqianxiugaiCommit"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#hebingqianxiugaiCommit")'>¶</a> 合并前修改 Commit</h4>
+<p>圣人千虑，必有一失，就算熟读了规范，应用了工具帮助「commit」，也总会出现需要修改「commit」的时候，比如：</p>
+<ul>
+<li>「commit」的类型/描述/issue 填写(选)错了；</li>
+<li>「commit」了之后才发现添加少了文件；</li>
+<li>多个「commit」其实加起来都只实现了一个功能；</li>
+<li>因为有紧急 bug 需要处理而必须先搁置当前正在开发的代码而又不想使用贮藏；</li>
+<li>...</li>
+</ul>
+<p>什么情况都有可能发生，这些常见突发状况可以总结为一下三种类型，对应的处理方法一并给出。</p>
+<p><strong>1.只修改「commit」信息：</strong></p>
+<pre data-line="3" class="language-bash"><code data-line="3" class="language-bash"># 再次执行 commit 命令同时添加“--amend”指令
+~/FE-Project/git-test>git commit --amend
+fix: bug fix readme
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Fri Jul 10 00:33:23 2020 +0800
+#
+# On branch feature-some
+# Changes to be committed:
+#       modified:   README.md
+#
+
+</code></pre><p>出现这个界面直接用 vi 的方式修改「commit」信息，然后用<code>:wq</code>命令保存退出就可以了。</p>
+<p><strong>2.需要「commit」的文件少了：</strong></p>
+<pre data-line="3" class="language-bash"><code data-line="3" class="language-bash"># 这种情况和上面是类似的，但是在执行“git commit --amend”前先把文件添加到暂存区
+~/FE-Project/git-test>touch additional.js # 模拟新增文件
+~/FE-Project/git-test>echo 'some code' > additional.js # 模拟新增代码
+~/FE-Project/git-test>git add additional.js # 添加遗漏的文件到暂存区
+~/FE-Project/git-test>git commit --amend
+fix: bug fix readme
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Fri Jul 10 00:33:23 2020 +0800
+#
+# On branch feature-some
+# Changes to be committed:
+#       modified:   README.md
+#
+
+</code></pre><p><strong>3.合并多个「commit」记录：</strong></p>
+<pre data-line="3-5" class="language-bash"><code data-line="3-5" class="language-bash"># 使用“git rebase -i”命令来进行多个提交的修改，这时候可以看到三个提交信息以「从旧到新，从上往下」的方式进行分行显示
+~/FE-Project/git-test>git rebase -i HEAD~3 # 修改最后三个「commit」记录
+pick 3c280ae revert(scope): short
+pick 80cc0a1 Revert "feat(scope): here is a short description"
+pick ea97323 fix: bug fix readme
+
+# Rebase 8bbd337..ea97323 onto 8bbd337 (3 commands)
+#
+# Commands:
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# x, exec = run command (the rest of the line) using shell
+# d, drop = remove commit
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.
+#
+# Note that empty commits are commented out
+</code></pre><p>需要合并三个「commit」的话，需要将第二三行的「pick」修改为「squash」，使用<code>:wq</code>保存退出,</p>
+<pre data-line="1-3" class="language-bash"><code data-line="1-3" class="language-bash">pick 3c280ae revert(scope): short
+squash 80cc0a1 Revert "feat(scope): here is a short description"
+squash ea97323 fix: bug fix readme and some additional operation
+</code></pre><p>git 应用所有的三次修改然后将你放到编辑器中来合并三次提交信息：</p>
+<pre class="language-bash"><code class="language-bash">feat: short
+
+long
+
+BREAKING CHANGE: beaking
+
+fix #123
+
+feat(scope): here is a short description
+
+here is the first paragraph
+
+BREAKING CHANGE: here is a description about breaking changes
+
+fix #123
+
+revert(scope): short
+
+long
+
+Revert "feat(scope): here is a short description"
+
+This reverts commit 8bbd337eab7d54c82327159c41ac975f805e28f5.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Thu Jul 9 17:58:06 2020 +0800
+#
+# interactive rebase in progress; onto 99a56e3
+# Last command done (1 command done):
+#    squash 267e38a feat: test
+# Next command to do (1 remaining command):
+#    reword 496f422 fix: bug fix readme heiheihei
+# You are currently rebasing branch 'feature-some' on '99a56e3'.
+#
+# Changes to be committed:
+#       modified:   README.md
+#
+
+</code></pre><p>当你保存之后，你就拥有了一个包含前三次提交的全部变更的提交。</p>
+<p>关于「git rebase -i HEAD~[number]」的操作还有很多，比如它也可以做到重写「commit」信息、调整多个「commit」的先后顺序、拆分提交等等，篇幅有限，这里不再展开，如果有兴趣的话请狠狠点击<a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E9%87%8D%E5%86%99%E5%8E%86%E5%8F%B2" target="_blank">这里</a>学习。</p>
+<h4 id="zhuyi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhuyi")'>¶</a> 注意！</h4>
+<p>以上操作只能在本地分支的「commit」没有合并到远程分支前执行，所有与远程分支同步的「commit」都不可随意修改或合并，否者会给你的合作者带来各种神奇的麻烦，如果你一意孤行且敲下了罪恶的「git push --force」，你将会被世人所不齿，被人们所唾弃。三思。</p>
+<h3 id="yuanchengmasterfenzhiquanxiankongzhi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#yuanchengmasterfenzhiquanxiankongzhi")'>¶</a> 远程 master 分支权限控制</h3>
+<p>远程主分支和发布分支应该进严格的权限控制，只允许 master （管理员）的角色进行 commit 的合并，这些角色通常由小组负责人或项目负责人担任。其他代码贡献者（同事）设置为「developer」或其他对这些主要分支只有 <strong><em>访问</em></strong> 权限的角色。常用的 gitlab 设置如下图：</p>
+<p><img src="_nuxt/img/pic-git-lab-setting.6bb57c6.png" alt=""></p>
+<p>团队成员应该严格遵循团队内的「git workflow」（如果有的话），所有新需求或 bug 修复都应该在本地分支进行开发，开发完成后提交到测试分支或者远端「dev」分支，测试通过后，再由 master 角色的进行主要分支的合并。</p>
+<h3 id="helifencha"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#helifencha")'>¶</a> 合理分叉</h3>
+<p>当然，以千万级使用量的开源库来对我们平时进行业务开发的代码库进行硬性要求，难免存在不合理性，脱离了业务的开源库的每个提交都是基于新增功能或者修复 bug 性质的，而业务开发更多时候是伴随着一个「功能模块」进行开发测试的。</p>
+<p>比如业务需求增加了「积分」这一模块，这个「积分」模块可能涉及到多个功能模块的修改或者新增了一部分公共模块，这个时候如果还是「一条直线」的「git log」记录反而显得不那么清晰了。那么这时候可以使用「git merge --no-ff [branch-name]」命令来可以取消 git 默认的 「fast-forwarded」行为，进而刻意地创建一个「merge」类型的「commit」。</p>
+<p>情景分析：在接到「积分」模块开发任务的时候，首先基于「master」创建一条「points-module」分支。在开发并提交了三个「feature points」相关功能后，发现需要修改「feature-1」的 bug 以适应积分模块。当整个模块测试完成需要合并到「master」的时候，切换到「master」，执行「git merge --no-ff points-module」命令来进行合并，此时输入「add points module」来作为提交信息。</p>
+<p>结果如下所示：</p>
+<pre data-line="1" class="language-bash"><code data-line="1" class="language-bash">*   a1915ff (HEAD -> master)  add points module - CurtisLiong, 2 minutes ago
+|\
+| * af0b028 fix(feature-1.js): fix bug to adapt feature points - CurtisLiong, 4 minutes ago
+| * 5ca19a9 feat(feature-points-3.js): add feature points 3 - CurtisLiong, 7 minutes ago
+| * 8a85062 feat(feature-points-2.js): add feature points 2 - CurtisLiong, 8 minutes ago
+| * 87ae897 feat(feature-points-1.js): add feature points 1 - CurtisLiong, 8 minutes ago
+|/
+* 78c6ff0 feat(feature-1.js): add feature 1 - CurtisLiong, 13 minutes ago
+* 37d2d11 feat(whole project): project init - CurtisLiong, 14 minutes ago
+</code></pre><p>这样在回溯「积分」这个模块的开发过程的时候，就可以快速分辨出那些提交是属于「积分」这个模块的。</p>
+<hr>
+<h2 id="jieyan"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jieyan")'>¶</a> 结言</h2>
+<p>一套酣畅淋漓的打法下来，规范提交「commit」的姿势相信你已经掌握得七七八八。</p>
+<p>规范整洁的「git log」记录不仅可以给项目增加严谨性，还可以给项目带来快速方便回溯的好处，与此同时，也体现了我们作为编码工作者的专业性。</p>
+<p>如果你对上面使用到的 git 相关命令不熟悉的话，请飞速前往<a href="https://git-scm.com/book/zh/v2" target="_blank">git pro</a>学习，为了你的同事，也为了你自己，请务必增强自己的 git 技能。</p>
+</article> <hr> <div class="cs-post__link-wrapper"><a href="/post/design-patterns-in-javascript/" class="cs-outside-link">← Design Patterns In Javascript</a> <a href="/post/js-solid-principle/" class="cs-outside-link">代码整洁之道：JS 中的 S.O.L.I.D 原则 →</a></div> <hr> <form action="https://app.convertkit.com/forms/1488259/subscriptions" method="post" data-sv-form="1488259" data-uid="51a87aa3a3" data-format="inline" data-version="5" min-width="400 500 600 700" class="cs-subscribe cs-container" data-v-011cff22><div class="cs-subscribe__wrapper" data-v-011cff22><h3 class="cs-subscribe__title" data-v-011cff22>订阅本博客的最新内容</h3> <p class="cs-subscribe__describe" data-v-011cff22>如果我有新的想法，会第一时间通过邮件与你分享.</p> <svg xmlns="http://www.w3.org/2000/svg" class="cs-subscribe__icon icon sprite-icons" data-v-011cff22 data-v-011cff22><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" data-v-011cff22 data-v-011cff22></use></svg></div> <div class="cs-subscribe__wrapper" data-v-011cff22><input aria-label="Your first name" name="fields[first_name]" placeholder="你的昵称" required class="cs-subscribe__input" data-v-011cff22> <input type="email" name="email_address" aria-label="Your email address" placeholder="你的邮件地址" required class="cs-subscribe__input" data-v-011cff22> <button data-element="submit" class="cs-subscribe__submit-btn" data-v-011cff22><span data-v-011cff22>立即订阅</span></button> <p class="cs-subscribe__tips" data-v-011cff22>请放心我不会发送任何辣鸡邮件给你.</p> <p class="cs-subscribe__tips" data-v-011cff22>
+      你可以
+      <em data-v-011cff22>随时</em> 取消订阅.
+    </p></div></form> <section class="cs-statement" data-v-08ff1539><p class="cs-statement__text" data-v-08ff1539>
+    讨论请发邮件到
+    <a href="mailto:lkangd@gmail.com" target="_blank" data-v-08ff1539>lkangd@gmail.com</a></p> <p class="cs-statement__text" data-v-08ff1539>未经授权，禁止转载</p> <p class="cs-statement__text" data-v-08ff1539>通过支付宝 lkangd@foxmail.com 或赞赏码赞助此文</p> <img alt="reward-code" src="/_nuxt/img/wechat-reward-code.3b0f29f.jpg" class="cs-statement__reward-code theme-ignore" data-v-08ff1539></section> <ul class="cs-toc" data-v-2002d74b></ul></section> <footer class="cs-footer" data-v-11bea6b1><div class="cs-footer__wrapper" data-v-11bea6b1><a href="/about/" class="fl" data-v-11bea6b1>About</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/tech/" class="fl" data-v-11bea6b1>Tech</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/think/" class="fl" data-v-11bea6b1>Think</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/fun/" class="fl" data-v-11bea6b1>Fun</a> <a href="/sitemap.xml" target="_blank" class="fr" data-v-11bea6b1>Sitemap</a> <span class="fr" data-v-11bea6b1>• </span> <a href="/feed.xml" target="_blank" class="fr" data-v-11bea6b1>RSS</a> <div class="cs-footer__bottom" data-v-11bea6b1><svg xmlns="http://www.w3.org/2000/svg" class="cs-footer__logo icon sprite-icons" data-v-11bea6b1 data-v-11bea6b1><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" data-v-11bea6b1 data-v-11bea6b1></use></svg>
+      2017-2020 Curtis' Spot
+      <span style="margin:0 5px" data-v-11bea6b1>•</span> <div class="cs-color-slogan cs-footer__slogan" data-v-a8c8150c data-v-11bea6b1><span class="cs-color-slogan__start-text" data-v-a8c8150c>Work With </span> <span class="cs-color-slogan__placeholder" data-v-a8c8150c></span> <span class="cs-color-slogan__wrapper" data-v-a8c8150c>
+     
+    <span data-v-a8c8150c></span></span></div></div></div></footer></div></div></div><script>window.__NUXT__={staticAssetsBase:"/_nuxt/static/1600180271",layout:"post",error:null,serverRendered:!0,routePath:"/post/develop-good-git-commit-habits",config:{}}</script><script src="/_nuxt/runtime.2b486dc.js" defer></script><script src="/_nuxt/pages/post/_id.293b655.js" defer></script><script src="/_nuxt/node_modules/commons.82dad87.js" defer></script><script src="/_nuxt/app.ab1a4d4.js" defer></script><script data-n-head="ssr" type="text/javascript" data-body="true">!function(){function t(e){r=e,document.body.className=e}var r,a={light:"light",dark:"dark"};try{r=localStorage.getItem("theme")}catch(e){}window.__setPreferredTheme=function(e){t(e);try{localStorage.setItem("theme",e)}catch(e){}};var e=window.matchMedia("(prefers-color-scheme: dark)");e.addListener(function(e){window.__setPreferredTheme(a[r]||(e.matches?"dark":"light"))}),t(a[r]||(e.matches?"dark":"light"))}()</script>
+  </body>
+</html>

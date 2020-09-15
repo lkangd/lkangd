@@ -1,0 +1,693 @@
+<!doctype html>
+<html data-n-head-ssr>
+  <head>
+    <title>剖析无限滚动虚拟列表的实现原理 - Curtis' Spot</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="google-site-verification" content="kfF1FRzuuywPcdFndPOA2Lc_CY77xywarjgy_EHl-h8"><meta data-n-head="ssr" name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"><meta data-n-head="ssr" data-hid="description" name="description" content="Front-end Engineer. Blogging about life, tech & everything I love."><base href="/"><link data-n-head="ssr" rel="icon" type="image/x-icon" href="/favicon.png"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:900&display=swap"><link rel="preload" href="/_nuxt/runtime.2b486dc.js" as="script"><link rel="preload" href="/_nuxt/node_modules/commons.82dad87.js" as="script"><link rel="preload" href="/_nuxt/app.ab1a4d4.js" as="script"><link rel="preload" href="/_nuxt/pages/post/_id.293b655.js" as="script"><style data-vue-ssr-id="27366e46:0 563f3fe6:0 bd3e5fbe:0 3d8525fc:0 b59d545e:0 44ce5391:0 1728c230:0 66187182:0 7e4cdd9a:0 2aeaee0a:0 6c57b7be:0">a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,input,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{box-sizing:border-box;margin:0;padding:0;border:0;font-size:100%;font-weight:400;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,menu,nav,section{display:block}body{line-height:1}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:none}table{border-collapse:collapse;border-spacing:0}a,button,input{background-color:transparent;text-decoration:none;border:none;outline:0;-webkit-tap-highlight-color:transparent}a:active,a:focus,button:active,button:focus,input:active,input:focus{outline:0!important}li{list-style:none}body,html{font-family:"PingFang SC",STHeitiSC-Light,Helvetica-Light,arial,sans-serif,"Droid Sans Fallback"}body{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}html{font-size:14px!important}body,html{height:100%;line-height:1;font-family:Merriweather,Georgia,serif;-webkit-tap-highlight-color:transparent;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}body{margin:0 auto;scroll-behavior:smooth}strong{font-weight:700}a,button{color:inherit;outline:0;border:none;background-color:transparent;-webkit-tap-highlight-color:transparent;transition:text-shadow .3s;white-space:pre-wrap;word-break:break-all;cursor:pointer}a:active,a:focus,button:active,button:focus{outline:0!important}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}code[class*=language-],pre[class*=language-]{color:#fff;background:0 0;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-feature-settings:normal;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;margin-bottom:0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{overflow:auto;padding:1.3125rem}pre[class*=language-]::-moz-selection{background:#27292a}pre[class*=language-]::selection{background:#27292a}pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:hsla(0,0%,100%,.15)}pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:hsla(0,0%,100%,.15)}:not(pre)>code[class*=language-]{border-radius:.3em;background:var(--inline-code-bg);color:var(--inline-code-fg);padding:.15em .2em .05em;white-space:normal}.token{position:relative;z-index:1}.token.attr-name{color:#addb67;font-style:italic}.token.comment{color:#809393}.token.string,.token.url{color:#addb67}.token.variable{color:#d6deeb}.token.number{color:#f78c6c}.token.builtin,.token.char,.token.constant,.token.function{color:#82aaff}.token.punctuation{color:#c792ea}.token.doctype,.token.selector{color:#c792ea;font-style:italic}.token.class-name{color:#ffcb8b}.token.keyword,.token.operator,.token.tag{color:var(--main)}.token.boolean{color:#ff5874}.token.property{color:#80cbc4}.token.namespace{color:#b2ccd6}pre[data-line]{padding:1em 0 1em 3em;position:relative}.gatsby-highlight-code-line{background-color:#022a4b;display:block;padding-right:1em;padding-left:1.25em;border-left:.25em solid var(--main)}.gatsby-highlight,.gatsby-highlight-code-line{margin-right:-1.3125rem;margin-left:-1.3125rem}.gatsby-highlight{margin-bottom:1.75rem;border-radius:10px;-webkit-overflow-scrolling:touch;overflow:auto}@media (max-width:672px){.gatsby-highlight{border-radius:0}}.gatsby-highlight pre[class*=language-]{float:left;min-width:100%}.line-highlight{z-index:-1;border-left:4px solid var(--main);background:rgba(2,42,75,.8)!important}.line-highlight:after,.line-highlight:before{display:none}body[data-v-377fcad6]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-377fcad6]{font-weight:700}body.dark[data-v-377fcad6]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-377fcad6]{font-weight:400}body.dark img[data-v-377fcad6]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-377fcad6]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-377fcad6]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-377fcad6]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-377fcad6]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-377fcad6],.cs-title sup[data-v-377fcad6]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-377fcad6]{position:relative;top:-12px}.cs-text[data-v-377fcad6]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-377fcad6]{text-decoration:underline}.cs-text small[data-v-377fcad6]{font-size:.6em}.cs-list[data-v-377fcad6]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-377fcad6]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-377fcad6]{float:left}.fr[data-v-377fcad6]{float:right}a[data-v-377fcad6]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-377fcad6],h2[data-v-377fcad6],h3[data-v-377fcad6],h4[data-v-377fcad6],h5[data-v-377fcad6],h6[data-v-377fcad6]{font-family:Montserrat,serif}h1 a[data-v-377fcad6],h2 a[data-v-377fcad6],h3 a[data-v-377fcad6],h4 a[data-v-377fcad6],h5 a[data-v-377fcad6],h6 a[data-v-377fcad6]{color:var(--text-title)}h1 .cs-header-anchor[data-v-377fcad6],h2 .cs-header-anchor[data-v-377fcad6],h3 .cs-header-anchor[data-v-377fcad6],h4 .cs-header-anchor[data-v-377fcad6],h5 .cs-header-anchor[data-v-377fcad6],h6 .cs-header-anchor[data-v-377fcad6]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-377fcad6],h2:hover .cs-header-anchor[data-v-377fcad6],h3:hover .cs-header-anchor[data-v-377fcad6],h4:hover .cs-header-anchor[data-v-377fcad6],h5:hover .cs-header-anchor[data-v-377fcad6],h6:hover .cs-header-anchor[data-v-377fcad6]{opacity:1}.cs-toc-dom[data-v-377fcad6]{display:none}.cs-loading[data-v-377fcad6]{position:fixed;top:0;left:0;z-index:100;width:100%;height:100%;background-color:var(--bg);will-change:opacity;transition:opacity .5s .4s}.cs-loading.loaded[data-v-377fcad6]{opacity:0}.cs-loading .main[data-v-377fcad6]{position:absolute;top:calc(50% - 63px);left:calc(50% - 63px);z-index:1;width:126px;height:126px}.cs-loading .main.out-of-window .line1-2[data-v-377fcad6],.cs-loading .main.out-of-window .line1[data-v-377fcad6],.cs-loading .main.out-of-window .line3-2[data-v-377fcad6],.cs-loading .main.out-of-window .line3[data-v-377fcad6],.cs-loading .main.out-of-window .line5[data-v-377fcad6],.cs-loading .main.out-of-window .line7[data-v-377fcad6],.cs-loading .main.out-of-window .line9[data-v-377fcad6]{transform:rotate(45deg) translateY(100vh)}.cs-loading .main.out-of-window .line10[data-v-377fcad6],.cs-loading .main.out-of-window .line2-2[data-v-377fcad6],.cs-loading .main.out-of-window .line2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-3[data-v-377fcad6],.cs-loading .main.out-of-window .line4[data-v-377fcad6],.cs-loading .main.out-of-window .line6[data-v-377fcad6],.cs-loading .main.out-of-window .line8-1[data-v-377fcad6],.cs-loading .main.out-of-window .line8[data-v-377fcad6]{transform:rotate(45deg) translateY(-100vh)}.cs-loading .main.out-of-window .text[data-v-377fcad6]{opacity:0;transition:opacity .5s}.cs-loading .main .line[data-v-377fcad6]{position:absolute;z-index:3;width:7px;background:var(--text-normal);will-change:transform;transform:rotate(45deg)}.cs-loading .main .line.line1[data-v-377fcad6]{top:51px;left:5px;height:17px;transition:transform .5s}.cs-loading .main .line.line1-2[data-v-377fcad6]{top:-3px;left:50px;height:36px;transition:transform .5s}.cs-loading .main .line.line2[data-v-377fcad6]{top:55px;left:9px;height:27px;transition:transform .5s}.cs-loading .main .line.line2-2[data-v-377fcad6]{top:-5px;left:56px;height:53px;transition:transform .5s}.cs-loading .main .line.line3[data-v-377fcad6]{top:58px;left:15px;height:35px;transition:transform .5s .1s}.cs-loading .main .line.line3-2[data-v-377fcad6]{top:-2px;left:63px;height:59px;transition:transform .5s .1s}.cs-loading .main .line.line4[data-v-377fcad6]{top:55px;left:24px;height:48px;transition:transform .5s .1s}.cs-loading .main .line.line4-2[data-v-377fcad6]{top:27px;left:60px;height:33px;transition:transform .5s .1s}.cs-loading .main .line.line4-3[data-v-377fcad6]{top:9px;left:84px;height:21px;transition:transform .5s .1s}.cs-loading .main .line.line5[data-v-377fcad6]{top:4px;left:54px;height:117px;transition:transform .5s .2s}.cs-loading .main .line.line6[data-v-377fcad6]{top:15px;left:59px;height:111px;transition:transform .5s .2s}.cs-loading .main .line.line7[data-v-377fcad6]{top:16px;left:69px;height:115px;transition:transform .5s .3s}.cs-loading .main .line.line8[data-v-377fcad6]{top:56px;left:63px;height:72px;transition:transform .5s .3s}.cs-loading .main .line.line8-1[data-v-377fcad6]{top:30px;left:116px;height:18px;transition:transform .5s .3s}.cs-loading .main .line.line9[data-v-377fcad6]{top:67px;left:70px;height:61px;transition:transform .5s .4s}.cs-loading .main .line.line10[data-v-377fcad6]{top:82px;left:78px;height:40px;transition:transform .5s .4s}.cs-loading .main .text[data-v-377fcad6]{position:absolute;bottom:-18%;left:0;width:100%;font-size:16px;font-weight:700;color:var(--text-normal);text-align:center;will-change:opacity;transition:opacity .5s .5s}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}.cs-post{position:relative;padding:42px 21px!important;background-color:transparent}.cs-post__toggle{position:absolute;top:52px;right:21px}.cs-post__blog-name{margin-bottom:42px;height:42px;font-family:Montserrat,sans-serif;font-size:23px;font-weight:900;line-height:2.625rem}.cs-post__blog-name>a{color:var(--main)!important;box-shadow:none}.cs-post__title{margin-top:56px;line-height:44px;font-size:40px;font-family:Montserrat,serif;font-weight:900;color:var(--text-title)}.cs-post__info{margin-bottom:28px;line-height:2;font-size:14px;font-family:Merriweather,Georgia,serif;word-spacing:2px}.cs-post hr{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__link-wrapper{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.cs-post__link-wrapper>a{margin:20px 0}.cs-post__article a{padding:0 4px;text-decoration:underline}.cs-post__article h1{margin:50px 0 24px;font-size:28px;font-weight:700}.cs-post__article h2{margin:50px 0 24px;font-size:25px;font-weight:700}.cs-post__article h3{margin:50px 0 24px;font-size:22px;font-weight:700}.cs-post__article h4{margin:30px 0 24px;font-size:19px;font-weight:700}.cs-post__article h5{margin:30px 0 24px;font-size:16px;font-weight:700}.cs-post__article h6{margin:30px 0 24px;font-size:13px;font-weight:700}.cs-post__article li,.cs-post__article p,.cs-post__article td{margin:0;font-size:14px;line-height:28px;color:var(--text-normal)}.cs-post__article p{margin-bottom:24px}.cs-post__article code:not([class*=language-]){margin:0 4px;padding:0 4px;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-weight:700;color:var(--inline-code-fg);background-color:var(--inline-code-bg);border-radius:3px}.cs-post__article strong em{margin:0 6px;font-weight:700}.cs-post__article hr{margin:30px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__article em{margin:0 6px}.cs-post__article pre{margin:24px 0;font-size:12px;border-radius:10px;background-color:#011627;opacity:.99}.cs-post__article blockquote{background:var(--blockquote-bg);border-left:6px solid var(--blockquote-bl);margin:24px 6px;padding:16px 10px;quotes:"“" "”" "‘" "’"}.cs-post__article blockquote p:last-child{margin-bottom:0}.cs-post__article li+li{margin-top:10px}.cs-post__article ul{margin:24px 0;padding-left:30px}.cs-post__article ul li{text-align:-webkit-match-parent;line-height:28px;list-style:disc}.cs-post__article ul li ul li{list-style:circle}.cs-post__article ol{margin:24px 0;padding-left:40px}.cs-post__article ol li{list-style:decimal}.cs-post__article img{display:block;margin:50px auto;max-width:80%;height:auto}.cs-post__article table{display:inline-block;margin:0 0 24px;max-width:100%;border:1px solid #dee2e6;overflow:scroll}.cs-post__article table thead tr th{padding:12px;font-weight:700;color:#495057;background-color:#e9ecef;border-bottom:2px solid #dee2e6}.cs-post__article table thead tr th+th{border-left:1px solid #dee2e6}.cs-post__article table tbody tr td{padding:12px}.cs-post__article table tbody tr td+td{border-left:1px solid #dee2e6}.cs-post__article table tbody tr+tr{border-top:1px solid #dee2e6}body[data-v-447e03ac]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-447e03ac]{font-weight:700}body.dark[data-v-447e03ac]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-447e03ac]{font-weight:400}body.dark img[data-v-447e03ac]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-447e03ac]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-447e03ac]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-447e03ac]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-447e03ac]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-447e03ac],.cs-title sup[data-v-447e03ac]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-447e03ac]{position:relative;top:-12px}.cs-text[data-v-447e03ac]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-447e03ac]{text-decoration:underline}.cs-text small[data-v-447e03ac]{font-size:.6em}.cs-list[data-v-447e03ac]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-447e03ac]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-447e03ac]{float:left}.fr[data-v-447e03ac]{float:right}a[data-v-447e03ac]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-447e03ac],h2[data-v-447e03ac],h3[data-v-447e03ac],h4[data-v-447e03ac],h5[data-v-447e03ac],h6[data-v-447e03ac]{font-family:Montserrat,serif}h1 a[data-v-447e03ac],h2 a[data-v-447e03ac],h3 a[data-v-447e03ac],h4 a[data-v-447e03ac],h5 a[data-v-447e03ac],h6 a[data-v-447e03ac]{color:var(--text-title)}h1 .cs-header-anchor[data-v-447e03ac],h2 .cs-header-anchor[data-v-447e03ac],h3 .cs-header-anchor[data-v-447e03ac],h4 .cs-header-anchor[data-v-447e03ac],h5 .cs-header-anchor[data-v-447e03ac],h6 .cs-header-anchor[data-v-447e03ac]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-447e03ac],h2:hover .cs-header-anchor[data-v-447e03ac],h3:hover .cs-header-anchor[data-v-447e03ac],h4:hover .cs-header-anchor[data-v-447e03ac],h5:hover .cs-header-anchor[data-v-447e03ac],h6:hover .cs-header-anchor[data-v-447e03ac]{opacity:1}.cs-toc-dom[data-v-447e03ac]{display:none}.cs-theme-toggle[data-v-447e03ac]{position:absolute;display:flex;align-items:center;justify-content:space-between;padding:0 4px;width:50px;height:24px;background-color:#0f1114;border-radius:500px;cursor:pointer}.cs-theme-toggle__icon[data-v-447e03ac]{width:16px;height:16px}.cs-theme-toggle__thumb[data-v-447e03ac]{position:absolute;top:1px;left:1px;width:22px;height:22px;background-color:#fff;border-radius:100%;transition:all .2s ease}.cs-theme-toggle.is-dark .cs-theme-toggle__thumb[data-v-447e03ac]{transform:translateX(26px);box-shadow:0 0 4px 2px var(--main)}body[data-v-011cff22]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-011cff22]{font-weight:700}body.dark[data-v-011cff22]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-011cff22]{font-weight:400}body.dark img[data-v-011cff22]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-011cff22]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-011cff22]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-011cff22]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-011cff22]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-011cff22],.cs-title sup[data-v-011cff22]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-011cff22]{position:relative;top:-12px}.cs-text[data-v-011cff22]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-011cff22]{text-decoration:underline}.cs-text small[data-v-011cff22]{font-size:.6em}.cs-list[data-v-011cff22]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-011cff22]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-011cff22]{float:left}.fr[data-v-011cff22]{float:right}a[data-v-011cff22]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-011cff22],h2[data-v-011cff22],h3[data-v-011cff22],h4[data-v-011cff22],h5[data-v-011cff22],h6[data-v-011cff22]{font-family:Montserrat,serif}h1 a[data-v-011cff22],h2 a[data-v-011cff22],h3 a[data-v-011cff22],h4 a[data-v-011cff22],h5 a[data-v-011cff22],h6 a[data-v-011cff22]{color:var(--text-title)}h1 .cs-header-anchor[data-v-011cff22],h2 .cs-header-anchor[data-v-011cff22],h3 .cs-header-anchor[data-v-011cff22],h4 .cs-header-anchor[data-v-011cff22],h5 .cs-header-anchor[data-v-011cff22],h6 .cs-header-anchor[data-v-011cff22]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-011cff22],h2:hover .cs-header-anchor[data-v-011cff22],h3:hover .cs-header-anchor[data-v-011cff22],h4:hover .cs-header-anchor[data-v-011cff22],h5:hover .cs-header-anchor[data-v-011cff22],h6:hover .cs-header-anchor[data-v-011cff22]{opacity:1}.cs-toc-dom[data-v-011cff22]{display:none}.cs-subscribe[data-v-011cff22]{display:flex;align-items:top;margin:40px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;background-color:var(--bg);box-shadow:var(--form-shadow);border-radius:6px;overflow:hidden}@media (max-width:500px){.cs-subscribe[data-v-011cff22]{flex-direction:column}}.cs-subscribe__wrapper[data-v-011cff22]{flex:1;padding:40px;background-color:var(--bg)}.cs-subscribe__wrapper[data-v-011cff22]:first-child{background-color:var(--bg-secondary)}.cs-subscribe__title[data-v-011cff22]{margin-bottom:20px;line-height:1.2;font-size:20px;font-weight:700}.cs-subscribe__describe[data-v-011cff22]{line-height:1.8;font-size:14px;font-weight:400}.cs-subscribe__icon[data-v-011cff22]{margin-top:20px;width:46px;height:46px}.cs-subscribe__input[data-v-011cff22]{display:block;padding:12px;width:100%;background-color:#fff;border:1px solid #e3e3e3;border-radius:4px}.cs-subscribe__input+.cs-subscribe__input[data-v-011cff22]{margin-top:10px}.cs-subscribe__input[data-v-011cff22]::-moz-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]:-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::placeholder{color:#bdbdbd}.cs-subscribe__submit-btn[data-v-011cff22]{margin:14px 0;padding:12px 24px;color:#fff;border-radius:500px;background-color:var(--main)}.cs-subscribe__submit-btn>span[data-v-011cff22]{font-weight:700}.cs-subscribe__tips[data-v-011cff22]{line-height:2;font-size:12px}body[data-v-08ff1539]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-08ff1539]{font-weight:700}body.dark[data-v-08ff1539]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-08ff1539]{font-weight:400}body.dark img[data-v-08ff1539]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-08ff1539]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-08ff1539]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-08ff1539]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-08ff1539]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-08ff1539],.cs-title sup[data-v-08ff1539]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-08ff1539]{position:relative;top:-12px}.cs-text[data-v-08ff1539]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-08ff1539]{text-decoration:underline}.cs-text small[data-v-08ff1539]{font-size:.6em}.cs-list[data-v-08ff1539]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-08ff1539]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-08ff1539]{float:left}.fr[data-v-08ff1539]{float:right}a[data-v-08ff1539]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-08ff1539],h2[data-v-08ff1539],h3[data-v-08ff1539],h4[data-v-08ff1539],h5[data-v-08ff1539],h6[data-v-08ff1539]{font-family:Montserrat,serif}h1 a[data-v-08ff1539],h2 a[data-v-08ff1539],h3 a[data-v-08ff1539],h4 a[data-v-08ff1539],h5 a[data-v-08ff1539],h6 a[data-v-08ff1539]{color:var(--text-title)}h1 .cs-header-anchor[data-v-08ff1539],h2 .cs-header-anchor[data-v-08ff1539],h3 .cs-header-anchor[data-v-08ff1539],h4 .cs-header-anchor[data-v-08ff1539],h5 .cs-header-anchor[data-v-08ff1539],h6 .cs-header-anchor[data-v-08ff1539]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-08ff1539],h2:hover .cs-header-anchor[data-v-08ff1539],h3:hover .cs-header-anchor[data-v-08ff1539],h4:hover .cs-header-anchor[data-v-08ff1539],h5:hover .cs-header-anchor[data-v-08ff1539],h6:hover .cs-header-anchor[data-v-08ff1539]{opacity:1}.cs-toc-dom[data-v-08ff1539]{display:none}.cs-statement[data-v-08ff1539]{text-align:center;font-size:14px}.cs-statement hr[data-v-08ff1539]{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-statement__text[data-v-08ff1539]{margin:8px 0;line-height:1.7;color:var(--text-normal)}.cs-statement__reward-code[data-v-08ff1539]{margin-top:50px;max-width:30%;height:auto}@media (max-width:375px){.cs-statement .cs-statement__reward-code[data-v-08ff1539]{max-width:76%!important}}body[data-v-2002d74b]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-2002d74b]{font-weight:700}body.dark[data-v-2002d74b]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-2002d74b]{font-weight:400}body.dark img[data-v-2002d74b]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-2002d74b]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-2002d74b]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-2002d74b]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-2002d74b]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-2002d74b],.cs-title sup[data-v-2002d74b]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-2002d74b]{position:relative;top:-12px}.cs-text[data-v-2002d74b]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-2002d74b]{text-decoration:underline}.cs-text small[data-v-2002d74b]{font-size:.6em}.cs-list[data-v-2002d74b]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-2002d74b]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-2002d74b]{float:left}.fr[data-v-2002d74b]{float:right}a[data-v-2002d74b]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-2002d74b],h2[data-v-2002d74b],h3[data-v-2002d74b],h4[data-v-2002d74b],h5[data-v-2002d74b],h6[data-v-2002d74b]{font-family:Montserrat,serif}h1 a[data-v-2002d74b],h2 a[data-v-2002d74b],h3 a[data-v-2002d74b],h4 a[data-v-2002d74b],h5 a[data-v-2002d74b],h6 a[data-v-2002d74b]{color:var(--text-title)}h1 .cs-header-anchor[data-v-2002d74b],h2 .cs-header-anchor[data-v-2002d74b],h3 .cs-header-anchor[data-v-2002d74b],h4 .cs-header-anchor[data-v-2002d74b],h5 .cs-header-anchor[data-v-2002d74b],h6 .cs-header-anchor[data-v-2002d74b]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-2002d74b],h2:hover .cs-header-anchor[data-v-2002d74b],h3:hover .cs-header-anchor[data-v-2002d74b],h4:hover .cs-header-anchor[data-v-2002d74b],h5:hover .cs-header-anchor[data-v-2002d74b],h6:hover .cs-header-anchor[data-v-2002d74b]{opacity:1}.cs-toc-dom[data-v-2002d74b]{display:none}.cs-toc[data-v-2002d74b]{display:inline-block;position:fixed;top:50%;left:50%;transform:translate3d(315px,-50%,0);max-height:550px;overflow-y:scroll}.cs-toc:hover .cs-toc__text[data-v-2002d74b]{opacity:1}.cs-toc__item[data-v-2002d74b]{height:16px;overflow:hidden}.cs-toc__item+.cs-toc__item[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor[data-v-2002d74b]{display:block;box-shadow:none}.cs-toc__anchor.is-active[data-v-2002d74b]:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor.is-active .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color);opacity:1}.cs-toc__text[data-v-2002d74b]{padding-left:16px;max-width:200px;overflow:hidden;line-height:1.4;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;font-size:13px;font-weight:700;color:var(--article-nav-text-color);white-space:nowrap;text-overflow:ellipsis;opacity:0;transition:opacity .5s}.cs-toc__anchor[data-v-2002d74b]:before,.cs-toc__text[data-v-2002d74b]{position:relative;top:-2px;display:inline-block;vertical-align:middle}.cs-toc__anchor[data-v-2002d74b]:before{content:"";width:16px;height:4px;border-radius:20px;background:var(--article-nav-dot-color);transition:background .5s}.cs-toc__anchor[data-v-2002d74b]:hover:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor:hover .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color)}.cs-toc__anchor+.cs-toc__anchor[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor--sub[data-v-2002d74b]:before{width:10px}.cs-toc__anchor--sub .cs-toc__text[data-v-2002d74b]{margin-left:6px;font-size:12px;font-weight:400}#__nuxt{position:relative;min-height:100%}body[data-v-11bea6b1]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-11bea6b1]{font-weight:700}body.dark[data-v-11bea6b1]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-11bea6b1]{font-weight:400}body.dark img[data-v-11bea6b1]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-11bea6b1]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-11bea6b1]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-11bea6b1]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-11bea6b1]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-11bea6b1],.cs-title sup[data-v-11bea6b1]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-11bea6b1]{position:relative;top:-12px}.cs-text[data-v-11bea6b1]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-11bea6b1]{text-decoration:underline}.cs-text small[data-v-11bea6b1]{font-size:.6em}.cs-list[data-v-11bea6b1]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-11bea6b1]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-11bea6b1]{float:left}.fr[data-v-11bea6b1]{float:right}a[data-v-11bea6b1]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-11bea6b1],h2[data-v-11bea6b1],h3[data-v-11bea6b1],h4[data-v-11bea6b1],h5[data-v-11bea6b1],h6[data-v-11bea6b1]{font-family:Montserrat,serif}h1 a[data-v-11bea6b1],h2 a[data-v-11bea6b1],h3 a[data-v-11bea6b1],h4 a[data-v-11bea6b1],h5 a[data-v-11bea6b1],h6 a[data-v-11bea6b1]{color:var(--text-title)}h1 .cs-header-anchor[data-v-11bea6b1],h2 .cs-header-anchor[data-v-11bea6b1],h3 .cs-header-anchor[data-v-11bea6b1],h4 .cs-header-anchor[data-v-11bea6b1],h5 .cs-header-anchor[data-v-11bea6b1],h6 .cs-header-anchor[data-v-11bea6b1]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-11bea6b1],h2:hover .cs-header-anchor[data-v-11bea6b1],h3:hover .cs-header-anchor[data-v-11bea6b1],h4:hover .cs-header-anchor[data-v-11bea6b1],h5:hover .cs-header-anchor[data-v-11bea6b1],h6:hover .cs-header-anchor[data-v-11bea6b1]{opacity:1}.cs-toc-dom[data-v-11bea6b1]{display:none}.cs-footer[data-v-11bea6b1]{position:absolute;bottom:0;left:0;right:0;margin:0 auto}.cs-footer__wrapper[data-v-11bea6b1]{margin:50px auto 0;padding:28px 21px;max-width:630px;font-family:Merriweather,Georgia,serif;font-size:14px;cursor:pointer}.cs-footer__wrapper>a[data-v-11bea6b1]{margin-right:5px;color:var(--main);box-shadow:0 1px 0 0 currentColor}@media (max-width:500px){.cs-footer__wrapper[data-v-11bea6b1]{text-align:center}}.cs-footer__bottom[data-v-11bea6b1]{display:flex;align-items:center;margin-top:40px;overflow:hidden}.cs-footer__logo[data-v-11bea6b1]{margin-right:10px;width:20px;height:20px}@media (max-width:500px){.cs-footer__slogan[data-v-11bea6b1] .cs-color-slogan__start-text{display:none}}body[data-v-a8c8150c]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-a8c8150c]{font-weight:700}body.dark[data-v-a8c8150c]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-a8c8150c]{font-weight:400}body.dark img[data-v-a8c8150c]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-a8c8150c]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-a8c8150c]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-a8c8150c]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-a8c8150c]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-a8c8150c],.cs-title sup[data-v-a8c8150c]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-a8c8150c]{position:relative;top:-12px}.cs-text[data-v-a8c8150c]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-a8c8150c]{text-decoration:underline}.cs-text small[data-v-a8c8150c]{font-size:.6em}.cs-list[data-v-a8c8150c]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-a8c8150c]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-a8c8150c]{float:left}.fr[data-v-a8c8150c]{float:right}a[data-v-a8c8150c]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-a8c8150c],h2[data-v-a8c8150c],h3[data-v-a8c8150c],h4[data-v-a8c8150c],h5[data-v-a8c8150c],h6[data-v-a8c8150c]{font-family:Montserrat,serif}h1 a[data-v-a8c8150c],h2 a[data-v-a8c8150c],h3 a[data-v-a8c8150c],h4 a[data-v-a8c8150c],h5 a[data-v-a8c8150c],h6 a[data-v-a8c8150c]{color:var(--text-title)}h1 .cs-header-anchor[data-v-a8c8150c],h2 .cs-header-anchor[data-v-a8c8150c],h3 .cs-header-anchor[data-v-a8c8150c],h4 .cs-header-anchor[data-v-a8c8150c],h5 .cs-header-anchor[data-v-a8c8150c],h6 .cs-header-anchor[data-v-a8c8150c]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-a8c8150c],h2:hover .cs-header-anchor[data-v-a8c8150c],h3:hover .cs-header-anchor[data-v-a8c8150c],h4:hover .cs-header-anchor[data-v-a8c8150c],h5:hover .cs-header-anchor[data-v-a8c8150c],h6:hover .cs-header-anchor[data-v-a8c8150c]{opacity:1}.cs-toc-dom[data-v-a8c8150c]{display:none}.cs-color-slogan[data-v-a8c8150c]{display:inline-block;position:relative;font-family:Merriweather,Georgia,serif;color:var(--text-normal);background-color:transparent}.cs-color-slogan__placeholder[data-v-a8c8150c]{opacity:0}.cs-color-slogan__wrapper[data-v-a8c8150c]{position:absolute;top:0;white-space:nowrap}</style><link rel="preload" href="/_nuxt/static/1600180271/post/virtual-infinite-scroll/payload.js" as="script">
+  </head>
+  <body>
+    <div data-server-rendered="true" id="__nuxt"><!----><div id="__layout"><div><section class="cs-post cs-container"><div class="cs-theme-toggle cs-post__toggle is-dark" data-v-447e03ac><img src="/_nuxt/img/moon.b276b99.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <img src="/_nuxt/img/sun.9e5c5e6.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <button class="cs-theme-toggle__thumb" data-v-447e03ac></button></div> <h3 class="cs-post__blog-name"><a href="/" class="nuxt-link-active">Curtis' Spot</a></h3> <h2 class="cs-post__title">剖析无限滚动虚拟列表的实现原理</h2> <p class="cs-post__info">26, Aug, 2020 • 7k words • 🍱🍱 28 min read</p> <article class="cs-post__article"><p></p><div class="cs-toc-dom"><ul><li><a href="#shimoshixuniliebiao">什么是虚拟列表？</a><ul><li><a href="#xiangguangainian">相关概念</a></li><li><a href="#shixianluojibuzhou">实现逻辑步骤</a></li></ul></li><li><a href="#gudinggaodudexuniliebiao">固定高度的虚拟列表</a><ul><li><a href="#zhunbeigongzuogudinggaodu">准备工作|固定高度</a></li><li><a href="#jisuankegundonggaodu">计算「可滚动高度」</a></li><li><a href="#jisuanchushikeshiyuansu">计算初始「可视元素」</a></li><li><a href="#gundonggengxinkeshiyuansugudinggaodu">滚动更新「可视元素」|固定高度</a></li></ul></li><li><a href="#dongtaigaodudexuniliebiao">动态高度的虚拟列表</a><ul><li><a href="#guanjiandianyiruhehuodeyuansudedongtaigaodu">关键点一：如何获得元素的动态高度？</a></li><li><a href="#guanjiandianerruhemonikegundonggaodu">关键点二：如何模拟「可滚动高度」？</a></li><li><a href="#guanjiandiansanruhejisuanmeiyigeyuansudescrollY">关键点三：如何计算每一个元素的「scrollY」？</a></li><li><a href="#zhunbeigongzuodongtaigaodu">准备工作|动态高度</a></li><li><a href="#jiantingyuansugaodubianhua">监听元素高度变化</a></li><li><a href="#gundonggengxinkeshiyuansudongtaigaodu">滚动更新「可视元素」|动态高度</a></li><li><a href="#xiuzhenggundongtiao">修正滚动条</a></li></ul></li><li><a href="#zongjie">总结</a></li></ul></div><p></p>
+<blockquote>
+<p><strong>TL;DR：</strong>「虚拟列表」的本质就是仅将<strong>需要显示在视窗中</strong>的列表节点挂载到 DOM，是一种优化长列表加载的技术手段。其中按照节点的高度是否固定又分为「固定高度的虚拟列表」和「动态高度的虚拟列表」。这是本文对两种虚拟列表场景实现的 <a href="https://lkangd.github.io/infinite-scroll-sample/#/" target="_blank">demo</a>(页面托管在 github pages 可能需要爬梯子) 和 <a href="https://github.com/lkangd/infinite-scroll-sample" target="_blank">代码库</a>(基于 Vue 2.x)。</p>
+</blockquote>
+<p>在进行前端业务开发时，很容易遇到需要加载巨大列表的场景。比如微博的信息流、微信的朋友圈和直播平台的聊天框等，这些列表通常具有两个显著的特点：</p>
+<ul>
+<li>不能分页；</li>
+<li>只要用户愿意就可以无限地滚动下去。</li>
+</ul>
+<p>在这种场景下，如果直接加载一个数量级很大的列表，会造成页面假死，使用传统的上拉分页加载模式或者 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestAnimationFrame" target="_blank">window.requestAnimationFrame</a>空闲加载模式可以在一定程度上缓解这种情况，但是在加载到一定量级的页面时，会因为页面同时存在大量的 DOM 元素而出现过渡占用内存、页面卡顿等性能问题，带来糟糕的用户体验。因此必须对这种业务场景做相应的加载优化，<strong>只加载需要显示的元素</strong>是这种情况的唯一解，「虚拟列表」的概念应运而生。</p>
+<h2 id="shimoshixuniliebiao"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shimoshixuniliebiao")'>¶</a> 什么是虚拟列表？</h2>
+<p>首先，来说说「虚拟列表」的定义，它的本质就是仅将<strong>需要显示在视窗中</strong>的列表节点挂载到 DOM，以达到「减少<strong>一次性加载节点数量</strong>」和「减少<strong>滚动容器内总挂载节点数量</strong>」的目的，也即：</p>
+<blockquote>
+<p>通过「<strong>单个元素高度</strong>」计算当前列表全部加载时的高度作为「<strong>滚动容器</strong>」的「<strong>可滚动高度</strong>」，按该「<strong>可滚动高度</strong>」撑开「<strong>滚动容器</strong>」。并根据「<strong>当前滚动高度</strong>」，在「<strong>可视区域</strong>」内按需加载列表元素。</p>
+</blockquote>
+<h3 id="xiangguangainian"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xiangguangainian")'>¶</a> 相关概念</h3>
+<p>上面的描述提到了几个关键的概念，它们分别是：</p>
+<ul>
+<li>
+<p><strong>单个元素高度</strong>：列表内每个独立元素的高度，它可以是固定的或者是动态的。</p>
+</li>
+<li>
+<p><strong>滚动容器</strong>：意指挂载列表元素的 DOM 对象，它可以是自定义的元素或者<code>window</code>对象(默认)。</p>
+</li>
+<li>
+<p><strong>可滚动高度</strong>：滚动容器可滚动的纵向高度。当滚动容器的高度（宽度），小于它的子元素所占的总高度（宽度）且该滚动容器的<code>overflow</code>不为<code>hidden</code>时，此时滚动容器的<code>scrollHeight</code>为<strong>可滚动高度</strong>。</p>
+</li>
+<li>
+<p><strong>可视区域</strong>：滚动容器的视觉可见区域。如果容器元素是<code>window</code>对象，可视区域就是浏览器的视口大小（即视觉视口）；如果容器元素是某个 ul 元素，其高度是 300，右侧有纵向滚动条可以滚动，那么视觉可见的区域就是可视区域，也即是该滚动容器的<code>offsetHeight</code>。</p>
+</li>
+<li>
+<p><strong>当前滚动高度</strong>：与平常的滚动高度概念一致。虽然虚拟列表仅加载需要显示在可视区域内的元素，但是为了维持与常规列表一致的滚动体验，必须通过监听当前滚动高度来动态更新需要显示的元素。</p>
+</li>
+</ul>
+<p>参考下图加深理解：</p>
+<p><img src="_nuxt/img/pic-0.8c610f9.png" alt=""></p>
+<h3 id="shixianluojibuzhou"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shixianluojibuzhou")'>¶</a> 实现逻辑步骤</h3>
+<p>因此，实现「虚拟列表」可以简单理解为就是在列表发生滚动时，改变「可视区域」内的渲染元素。大概的文字逻辑步骤如下：</p>
+<ol>
+<li>根据单个元素高度计算出滚动容器的可滚动高度，并撑开滚动容器；</li>
+<li>根据可视区域计算总挂载元素数量；</li>
+<li>根据可视区域和总挂载元素数量计算头挂载元素（初始为 0）和尾挂载元素；</li>
+<li>当发生滚动时，根据滚动差值和滚动方向，重新计算头挂载元素和尾挂载元素。</li>
+</ol>
+<p>根据这些步骤，下面开始通过实际代码对「虚拟列表」进行实现。</p>
+<h2 id="gudinggaodudexuniliebiao"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#gudinggaodudexuniliebiao")'>¶</a> 固定高度的虚拟列表</h2>
+<h3 id="zhunbeigongzuogudinggaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhunbeigongzuogudinggaodu")'>¶</a> 准备工作|固定高度</h3>
+<p>首先，创建列表元素组件，约定它的高度固定为<code>180px</code>：</p>
+<pre class="language-html"><code class="language-html">&lt;template>
+  &lt;li class="item" ref="item">
+    &lt;div class="item__wrapper">
+      &lt;div class="item__info">
+        &lt;img :src="data.avatar" class="item__avatar" />
+        &lt;p class="item__name">{{ index }}. {{ data.name }}&lt;/p>
+        &lt;p class="item__date">{{ data.dob }}&lt;/p>
+      &lt;/div>
+      &lt;p class="item__text">E-mail: {{ data.email }}&lt;/p>
+      &lt;p class="item__text">Phone: {{ data.phone }}&lt;/p>
+      &lt;p class="item__text">City: {{ data.address.city }}&lt;/p>
+      &lt;p class="item__text">Street: {{ data.address.street }}&lt;/p>
+    &lt;/div>
+  &lt;/li>
+&lt;/template>
+&lt;script>
+  export default {
+    name: 'item',
+    props: {
+      index: {
+        type: Number, // 元素下标
+        default: 0,
+      },
+      data: {
+        type: Object,
+        default: () => ({}),
+      },
+    },
+  };
+&lt;/script>
+&lt;style scoped lang="scss">
+  .item {
+    height: 180px;
+    /* ... */
+  }
+&lt;/style>
+</code></pre><p>通过<a href="https://github.com/marak/Faker.js/" target="_blank">faker.js</a>来生成一些随机数据，以满足分页加载的测试情况：</p>
+<pre class="language-js"><code class="language-js">import faker from 'faker';
+
+export function fetchData(count = 30) {
+  const result = [];
+  for (let i = 0; i &lt; count; i++) {
+    const item = faker.helpers.contextualCard();
+    item.paragraph = faker.lorem.paragraph();
+    result.push(item);
+  }
+  return result;
+}
+</code></pre><p>最后，创建滚动容器组件，引入<code>item</code>组件和随机数据，渲染列表：</p>
+<pre class="language-html"><code class="language-html">&lt;template>
+  &lt;ul class="height-fixed" ref="scroller">
+    &lt;item class="height-fixed__item" v-for="item in listData" :data="item" :index="item.index" :key="item.username + item.phone" />
+  &lt;/ul>
+&lt;/template>
+&lt;script>
+  import Item from './components/item';
+  import { fetchData } from './helpers';
+
+  const FIXED_HEIGHT = 180;
+
+  export default {
+    name: 'height-fixed',
+    data() {
+      return {
+        listData: [],
+      };
+    },
+    mounted() {
+      this.fetchData();
+    },
+    methods: {
+      fetchData() {
+        this.listData.push(...this.setItemIndex(fetchData()));
+      },
+      // 给每个列表元素设置固定的下标
+      setItemIndex(list) {
+        let latestIndex = this.listData.length;
+        for (let i = 0; i &lt; list.length; i++) {
+          const item = list[i];
+          item.index = latestIndex + i;
+          Object.freeze(item);
+        }
+        return list;
+      },
+    },
+    components: { Item },
+  };
+&lt;/script>
+&lt;style scoped lang="scss">
+  .height-fixed {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* ... */
+  }
+&lt;/style>
+</code></pre><p>通过路由挂载后，完成一个常规列表的渲染，如下图：</p>
+<p><img src="_nuxt/img/pic-1.92a1651.png" alt=""></p>
+<h3 id="jisuankegundonggaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jisuankegundonggaodu")'>¶</a> 计算「可滚动高度」</h3>
+<p>因为元素高度是固定，所以在拿到列表数据时就可以通过 <strong>列表长度</strong> * <strong>元素高度</strong> 获得「可滚动高度」，然后使用此高度撑开滚动容器。通过上文图一可以得知，可滚动高度由「可视区域」+「已浏览区域」+「待浏览区域」组成，关于如何撑开「已浏览区域」和「待浏览区域」，有两种常规的做法：</p>
+<ul>
+<li>直接使用 padding 撑开列表高度；</li>
+<li>在列表可视区域外部放置哨兵元素撑开高度。</li>
+</ul>
+<p>为了更好地理解后文「动态高度的虚拟列表」的内容，这里选用第二种方法。</p>
+<p>新增<code>scrollRunwayEnd</code>属性，在列表获取后计算总高度：</p>
+<pre data-line="6,12" class="language-js"><code data-line="6,12" class="language-js">export default {
+  // ...
+  data() {
+    return {
+      // ...
+      scrollRunwayEnd: 0,
+    };
+  },
+  methods: {
+    fetchData() {
+      this.listData.push(...this.setItemIndex(fetchData()));
+      this.scrollRunwayEnd = this.listData.length * FIXED_HEIGHT;
+    },
+  },
+  // ...
+};
+</code></pre><p>在模板内增加<code>scroll-runway</code>元素，根据<code>scrollRunwayEnd</code>，使用<code>transform: translateY</code>的方式撑开「滚动容器」高度：</p>
+<pre data-line="3" class="language-html"><code data-line="3" class="language-html">&lt;template>
+  &lt;ul class="height-fixed" ref="scroller" @scroll="handleScroll">
+    &lt;li class="height-fixed__scroll-runway" :style="`transform: translate(0, ${scrollRunwayEnd}px)`">&lt;/li>
+    &lt;item class="height-fixed__item" v-for="item in listData" :data="item" :index="item.index" :key="item.username + item.phone" />
+  &lt;/ul>
+&lt;/template>
+&lt;!-- ... -->
+&lt;style scoped lang="scss">
+  .height-fixed {
+    /* ... */
+    &__scroll-runway {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      transition: transform 0.2s;
+    }
+  }
+&lt;/style>
+</code></pre><h3 id="jisuanchushikeshiyuansu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jisuanchushikeshiyuansu")'>¶</a> 计算初始「可视元素」</h3>
+<p>「可视元素」使用<code>visibleData</code>表示，<code>visibleData</code>可使用「头挂载元素」和「尾挂载元素」分别代表的元素下标在原始的<code>listData</code>进行动态截取。</p>
+<p>根据固定的元素高度和「滚动容器」的高度，可以轻松得出「可视元素」的个数为 <strong>滚动容器高度</strong> / <strong>单个元素高度</strong>，使用<code>VISIBLE_COUNT</code>表示。同时，为了在快速滚动的情况下也能获得较为良好的数据现实体验，可以适当设置「缓冲区元素」，使用<code>BUFFER_SIZE</code>表示。</p>
+<p>新增<code>visibleData</code>数组，用于「可视元素」的装载。页面初次挂载时，「头挂载元素」<code>firstAttachedItem</code>必定为 0，再根据<code>VISIBLE_COUNT</code>和<code>BUFFER_SIZE</code>可得「尾挂载元素」<code>lastAttachedItem</code>：</p>
+<pre class="language-js"><code class="language-js">// ...
+const BUFFER_SIZE = 3; // 「缓冲区元素」个数
+let VISIBLE_COUNT = 0;
+
+export default {
+  name: 'height-fixed',
+  data() {
+    return {
+      // ...
+      visibleData: [],
+      firstAttachedItem: 0, // 「头挂载元素」
+      lastAttachedItem: 0, // 「尾挂载元素」
+    };
+  },
+  mounted() {
+    VISIBLE_COUNT = Math.ceil(this.$refs.scroller.offsetHeight / FIXED_HEIGHT);
+    this.lastAttachedItem = VISIBLE_COUNT + BUFFER_SIZE;
+    this.visibleData = this.listData.slice(this.firstAttachedItem, this.lastAttachedItem);
+  },
+};
+</code></pre><p>将<code>listData</code>更改为<code>visibleData</code>：</p>
+<pre data-line="4" class="language-html"><code data-line="4" class="language-html">&lt;template>
+  &lt;ul class="height-fixed" ref="scroller">
+    &lt;li class="height-fixed__scroll-runway" :style="`transform: translate(0, ${scrollRunwayEnd}px)`">&lt;/li>
+    &lt;item class="height-fixed__item" v-for="item in visibleData" :data="item" :index="item.index" :key="item.username + item.phone" />
+  &lt;/ul>
+&lt;/template>
+</code></pre><p>在获得了<code>visibleData</code>后，下一步需要改变列表元素的显示方式。对每个列表元素使用绝对定位，使其脱离文档流，然后使用<code>transform: translateY</code>的方式来对元素进行定位。</p>
+<p>将<code>setItemIndex</code>方法更改为<code>calItemScrollY</code>，并根据下标，赋值给每个元素固定的<code>scrollY</code>：</p>
+<pre data-line="15" class="language-js"><code data-line="15" class="language-js">// setItemIndex(list) {
+//   let latestIndex = this.listData.length;
+//   for (let i = 0; i &lt; list.length; i++) {
+//     const item = list[i];
+//     item.index = latestIndex + i;
+//     Object.freeze(item);
+//   }
+//   return list;
+// }
+calItemScrollY(list) {
+  let latestIndex = this.listData.length;
+  for (let i = 0; i &lt; list.length; i++) {
+    const item = list[i];
+    item.index = latestIndex + i;
+    item.scrollY = this.scrollRunwayEnd + i * FIXED_HEIGHT;
+    Object.freeze(item);
+  }
+  return list;
+},
+</code></pre><pre data-line="9,17" class="language-html"><code data-line="9,17" class="language-html">&lt;template>
+  &lt;!-- ... -->
+  &lt;item
+    class="height-fixed__item"
+    v-for="item in visibleData"
+    :data="item"
+    :index="item.index"
+    :key="item.username + item.phone"
+    :style="`transform: translate(0, ${item.scrollY}px)`"
+  />
+  &lt;!-- ... -->
+&lt;/template>
+&lt;!-- ... -->
+&lt;style scoped lang="scss">
+  .height-fixed {
+    /* ... */
+    &__item {
+      position: absolute;
+      contain: layout;
+      will-change: transform;
+    }
+  }
+&lt;/style>
+</code></pre><h3 id="gundonggengxinkeshiyuansugudinggaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#gundonggengxinkeshiyuansugudinggaodu")'>¶</a> 滚动更新「可视元素」|固定高度</h3>
+<p>在处理滚动逻辑之前，先引入一个概念：<strong>「锚点元素」</strong>，即处于「滚动容器」的「可视区域」内的<strong>第一个元素</strong>。我们需要在滚动时候，根据每一次滚动事件的滚动差值和方向来更新「锚点元素」，计算出「锚点元素」后，就可以根据新的「锚点元素」下标和缓冲区值<code>BUFFER_SIZE</code>、<code>VISIBLE_COUNT</code>来计算「头挂载元素」和「尾挂载元素」。</p>
+<pre class="language-text"><code class="language-text">「锚点元素」= 「当前滚动高度」/ FIXED_HEIGHT // 当偏移量绝对值大于 FIXED_HEIGHT 时需要重新计算；
+「头挂载元素」=「锚点元素」- BUFFER_SIZE // 不能小于 0，即第一个元素；
+「尾挂载元素」= 「头挂载元素」+ VISIBLE_COUNT + BUFFER_SIZE // 不能大于列表长度，即最后一个元素；
+</code></pre><p>「锚点元素」大部分情况下处于被<strong>部分遮盖</strong>的状态，被遮盖的部分为它的偏移量<code>offset</code>，其中包含指向具体元素的下标<code>index</code>，如下图所示：</p>
+<p><img src="_nuxt/img/pic-3.9db10a7.png" alt=""></p>
+<hr>
+<p>了解了「锚点元素」概念之后，接下来就可以处理「滚动容器」的滚动行为了，首先监听滚动事件：</p>
+<pre data-line="2" class="language-html"><code data-line="2" class="language-html">&lt;template>
+  &lt;ul ref="scroller" class="height-fixed" @scroll="handleScroll">
+    &lt;!-- ... -->
+  &lt;/ul>
+&lt;/template>
+</code></pre><p>根据滚动方向和偏移量，按顺序更新「锚点元素」→「头挂载元素」→「尾挂载元素」→「可视元素」：</p>
+<pre data-line="52" class="language-js"><code data-line="52" class="language-js">// ...
+export default {
+  // ...
+  data() {
+    return {
+      // ...
+      anchorItem: { index: 0, offset: 0 }, // 「锚点元素」初始值
+      lastScrollTop: 0, // 记录上次滚动事件时「滚动容器」的「滚动高度」
+    };
+  },
+  methods: {
+    // 「锚点元素」更新方法
+    updateAnchorItem() {
+      const index = Math.floor(this.$refs.scroller.scrollTop / FIXED_HEIGHT);
+      const offset = this.$refs.scroller.scrollTop - index * FIXED_HEIGHT;
+      this.anchorItem = { index, offset };
+    },
+    handleScroll() {
+      // 滚动差值
+      const delta = this.$refs.scroller.scrollTop - this.lastScrollTop;
+      this.lastScrollTop = this.$refs.scroller.scrollTop;
+
+      // 更新「锚点元素」偏移量
+      this.anchorItem.offset += delta;
+      const isPositive = delta >= 0;
+      // 判断滚动方向
+      if (isPositive) {
+        // 1.当「锚点元素」偏移量大于等于固定高度时，说明视图滚动条向下，并超过一个元素，需要更新「锚点元素」
+        if (this.anchorItem.offset >= FIXED_HEIGHT) {
+          this.updateAnchorItem();
+        }
+        // 2.计算「头挂载元素」
+        if (this.anchorItem.index - this.firstAttachedItem >= BUFFER_SIZE) {
+          this.firstAttachedItem = Math.min(this.listData.length - VISIBLE_COUNT, this.anchorItem.index - BUFFER_SIZE);
+        }
+      } else {
+        if (this.$refs.scroller.scrollTop &lt;= 0) {
+          // 特殊情况：处理滚动到顶部，更新「锚点元素」为初始值
+          this.anchorItem = { index: 0, offset: 0 };
+        } else if (this.anchorItem.offset &lt; 0) {
+          // 1.当「锚点元素」偏移量小于零时，说明视图滚动条向上，并超过一个元素，需要更新「锚点元素」
+          this.updateAnchorItem();
+        }
+        // 2.计算「头挂载元素」
+        if (this.anchorItem.index - this.firstAttachedItem &lt; BUFFER_SIZE) {
+          this.firstAttachedItem = Math.max(0, this.anchorItem.index - BUFFER_SIZE);
+        }
+      }
+      // 3.更新「尾挂载元素」
+      this.lastAttachedItem = Math.min(this.firstAttachedItem + VISIBLE_COUNT + BUFFER_SIZE * 2, this.listData.length);
+      // 4.更新「可视元素」
+      this.visibleData = this.listData.slice(this.firstAttachedItem, this.lastAttachedItem);
+    },
+  },
+};
+</code></pre><p>至此，一个简单的「固定高度虚拟滚动」就实现了，打开开发者工具，可以观察到就算滚动条一直向下，列表元素的个数是恒定的：</p>
+<p><img src="_nuxt/img/pic-8.a90bd13.gif" alt=""></p>
+<p>你可以点击<a href="https://lkangd.github.io/infinite-scroll-sample/#/height-fixed" target="_blank">此处</a>进行体验。</p>
+<h2 id="dongtaigaodudexuniliebiao"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#dongtaigaodudexuniliebiao")'>¶</a> 动态高度的虚拟列表</h2>
+<p>因为不再具有固定的元素高度，所以「可滚动高度」和「可视元素」很难像实现固定高度的虚拟列表那样，可以在获取数据后进行一次性计算就完事。下面来说说动态高度虚拟列表的关键难点：</p>
+<h3 id="guanjiandianyiruhehuodeyuansudedongtaigaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#guanjiandianyiruhehuodeyuansudedongtaigaodu")'>¶</a> 关键点一：如何获得元素的动态高度？</h3>
+<p>按常规情况，一个列表元素高度为动态的情况大致分为三种：</p>
+<ol>
+<li>列表元素内初始渲染时高度就不确定。比如<strong>不定行数</strong>的多行文本、列表元素内包含<strong>不定长度</strong>的内嵌列表等；</li>
+<li>列表元素内初始渲染后因用户操作而高度发生变化。比如展开一个<strong>收缩项目</strong>、<strong>删除或增加</strong>子元素等；</li>
+<li>列表元素内包含异步渲染元素。比如未缓存过的<strong>图片</strong>、<strong>异步组件</strong>等。</li>
+</ol>
+<p>由于这些复杂的情况可能同时存在一个列表元素内，所以只能够实时监听每一个<strong>处于可视区域</strong>内的元素的高度。现阶段 ECMA DOM 规范下，有两个 API 可以达到这个目的：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver" target="_blank">MutationObserver</a>和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver" target="_blank">ResizeObserver</a>。</p>
+<p>这两个 API 都存在一定的兼容性问题，<a href="https://caniuse.com/#feat=resizeobserver" target="_blank">caniuse#ResizeObserver</a> | <a href="https://caniuse.com/#search=MutationObserver" target="_blank">caniuse#MutationObserver</a>，可以使用对应的<code>polyfill</code>进行解决，因为<code>ResizeObserver</code>可以更直观地达到监听元素高度变动的目的，所以这里选择使用<code>ResizeObserver</code>。<code>ResizeObserver</code>的 <a href="https://github.com/que-etc/resize-observer-polyfill" target="_blank">polyfill</a>。</p>
+<h3 id="guanjiandianerruhemonikegundonggaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#guanjiandianerruhemonikegundonggaodu")'>¶</a> 关键点二：如何模拟「可滚动高度」？</h3>
+<p>因为列表元素的高度不再是固定的，所以「可滚动高度」不能再通过「列表元素个数」*「固定元素高度」简单逻辑关系来获得。此时，只能基于业务的实际情况，给每个列表元素定一个「估算高度」：<code>ESTIMATED_HEIGHT</code>。</p>
+<p>同时，还需要新增一个<code>cachedHeight</code>数组，根据上一关键点提到的元素高度变化事件，以每一个列表元素对应的下标记录最后一次变化的高度。如果元素未渲染或者被略过渲染时，用<code>ESTIMATED_HEIGHT</code>进行暂时代替。</p>
+<p>由此可得知，「可滚动高度」<code>scrollRunwayEnd</code>只能是「动态」且「大致准确」的。在 vue 里，可以用一个「计算属性」进行实时估值：</p>
+<pre class="language-js"><code class="language-js">  // ...
+  data() {
+    return {
+      // ...
+      // scrollRunwayEnd: 0,
+    };
+  },
+  computed: {
+    scrollRunwayEnd() {
+      // 根据当前已渲染的元素高度，求得当前所有元素总高度
+      const maxScrollY = this.cachedHeight.reduce((sum, h) => (sum += h || ESTIMATED_HEIGHT), 0);
+      // 根据当前所有元素总高度，求得元素平均高度
+      const currentAverageH = maxScrollY / this.cachedHeight.length;
+      // 返回估算高度
+      return maxScrollY + (this.listData.length - this.cachedHeight.length) * currentAverageH;
+    },
+  },
+  // ...
+</code></pre><h3 id="guanjiandiansanruhejisuanmeiyigeyuansudescrollY"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#guanjiandiansanruhejisuanmeiyigeyuansudescrollY")'>¶</a> 关键点三：如何计算每一个元素的「scrollY」？</h3>
+<p>这一步是最难的，因为除了第一个元素外的每一个元素的「scrollY」可能都会因为下面几种情况而失效：</p>
+<ol>
+<li><strong>当前元素的上一个元素高度发生了变化。</strong> 这种情况意味着从<strong>当前元素</strong>开始，每一个后续元素都需要按<strong>上一个元素</strong>的高度差值进行「scrollY」计算。</li>
+<li><strong>用户快速拖动滚动条至底部或顶部。</strong> 由于略过了中间元素的渲染，<code>cachedHeight</code>会缺少略过元素的真实高度，所以只能用上文的<code>ESTIMATED_HEIGHT</code>进行代替。这种情况下用户再缓慢滚动到顶部时，略过元素的初次渲染会更新<code>cachedHeight</code>中对应的记录。此时更新的高度肯定是大于或者小于<code>ESTIMATED_HEIGHT</code>的，所以当用户持续滚动缓慢滚动到<code>scrollTop</code>为 0 时，可能会出现 <strong><em>上部滚动区域</em></strong>「不足」或者「多余」的情况。因此，必须在<strong>保证当前页面滚动情况不变</strong>的前提下，提前对这两种情况进行实时修正，也即修正<code>scrollTop</code>的同时重新计算「锚点元素」。</li>
+<li><strong>屏幕宽度发生改变。</strong> 手机屏幕横竖方向改变和手动改变浏览器窗口大小都可能导致「滚动容器」的宽度发生变化，「滚动容器」的宽度决定了列表元素的高度，这种情况下每一个元素的「scrollY」都将失效，需要重新计算。同时，为了更好地的用户体验，我们应该在宽度发生变化时，保持「锚定元素」的<code>offset</code>不变，举一个 twitter 例子：<br>
+<img src="_nuxt/img/pic-4.194b7ea.gif" alt=""></li>
+</ol>
+<p>因此，这里我们不再将「scrollY」直接赋予每一个列表元素，而是新增一个<code>cachedScrollY</code>数组用于存储所有列表元素的临时「scrollY」。在每一次滚动事件发生时，根据滚动差值是否超过「锚点元素」对应的<code>cachedHeight</code>去判断是否需要更新「锚点元素」。如果「锚点元素」发生改变，以「锚点元素」为基点，用每一个「可视元素」对应的<code>cachedHeight</code>叠加「锚点元素」的「scrollY」去计算自身的「scrollY」，然后更新每个列表元素对应<code>cachedScrollY</code>，最后渲染到「可视区域」。</p>
+<h3 id="zhunbeigongzuodongtaigaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhunbeigongzuodongtaigaodu")'>¶</a> 准备工作|动态高度</h3>
+<p>修改随机数据函数，给每个元素增加<strong>随机图片</strong>和该图片的<strong>随机宽度</strong>：</p>
+<pre data-line="7,8" class="language-js"><code data-line="7,8" class="language-js">export function fetchData(count = 30) {
+  const result = [];
+  for (let i = 0; i &lt; count; i++) {
+    const item = faker.helpers.contextualCard();
+    item.paragraph = faker.lorem.paragraph();
+    item.img = {
+      src: `/images/${faker.random.number({ min: 1, max: 20 })}.jpeg`, // 从给定的 20 张图片内随机
+      width: `${faker.random.number({ min: 100, max: 700 })}px`, // 从 100px - 700px 范围内随机
+    };
+    result.push(item);
+  }
+  return result;
+}
+</code></pre><p>修改<code>item</code>组件，注意加载的两张图片：一张为正常加载的图片，一张为<strong>人工延时</strong>加载的图片：</p>
+<pre data-line="8-14" class="language-html"><code data-line="8-14" class="language-html">&lt;template>
+  &lt;li class="item" ref="item">
+    &lt;div class="item__wrapper" :class="{ 'is-fixed': fixedHeight }">
+      &lt;!-- ... -->
+      &lt;template v-if="fixedHeight">
+        &lt;!-- ... -->
+      &lt;/template>
+      &lt;template v-else>
+        &lt;p class="item__paragraph">{{ data.paragraph }}&lt;/p>
+        &lt;!-- 模拟延时加载图片 -->
+        &lt;img class="item__img" :src="defferImgSrc" :style="{width: data.img.width}" />
+        &lt;!-- 正常加载图片 -->
+        &lt;img class="item__img" :src="data.img.src" :style="{width: data.img.width}" />
+      &lt;/template>
+    &lt;/div>
+  &lt;/li>
+&lt;/template>
+&lt;script>
+  // ...
+  export default {
+    // ...
+    props: {
+      // ...
+      fixedHeight: {
+        type: Boolean,
+        default: true,
+      },
+    },
+    data() {
+      return {
+        defferImgSrc: '',
+      };
+    },
+    created() {
+      // 模拟图片加载时间
+      if (this.data.img.isDeffer) {
+        this.defferImgSrc = this.data.img.src;
+      } else {
+        setTimeout(() => {
+          this.defferImgSrc = this.data.img.src;
+          this.data.img.isDeffer = true;
+        }, faker.random.number({ min: 300, max: 5000 }));
+      }
+    },
+  };
+&lt;/script>
+</code></pre><p>最后，在<code>mounted</code>钩子内使用 <a href="https://github.com/que-etc/resize-observer-polyfill" target="_blank">resize-observer-polyfill</a> 监听元素高度变化：</p>
+<pre data-line="10" class="language-js"><code data-line="10" class="language-js">import ResizeObserver from 'resize-observer-polyfill';
+
+export default {
+  // ...
+  mounted() {
+    if (this.fixedHeight) return;
+
+    const ro = new ResizeObserver((entries, observer) => {
+      // 高度发生变化时，将 'size-change' 事件 emit 到父组件
+      this.$emit('size-change', this.index);
+    });
+    ro.observe(this.$refs.item);
+    this.$once('hook:beforeDestroy', ro.disconnect.bind(ro));
+  },
+  // ...
+};
+</code></pre><p>通过路由挂载后，完成一个动态高度元素列表的渲染，如下图：<br>
+<img src="_nuxt/img/pic-2.42bae0b.png" alt=""></p>
+<h3 id="jiantingyuansugaodubianhua"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jiantingyuansugaodubianhua")'>¶</a> 监听元素高度变化</h3>
+<p>在每一次「可视元素」的高度发生变化时，以「锚点元素」为基点，计算出「锚点元素」的<code>scrollY</code>，然后按「锚点元素」之前和之后的元素进行区别计算，得出所有「可视元素」的最新<code>scrollY</code>。</p>
+<p><em>注意：列表元素的初次渲染和后续的高度变化都会触发<code>ResizeObserver</code>事件</em></p>
+<pre data-line="13" class="language-html"><code data-line="13" class="language-html">&lt;template>
+  &lt;ul ref="scroller" class="height-dynamic" @scroll="handleScroll">
+    &lt;!-- ... -->
+    &lt;item
+      class="height-dynamic__item"
+      v-for="item in visibleData"
+      ref="items"
+      :data="item"
+      :fixed-height="false"
+      :key="item.username + item.phone"
+      :index="item.index"
+      :style="`transform: translate(0, ${cachedScrollY[item.index]}px)`"
+      @size-change="handleSizeChange"
+    />
+  &lt;/ul>
+&lt;/template>
+&lt;script>
+  export default {
+    // ...
+    methods: {
+      handleSizeChange(index) {
+        this.calItemScrollY();
+      },
+      // 计算每一个「可视元素」的 scrollY
+      async calItemScrollY() {
+        await this.$nextTick();
+        // 修正 vue diff 算法导致「可视元素」顺序不正确的问题
+        this.$refs.items.sort((a, b) => a.index - b.index);
+
+        // 获取「锚点元素」在「可视元素」中的序号
+        const anchorDomIndex = this.$refs.items.findIndex(item => item.index === this.anchorItem.index);
+        const anchorDom = this.$refs.items[anchorDomIndex];
+        const anchorDomHeight = anchorDom.$el.getBoundingClientRect().height;
+
+        // 通过「滚动容器」的「当前滚动高度」和「锚点元素」的 offset 算出其 scrollY
+        this.$set(this.cachedScrollY, this.anchorItem.index, this.$refs.scroller.scrollTop - this.anchorItem.offset);
+        this.$set(this.cachedHeight, this.anchorItem.index, anchorDomHeight);
+
+        // 计算 anchorItem 后面的列表元素 scrollY
+        for (let i = anchorDomIndex + 1; i &lt; this.$refs.items.length; i++) {
+          const item = this.$refs.items[i];
+          const { height } = item.$el.getBoundingClientRect();
+          this.$set(this.cachedHeight, item.index, height);
+          // 当前元素的 scrollY 是上一个元素的 scrollY + 上一个元素的高度
+          const scrollY = this.cachedScrollY[item.index - 1] + this.cachedHeight[item.index - 1];
+          this.$set(this.cachedScrollY, item.index, scrollY);
+        }
+        // 计算 anchorItem 前面的列表元素 scrollY
+        for (let i = anchorDomIndex - 1; i >= 0; i--) {
+          const item = this.$refs.items[i];
+          const { height } = item.$el.getBoundingClientRect();
+          this.$set(this.cachedHeight, item.index, height);
+          // 当前元素的 scrollY 是下一个元素的 scrollY - 当前元素的高度
+          const scrollY = this.cachedScrollY[item.index + 1] - this.cachedHeight[item.index];
+          this.$set(this.cachedScrollY, item.index, scrollY);
+        }
+      },
+      // ...
+    },
+    // ...
+  };
+&lt;/script>
+</code></pre><h3 id="gundonggengxinkeshiyuansudongtaigaodu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#gundonggengxinkeshiyuansudongtaigaodu")'>¶</a> 滚动更新「可视元素」|动态高度</h3>
+<p>「可滚动高度」的计算已经在上面提过，而初始「可视元素」和固定高度的虚拟列表的计算是类似的，所以这里跳过这两点，只描述如何处理滚动更新「可视元素」。</p>
+<p>根据滚动方向和偏移量，按顺序更新「锚点元素」→「头挂载元素」→「尾挂载元素」→「可视元素」：</p>
+<pre class="language-js"><code class="language-js">// ...
+export default {
+  // ...
+  methods: {
+    // ...
+    handleScroll() {
+      const delta = this.$refs.scroller.scrollTop - this.lastScrollTop;
+      this.lastScrollTop = this.$refs.scroller.scrollTop;
+      // 1.更新「锚点元素」
+      this.updateAnchorItem(delta);
+      // 更新「头挂载元素」→「尾挂载元素」→「可视元素」
+      this.updateVisibleData();
+    },
+    async updateAnchorItem(delta) {
+      const lastIndex = this.anchorItem.index;
+      const lastOffset = this.anchorItem.offset;
+      delta += lastOffset;
+
+      let index = lastIndex;
+      const isPositive = delta >= 0;
+      // 判断滚动方向
+      if (isPositive) {
+        // 用 delta 一直减去从「锚点元素」开始向下方向的「可视元素」高度，每减一次 index 前进一位
+        while (index &lt; this.listData.length && delta > (this.cachedHeight[index] || ESTIMATED_HEIGHT)) {
+          // 当 this.cachedHeight[index] 不存在时，说明可能被快速拖动滚动条而略过渲染，此时需要填充估计高度
+          if (!this.cachedHeight[index]) {
+            this.$set(this.cachedHeight, index, ESTIMATED_HEIGHT);
+          }
+          delta -= this.cachedHeight[index];
+          index++;
+        }
+        if (index >= this.listData.length) {
+          this.anchorItem = { index: this.listData.length - 1, offset: 0 };
+        } else {
+          this.anchorItem = { index, offset: delta };
+        }
+      } else {
+        // 用 delta 一直叠加从「锚点元素」开始向上方向的「可视元素」高度，每加一次 index 后退一位
+        while (delta &lt; 0) {
+          // 当 this.cachedHeight[index] 不存在时，说明可能被快速拖动滚动条而略过渲染，此时需要填充估计高度
+          if (!this.cachedHeight[index - 1]) {
+            this.$set(this.cachedHeight, index - 1, ESTIMATED_HEIGHT);
+          }
+          delta += this.cachedHeight[index - 1];
+          index--;
+        }
+        if (index &lt; 0) {
+          this.anchorItem = { index: 0, offset: 0 };
+        } else {
+          this.anchorItem = { index, offset: delta };
+        }
+      }
+    },
+    updateVisibleData() {
+      // 2.更新「头挂载元素」，注意不能小于 0
+      const start = (this.firstAttachedItem = Math.max(0, this.anchorItem.index - BUFFER_SIZE));
+      // 3.更新「尾挂载元素」
+      this.lastAttachedItem = this.firstAttachedItem + VISIBLE_COUNT + BUFFER_SIZE * 2;
+      const end = Math.min(this.lastAttachedItem, this.listData.length);
+      // 4.更新「可视元素」
+      this.visibleData = this.listData.slice(start, end);
+    },
+    // ...
+  },
+  // ...
+};
+</code></pre><h3 id="xiuzhenggundongtiao"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xiuzhenggundongtiao")'>¶</a> 修正滚动条</h3>
+<p>到这一步，这个「动态高度虚拟列表」已经大致可用了，但是还有一个问题，就是当用户快速拖动滚动条，因为「滚动差值」很大，所以会略过中间元素的渲染，此时这些略过的元素在<code>cachedHeight</code>中用<code>ESTIMATED_HEIGHT</code>进行存储，因此会出现两种情况：</p>
+<ol>
+<li><strong>估算的「可滚动高度」小于实际的「可滚动高度」</strong>。比如略过了中间 20 个元素，这些略过元素的估算高度总值为 ESTIMATED_HEIGHT(180) * 20 = 3600，而假设实际元素真正渲染时的平均高度为 300，即略过元素的实际高度总值为 300 * 20 = 6000。可以得知差值为 3600 - 6000 = -2400，滚动到顶部时，无法滚动到第一个元素。</li>
+<li><strong>估算的「可滚动高度」大于实际的「可滚动高度」</strong>。比如略过了中间 20 个元素，这些略过元素的估算高度总值为 ESTIMATED_HEIGHT(180) * 20 = 3600，而假设实际元素真正渲染时的平均高度为 100，即略过元素的实际高度总值为 100 * 20 = 2000。可以得知差值为 3600 - 2000 = 1600，滚动到顶部时会有空白部分。</li>
+</ol>
+<p>考虑在这种情况下，可能会有往回滚动的场景，所以必须在发现「可滚动高度」过小或过大的时候，必须进行及时修正。修改原来的<code>handleScroll</code>、<code>updateAnchorItem</code>和<code>calItemScrollY</code>方法，添加相关逻辑。</p>
+<pre class="language-js"><code class="language-js">export default {
+  data() {
+    return {
+      // ...
+      revising: false,
+    };
+  },
+  // ...
+  methods: {
+    // ...
+    handleScroll() {
+      if (this.revising) return; // 修正滚动条时，屏蔽滚动逻辑
+      // ...
+    },
+    async updateAnchorItem(delta) {
+      // ...
+      // 修正拖动过快导致的滚动到顶端滚动条不足的偏差
+      if (this.cachedScrollY[this.firstAttachedItem] &lt;= -1) {
+        console.log('revising insufficient');
+        this.revising = true;
+        // 需要的修正的滚动高度为「锚点元素」之前的元素总高度 + 「锚点元素」的 offset
+        const actualScrollTop =
+          this.cachedHeight.slice(0, Math.max(0, this.anchorItem.index)).reduce((sum, h) => (sum += h), 0) + this.anchorItem.offset;
+        this.$refs.scroller.scrollTop = actualScrollTop;
+        this.lastScrollTop = this.$refs.scroller.scrollTop;
+        if (this.$refs.scroller.scrollTop === 0) {
+          this.anchorItem = { index: 0, offset: 0 };
+        }
+        // 更改了 lastScrollTop 后，需要重新计算「可视元素」的 scrollY
+        this.calItemScrollY();
+        this.revising = false;
+      }
+    },
+    // 计算每一个「可视元素」的 scrollY
+    async calItemScrollY() {
+      // ...
+      // 修正拖动过快导致的滚动到顶端有空余的偏差
+      if (this.cachedScrollY[0] > 0) {
+        console.log('revising redundant');
+        this.revising = true;
+        // 第一个列表元素的 cachedScrollY 即为多出的量
+        const delta = this.cachedScrollY[0];
+        const last = Math.min(this.lastAttachedItem, this.listData.length);
+        for (let i = 0; i &lt; last; i++) {
+          this.$set(this.cachedScrollY, i, this.cachedScrollY[i] - delta);
+        }
+        const scrollTop = this.cachedScrollY[this.anchorItem.index - 1]
+          ? this.cachedScrollY[this.anchorItem.index - 1] + this.anchorItem.offset
+          : this.anchorItem.offset;
+        this.$refs.scroller.scrollTop = scrollTop;
+        this.lastScrollTop = this.$refs.scroller.scrollTop;
+        this.revising = false;
+      }
+    },
+    // ...
+  },
+  // ...
+};
+</code></pre><p>打完收工，「动态高度虚拟列表」实现完成，打开开发者工具，可以观察到就算滚动条一直向下，列表元素的个数都是恒定的，而且无论是快速拖动滚动条还是实时改变窗口宽度，整个列表都能正确地渲染：</p>
+<p><img src="_nuxt/img/pic-9.8431154.gif" alt=""></p>
+<p>你可以点击<a href="https://lkangd.github.io/infinite-scroll-sample/#/height-dynamic" target="_blank">此处</a>进行体验。</p>
+<h2 id="zongjie"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zongjie")'>¶</a> 总结</h2>
+<p>本文介绍了前端业务开发中长列表的常规优化手段「虚拟列表」的定义和它在 Vue 环境中的实现，就「固定高度虚拟列表」和「动态高度虚拟列表」两个场景下以一个简单的 demo 详细讲述了虚拟列表的实现思路。</p>
+<p>阅读完本文后可以发现，以本文的思路实现「虚拟列表」的关键在于「锚点元素」的计算和更新，理解了这一点之后就可以发现后续的实现都是按部就班的。</p>
+<p>文字表达可能会有疏漏，建议通过下载本文的<a href="https://github.com/lkangd/infinite-scroll-sample" target="_blank">代码库</a>（基于 Vue 2.x）运行调试，加深理解。</p>
+<p>如果有不正确或难以理解的地方，欢迎通过邮件和留言进行指正讨论。</p>
+<blockquote>
+<p><strong>重要提示：</strong> 本文所有代码及示例项目只用于探讨虚拟列表的实现原理，请勿直接使用于生产。</p>
+</blockquote>
+<h4 id="cankao"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#cankao")'>¶</a> 参考</h4>
+<p><a href="https://developers.google.com/web/updates/2016/07/infinite-scroller#scroll_anchoring" target="_blank">Complexities of an Infinite Scroller</a><br>
+<a href="https://itsze.ro/blog/2017/04/09/infinite-list-and-react.html" target="_blank">Infinite List and React</a><br>
+<a href="https://github.com/dwqs/blog/issues/70" target="_blank">浅说虚拟列表的实现原理</a></p>
+</article> <hr> <div class="cs-post__link-wrapper"><a href="/post/prevent-duplicate-requests/" class="cs-outside-link">← 控制前端业务重复请求的一个新思路</a> <a href="/post/write-bem-with-scss/" class="cs-outside-link">SCSS 环境下的 BEM 优雅实践 →</a></div> <hr> <form action="https://app.convertkit.com/forms/1488259/subscriptions" method="post" data-sv-form="1488259" data-uid="51a87aa3a3" data-format="inline" data-version="5" min-width="400 500 600 700" class="cs-subscribe cs-container" data-v-011cff22><div class="cs-subscribe__wrapper" data-v-011cff22><h3 class="cs-subscribe__title" data-v-011cff22>订阅本博客的最新内容</h3> <p class="cs-subscribe__describe" data-v-011cff22>如果我有新的想法，会第一时间通过邮件与你分享.</p> <svg xmlns="http://www.w3.org/2000/svg" class="cs-subscribe__icon icon sprite-icons" data-v-011cff22 data-v-011cff22><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" data-v-011cff22 data-v-011cff22></use></svg></div> <div class="cs-subscribe__wrapper" data-v-011cff22><input aria-label="Your first name" name="fields[first_name]" placeholder="你的昵称" required class="cs-subscribe__input" data-v-011cff22> <input type="email" name="email_address" aria-label="Your email address" placeholder="你的邮件地址" required class="cs-subscribe__input" data-v-011cff22> <button data-element="submit" class="cs-subscribe__submit-btn" data-v-011cff22><span data-v-011cff22>立即订阅</span></button> <p class="cs-subscribe__tips" data-v-011cff22>请放心我不会发送任何辣鸡邮件给你.</p> <p class="cs-subscribe__tips" data-v-011cff22>
+      你可以
+      <em data-v-011cff22>随时</em> 取消订阅.
+    </p></div></form> <section class="cs-statement" data-v-08ff1539><p class="cs-statement__text" data-v-08ff1539>
+    讨论请发邮件到
+    <a href="mailto:lkangd@gmail.com" target="_blank" data-v-08ff1539>lkangd@gmail.com</a></p> <p class="cs-statement__text" data-v-08ff1539>未经授权，禁止转载</p> <p class="cs-statement__text" data-v-08ff1539>通过支付宝 lkangd@foxmail.com 或赞赏码赞助此文</p> <img alt="reward-code" src="/_nuxt/img/wechat-reward-code.3b0f29f.jpg" class="cs-statement__reward-code theme-ignore" data-v-08ff1539></section> <ul class="cs-toc" data-v-2002d74b></ul></section> <footer class="cs-footer" data-v-11bea6b1><div class="cs-footer__wrapper" data-v-11bea6b1><a href="/about/" class="fl" data-v-11bea6b1>About</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/tech/" class="fl" data-v-11bea6b1>Tech</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/think/" class="fl" data-v-11bea6b1>Think</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/fun/" class="fl" data-v-11bea6b1>Fun</a> <a href="/sitemap.xml" target="_blank" class="fr" data-v-11bea6b1>Sitemap</a> <span class="fr" data-v-11bea6b1>• </span> <a href="/feed.xml" target="_blank" class="fr" data-v-11bea6b1>RSS</a> <div class="cs-footer__bottom" data-v-11bea6b1><svg xmlns="http://www.w3.org/2000/svg" class="cs-footer__logo icon sprite-icons" data-v-11bea6b1 data-v-11bea6b1><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" data-v-11bea6b1 data-v-11bea6b1></use></svg>
+      2017-2020 Curtis' Spot
+      <span style="margin:0 5px" data-v-11bea6b1>•</span> <div class="cs-color-slogan cs-footer__slogan" data-v-a8c8150c data-v-11bea6b1><span class="cs-color-slogan__start-text" data-v-a8c8150c>Work With </span> <span class="cs-color-slogan__placeholder" data-v-a8c8150c></span> <span class="cs-color-slogan__wrapper" data-v-a8c8150c>
+     
+    <span data-v-a8c8150c></span></span></div></div></div></footer></div></div></div><script>window.__NUXT__={staticAssetsBase:"/_nuxt/static/1600180271",layout:"post",error:null,serverRendered:!0,routePath:"/post/virtual-infinite-scroll",config:{}}</script><script src="/_nuxt/runtime.2b486dc.js" defer></script><script src="/_nuxt/pages/post/_id.293b655.js" defer></script><script src="/_nuxt/node_modules/commons.82dad87.js" defer></script><script src="/_nuxt/app.ab1a4d4.js" defer></script><script data-n-head="ssr" type="text/javascript" data-body="true">!function(){function t(e){r=e,document.body.className=e}var r,a={light:"light",dark:"dark"};try{r=localStorage.getItem("theme")}catch(e){}window.__setPreferredTheme=function(e){t(e);try{localStorage.setItem("theme",e)}catch(e){}};var e=window.matchMedia("(prefers-color-scheme: dark)");e.addListener(function(e){window.__setPreferredTheme(a[r]||(e.matches?"dark":"light"))}),t(a[r]||(e.matches?"dark":"light"))}()</script>
+  </body>
+</html>

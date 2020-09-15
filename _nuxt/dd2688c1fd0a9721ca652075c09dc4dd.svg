@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+
+</defs>
+<symbol id="i-icon-e-mail" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" style="max-width:100%"><g fill="none" fill-rule="evenodd"><path fill="#1cc794" d="M23 36a1 1 0 01-.537-.156l-22-14a1.002 1.002 0 01.09-1.739L23 6l22.447 14.105a1.002 1.002 0 01.09 1.739l-22 14A1 1 0 0123 36z"/><path fill="#FFF" d="M38 37H8V1a1 1 0 011-1h28a1 1 0 011 1v36z"/><path fill="#20dba3" d="M45 46a1.03 1.03 0 01-.252-.032l-23-6L22 33l24-12v24a1.002 1.002 0 01-1 1z"/><path fill="#20f1b4" d="M45 46H1a1 1 0 01-1-1V21l45.479 23.122A.999.999 0 0145 46z"/><path fill="#20dba3" d="M19 20.414l-4.707-4.707a.999.999 0 010-1.414L19 9.586 20.414 11l-4 4 4 4L19 20.414zm8 0L25.586 19l4-4-4-4L27 9.586l4.707 4.707a.999.999 0 010 1.414L27 20.414z"/></g></symbol>
+<symbol id="i-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750.1 710.4"><path fill="none" stroke="currentColor" stroke-width="40" stroke-miterlimit="10" d="M387.5 14.1l-149 149.1M87.2 314.5l-73.1 73M459.1 17L241.3 234.8M128.8 347.2L18.4 457.7M511.4 39l-248 248.1M182.4 368.1L35.2 515.2M440.6 187.6L302.4 325.8M554.1 73.1l-85.5 85.5M263.4 364.8L63 565.2"/><path fill="#fff" stroke="currentColor" stroke-width="40" stroke-miterlimit="10" d="M96.3 608.2L346.6 358l235.8-235.8M136.4 642.6l270.8-270.8 188.9-188.9M183.6 669.8l320.1-320.1.7-.7 68.9-68.9 88-88"/><path fill="none" stroke="currentColor" stroke-width="40" stroke-miterlimit="10" d="M537.5 390.3L239 688.8M736 191.9l-75.5 75.4M559.1 443.2L306 696.3M560.8 515.8L394.3 682.3"/></symbol>
+</svg>

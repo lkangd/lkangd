@@ -1,0 +1,466 @@
+<!doctype html>
+<html data-n-head-ssr>
+  <head>
+    <title>控制前端业务重复请求的一个新思路 - Curtis' Spot</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="google-site-verification" content="kfF1FRzuuywPcdFndPOA2Lc_CY77xywarjgy_EHl-h8"><meta data-n-head="ssr" name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"><meta data-n-head="ssr" data-hid="description" name="description" content="Front-end Engineer. Blogging about life, tech & everything I love."><base href="/"><link data-n-head="ssr" rel="icon" type="image/x-icon" href="/favicon.png"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:900&display=swap"><link rel="preload" href="/_nuxt/runtime.2b486dc.js" as="script"><link rel="preload" href="/_nuxt/node_modules/commons.82dad87.js" as="script"><link rel="preload" href="/_nuxt/app.ab1a4d4.js" as="script"><link rel="preload" href="/_nuxt/pages/post/_id.293b655.js" as="script"><style data-vue-ssr-id="27366e46:0 563f3fe6:0 bd3e5fbe:0 3d8525fc:0 b59d545e:0 44ce5391:0 1728c230:0 66187182:0 7e4cdd9a:0 2aeaee0a:0 6c57b7be:0">a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,input,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{box-sizing:border-box;margin:0;padding:0;border:0;font-size:100%;font-weight:400;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,menu,nav,section{display:block}body{line-height:1}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:none}table{border-collapse:collapse;border-spacing:0}a,button,input{background-color:transparent;text-decoration:none;border:none;outline:0;-webkit-tap-highlight-color:transparent}a:active,a:focus,button:active,button:focus,input:active,input:focus{outline:0!important}li{list-style:none}body,html{font-family:"PingFang SC",STHeitiSC-Light,Helvetica-Light,arial,sans-serif,"Droid Sans Fallback"}body{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}html{font-size:14px!important}body,html{height:100%;line-height:1;font-family:Merriweather,Georgia,serif;-webkit-tap-highlight-color:transparent;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}body{margin:0 auto;scroll-behavior:smooth}strong{font-weight:700}a,button{color:inherit;outline:0;border:none;background-color:transparent;-webkit-tap-highlight-color:transparent;transition:text-shadow .3s;white-space:pre-wrap;word-break:break-all;cursor:pointer}a:active,a:focus,button:active,button:focus{outline:0!important}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}code[class*=language-],pre[class*=language-]{color:#fff;background:0 0;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-feature-settings:normal;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;margin-bottom:0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{overflow:auto;padding:1.3125rem}pre[class*=language-]::-moz-selection{background:#27292a}pre[class*=language-]::selection{background:#27292a}pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:hsla(0,0%,100%,.15)}pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:hsla(0,0%,100%,.15)}:not(pre)>code[class*=language-]{border-radius:.3em;background:var(--inline-code-bg);color:var(--inline-code-fg);padding:.15em .2em .05em;white-space:normal}.token{position:relative;z-index:1}.token.attr-name{color:#addb67;font-style:italic}.token.comment{color:#809393}.token.string,.token.url{color:#addb67}.token.variable{color:#d6deeb}.token.number{color:#f78c6c}.token.builtin,.token.char,.token.constant,.token.function{color:#82aaff}.token.punctuation{color:#c792ea}.token.doctype,.token.selector{color:#c792ea;font-style:italic}.token.class-name{color:#ffcb8b}.token.keyword,.token.operator,.token.tag{color:var(--main)}.token.boolean{color:#ff5874}.token.property{color:#80cbc4}.token.namespace{color:#b2ccd6}pre[data-line]{padding:1em 0 1em 3em;position:relative}.gatsby-highlight-code-line{background-color:#022a4b;display:block;padding-right:1em;padding-left:1.25em;border-left:.25em solid var(--main)}.gatsby-highlight,.gatsby-highlight-code-line{margin-right:-1.3125rem;margin-left:-1.3125rem}.gatsby-highlight{margin-bottom:1.75rem;border-radius:10px;-webkit-overflow-scrolling:touch;overflow:auto}@media (max-width:672px){.gatsby-highlight{border-radius:0}}.gatsby-highlight pre[class*=language-]{float:left;min-width:100%}.line-highlight{z-index:-1;border-left:4px solid var(--main);background:rgba(2,42,75,.8)!important}.line-highlight:after,.line-highlight:before{display:none}body[data-v-377fcad6]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-377fcad6]{font-weight:700}body.dark[data-v-377fcad6]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-377fcad6]{font-weight:400}body.dark img[data-v-377fcad6]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-377fcad6]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-377fcad6]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-377fcad6]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-377fcad6]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-377fcad6],.cs-title sup[data-v-377fcad6]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-377fcad6]{position:relative;top:-12px}.cs-text[data-v-377fcad6]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-377fcad6]{text-decoration:underline}.cs-text small[data-v-377fcad6]{font-size:.6em}.cs-list[data-v-377fcad6]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-377fcad6]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-377fcad6]{float:left}.fr[data-v-377fcad6]{float:right}a[data-v-377fcad6]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-377fcad6],h2[data-v-377fcad6],h3[data-v-377fcad6],h4[data-v-377fcad6],h5[data-v-377fcad6],h6[data-v-377fcad6]{font-family:Montserrat,serif}h1 a[data-v-377fcad6],h2 a[data-v-377fcad6],h3 a[data-v-377fcad6],h4 a[data-v-377fcad6],h5 a[data-v-377fcad6],h6 a[data-v-377fcad6]{color:var(--text-title)}h1 .cs-header-anchor[data-v-377fcad6],h2 .cs-header-anchor[data-v-377fcad6],h3 .cs-header-anchor[data-v-377fcad6],h4 .cs-header-anchor[data-v-377fcad6],h5 .cs-header-anchor[data-v-377fcad6],h6 .cs-header-anchor[data-v-377fcad6]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-377fcad6],h2:hover .cs-header-anchor[data-v-377fcad6],h3:hover .cs-header-anchor[data-v-377fcad6],h4:hover .cs-header-anchor[data-v-377fcad6],h5:hover .cs-header-anchor[data-v-377fcad6],h6:hover .cs-header-anchor[data-v-377fcad6]{opacity:1}.cs-toc-dom[data-v-377fcad6]{display:none}.cs-loading[data-v-377fcad6]{position:fixed;top:0;left:0;z-index:100;width:100%;height:100%;background-color:var(--bg);will-change:opacity;transition:opacity .5s .4s}.cs-loading.loaded[data-v-377fcad6]{opacity:0}.cs-loading .main[data-v-377fcad6]{position:absolute;top:calc(50% - 63px);left:calc(50% - 63px);z-index:1;width:126px;height:126px}.cs-loading .main.out-of-window .line1-2[data-v-377fcad6],.cs-loading .main.out-of-window .line1[data-v-377fcad6],.cs-loading .main.out-of-window .line3-2[data-v-377fcad6],.cs-loading .main.out-of-window .line3[data-v-377fcad6],.cs-loading .main.out-of-window .line5[data-v-377fcad6],.cs-loading .main.out-of-window .line7[data-v-377fcad6],.cs-loading .main.out-of-window .line9[data-v-377fcad6]{transform:rotate(45deg) translateY(100vh)}.cs-loading .main.out-of-window .line10[data-v-377fcad6],.cs-loading .main.out-of-window .line2-2[data-v-377fcad6],.cs-loading .main.out-of-window .line2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-3[data-v-377fcad6],.cs-loading .main.out-of-window .line4[data-v-377fcad6],.cs-loading .main.out-of-window .line6[data-v-377fcad6],.cs-loading .main.out-of-window .line8-1[data-v-377fcad6],.cs-loading .main.out-of-window .line8[data-v-377fcad6]{transform:rotate(45deg) translateY(-100vh)}.cs-loading .main.out-of-window .text[data-v-377fcad6]{opacity:0;transition:opacity .5s}.cs-loading .main .line[data-v-377fcad6]{position:absolute;z-index:3;width:7px;background:var(--text-normal);will-change:transform;transform:rotate(45deg)}.cs-loading .main .line.line1[data-v-377fcad6]{top:51px;left:5px;height:17px;transition:transform .5s}.cs-loading .main .line.line1-2[data-v-377fcad6]{top:-3px;left:50px;height:36px;transition:transform .5s}.cs-loading .main .line.line2[data-v-377fcad6]{top:55px;left:9px;height:27px;transition:transform .5s}.cs-loading .main .line.line2-2[data-v-377fcad6]{top:-5px;left:56px;height:53px;transition:transform .5s}.cs-loading .main .line.line3[data-v-377fcad6]{top:58px;left:15px;height:35px;transition:transform .5s .1s}.cs-loading .main .line.line3-2[data-v-377fcad6]{top:-2px;left:63px;height:59px;transition:transform .5s .1s}.cs-loading .main .line.line4[data-v-377fcad6]{top:55px;left:24px;height:48px;transition:transform .5s .1s}.cs-loading .main .line.line4-2[data-v-377fcad6]{top:27px;left:60px;height:33px;transition:transform .5s .1s}.cs-loading .main .line.line4-3[data-v-377fcad6]{top:9px;left:84px;height:21px;transition:transform .5s .1s}.cs-loading .main .line.line5[data-v-377fcad6]{top:4px;left:54px;height:117px;transition:transform .5s .2s}.cs-loading .main .line.line6[data-v-377fcad6]{top:15px;left:59px;height:111px;transition:transform .5s .2s}.cs-loading .main .line.line7[data-v-377fcad6]{top:16px;left:69px;height:115px;transition:transform .5s .3s}.cs-loading .main .line.line8[data-v-377fcad6]{top:56px;left:63px;height:72px;transition:transform .5s .3s}.cs-loading .main .line.line8-1[data-v-377fcad6]{top:30px;left:116px;height:18px;transition:transform .5s .3s}.cs-loading .main .line.line9[data-v-377fcad6]{top:67px;left:70px;height:61px;transition:transform .5s .4s}.cs-loading .main .line.line10[data-v-377fcad6]{top:82px;left:78px;height:40px;transition:transform .5s .4s}.cs-loading .main .text[data-v-377fcad6]{position:absolute;bottom:-18%;left:0;width:100%;font-size:16px;font-weight:700;color:var(--text-normal);text-align:center;will-change:opacity;transition:opacity .5s .5s}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}.cs-post{position:relative;padding:42px 21px!important;background-color:transparent}.cs-post__toggle{position:absolute;top:52px;right:21px}.cs-post__blog-name{margin-bottom:42px;height:42px;font-family:Montserrat,sans-serif;font-size:23px;font-weight:900;line-height:2.625rem}.cs-post__blog-name>a{color:var(--main)!important;box-shadow:none}.cs-post__title{margin-top:56px;line-height:44px;font-size:40px;font-family:Montserrat,serif;font-weight:900;color:var(--text-title)}.cs-post__info{margin-bottom:28px;line-height:2;font-size:14px;font-family:Merriweather,Georgia,serif;word-spacing:2px}.cs-post hr{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__link-wrapper{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.cs-post__link-wrapper>a{margin:20px 0}.cs-post__article a{padding:0 4px;text-decoration:underline}.cs-post__article h1{margin:50px 0 24px;font-size:28px;font-weight:700}.cs-post__article h2{margin:50px 0 24px;font-size:25px;font-weight:700}.cs-post__article h3{margin:50px 0 24px;font-size:22px;font-weight:700}.cs-post__article h4{margin:30px 0 24px;font-size:19px;font-weight:700}.cs-post__article h5{margin:30px 0 24px;font-size:16px;font-weight:700}.cs-post__article h6{margin:30px 0 24px;font-size:13px;font-weight:700}.cs-post__article li,.cs-post__article p,.cs-post__article td{margin:0;font-size:14px;line-height:28px;color:var(--text-normal)}.cs-post__article p{margin-bottom:24px}.cs-post__article code:not([class*=language-]){margin:0 4px;padding:0 4px;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-weight:700;color:var(--inline-code-fg);background-color:var(--inline-code-bg);border-radius:3px}.cs-post__article strong em{margin:0 6px;font-weight:700}.cs-post__article hr{margin:30px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__article em{margin:0 6px}.cs-post__article pre{margin:24px 0;font-size:12px;border-radius:10px;background-color:#011627;opacity:.99}.cs-post__article blockquote{background:var(--blockquote-bg);border-left:6px solid var(--blockquote-bl);margin:24px 6px;padding:16px 10px;quotes:"“" "”" "‘" "’"}.cs-post__article blockquote p:last-child{margin-bottom:0}.cs-post__article li+li{margin-top:10px}.cs-post__article ul{margin:24px 0;padding-left:30px}.cs-post__article ul li{text-align:-webkit-match-parent;line-height:28px;list-style:disc}.cs-post__article ul li ul li{list-style:circle}.cs-post__article ol{margin:24px 0;padding-left:40px}.cs-post__article ol li{list-style:decimal}.cs-post__article img{display:block;margin:50px auto;max-width:80%;height:auto}.cs-post__article table{display:inline-block;margin:0 0 24px;max-width:100%;border:1px solid #dee2e6;overflow:scroll}.cs-post__article table thead tr th{padding:12px;font-weight:700;color:#495057;background-color:#e9ecef;border-bottom:2px solid #dee2e6}.cs-post__article table thead tr th+th{border-left:1px solid #dee2e6}.cs-post__article table tbody tr td{padding:12px}.cs-post__article table tbody tr td+td{border-left:1px solid #dee2e6}.cs-post__article table tbody tr+tr{border-top:1px solid #dee2e6}body[data-v-447e03ac]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-447e03ac]{font-weight:700}body.dark[data-v-447e03ac]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-447e03ac]{font-weight:400}body.dark img[data-v-447e03ac]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-447e03ac]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-447e03ac]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-447e03ac]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-447e03ac]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-447e03ac],.cs-title sup[data-v-447e03ac]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-447e03ac]{position:relative;top:-12px}.cs-text[data-v-447e03ac]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-447e03ac]{text-decoration:underline}.cs-text small[data-v-447e03ac]{font-size:.6em}.cs-list[data-v-447e03ac]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-447e03ac]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-447e03ac]{float:left}.fr[data-v-447e03ac]{float:right}a[data-v-447e03ac]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-447e03ac],h2[data-v-447e03ac],h3[data-v-447e03ac],h4[data-v-447e03ac],h5[data-v-447e03ac],h6[data-v-447e03ac]{font-family:Montserrat,serif}h1 a[data-v-447e03ac],h2 a[data-v-447e03ac],h3 a[data-v-447e03ac],h4 a[data-v-447e03ac],h5 a[data-v-447e03ac],h6 a[data-v-447e03ac]{color:var(--text-title)}h1 .cs-header-anchor[data-v-447e03ac],h2 .cs-header-anchor[data-v-447e03ac],h3 .cs-header-anchor[data-v-447e03ac],h4 .cs-header-anchor[data-v-447e03ac],h5 .cs-header-anchor[data-v-447e03ac],h6 .cs-header-anchor[data-v-447e03ac]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-447e03ac],h2:hover .cs-header-anchor[data-v-447e03ac],h3:hover .cs-header-anchor[data-v-447e03ac],h4:hover .cs-header-anchor[data-v-447e03ac],h5:hover .cs-header-anchor[data-v-447e03ac],h6:hover .cs-header-anchor[data-v-447e03ac]{opacity:1}.cs-toc-dom[data-v-447e03ac]{display:none}.cs-theme-toggle[data-v-447e03ac]{position:absolute;display:flex;align-items:center;justify-content:space-between;padding:0 4px;width:50px;height:24px;background-color:#0f1114;border-radius:500px;cursor:pointer}.cs-theme-toggle__icon[data-v-447e03ac]{width:16px;height:16px}.cs-theme-toggle__thumb[data-v-447e03ac]{position:absolute;top:1px;left:1px;width:22px;height:22px;background-color:#fff;border-radius:100%;transition:all .2s ease}.cs-theme-toggle.is-dark .cs-theme-toggle__thumb[data-v-447e03ac]{transform:translateX(26px);box-shadow:0 0 4px 2px var(--main)}body[data-v-011cff22]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-011cff22]{font-weight:700}body.dark[data-v-011cff22]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-011cff22]{font-weight:400}body.dark img[data-v-011cff22]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-011cff22]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-011cff22]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-011cff22]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-011cff22]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-011cff22],.cs-title sup[data-v-011cff22]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-011cff22]{position:relative;top:-12px}.cs-text[data-v-011cff22]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-011cff22]{text-decoration:underline}.cs-text small[data-v-011cff22]{font-size:.6em}.cs-list[data-v-011cff22]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-011cff22]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-011cff22]{float:left}.fr[data-v-011cff22]{float:right}a[data-v-011cff22]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-011cff22],h2[data-v-011cff22],h3[data-v-011cff22],h4[data-v-011cff22],h5[data-v-011cff22],h6[data-v-011cff22]{font-family:Montserrat,serif}h1 a[data-v-011cff22],h2 a[data-v-011cff22],h3 a[data-v-011cff22],h4 a[data-v-011cff22],h5 a[data-v-011cff22],h6 a[data-v-011cff22]{color:var(--text-title)}h1 .cs-header-anchor[data-v-011cff22],h2 .cs-header-anchor[data-v-011cff22],h3 .cs-header-anchor[data-v-011cff22],h4 .cs-header-anchor[data-v-011cff22],h5 .cs-header-anchor[data-v-011cff22],h6 .cs-header-anchor[data-v-011cff22]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-011cff22],h2:hover .cs-header-anchor[data-v-011cff22],h3:hover .cs-header-anchor[data-v-011cff22],h4:hover .cs-header-anchor[data-v-011cff22],h5:hover .cs-header-anchor[data-v-011cff22],h6:hover .cs-header-anchor[data-v-011cff22]{opacity:1}.cs-toc-dom[data-v-011cff22]{display:none}.cs-subscribe[data-v-011cff22]{display:flex;align-items:top;margin:40px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;background-color:var(--bg);box-shadow:var(--form-shadow);border-radius:6px;overflow:hidden}@media (max-width:500px){.cs-subscribe[data-v-011cff22]{flex-direction:column}}.cs-subscribe__wrapper[data-v-011cff22]{flex:1;padding:40px;background-color:var(--bg)}.cs-subscribe__wrapper[data-v-011cff22]:first-child{background-color:var(--bg-secondary)}.cs-subscribe__title[data-v-011cff22]{margin-bottom:20px;line-height:1.2;font-size:20px;font-weight:700}.cs-subscribe__describe[data-v-011cff22]{line-height:1.8;font-size:14px;font-weight:400}.cs-subscribe__icon[data-v-011cff22]{margin-top:20px;width:46px;height:46px}.cs-subscribe__input[data-v-011cff22]{display:block;padding:12px;width:100%;background-color:#fff;border:1px solid #e3e3e3;border-radius:4px}.cs-subscribe__input+.cs-subscribe__input[data-v-011cff22]{margin-top:10px}.cs-subscribe__input[data-v-011cff22]::-moz-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]:-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::placeholder{color:#bdbdbd}.cs-subscribe__submit-btn[data-v-011cff22]{margin:14px 0;padding:12px 24px;color:#fff;border-radius:500px;background-color:var(--main)}.cs-subscribe__submit-btn>span[data-v-011cff22]{font-weight:700}.cs-subscribe__tips[data-v-011cff22]{line-height:2;font-size:12px}body[data-v-08ff1539]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-08ff1539]{font-weight:700}body.dark[data-v-08ff1539]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-08ff1539]{font-weight:400}body.dark img[data-v-08ff1539]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-08ff1539]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-08ff1539]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-08ff1539]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-08ff1539]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-08ff1539],.cs-title sup[data-v-08ff1539]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-08ff1539]{position:relative;top:-12px}.cs-text[data-v-08ff1539]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-08ff1539]{text-decoration:underline}.cs-text small[data-v-08ff1539]{font-size:.6em}.cs-list[data-v-08ff1539]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-08ff1539]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-08ff1539]{float:left}.fr[data-v-08ff1539]{float:right}a[data-v-08ff1539]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-08ff1539],h2[data-v-08ff1539],h3[data-v-08ff1539],h4[data-v-08ff1539],h5[data-v-08ff1539],h6[data-v-08ff1539]{font-family:Montserrat,serif}h1 a[data-v-08ff1539],h2 a[data-v-08ff1539],h3 a[data-v-08ff1539],h4 a[data-v-08ff1539],h5 a[data-v-08ff1539],h6 a[data-v-08ff1539]{color:var(--text-title)}h1 .cs-header-anchor[data-v-08ff1539],h2 .cs-header-anchor[data-v-08ff1539],h3 .cs-header-anchor[data-v-08ff1539],h4 .cs-header-anchor[data-v-08ff1539],h5 .cs-header-anchor[data-v-08ff1539],h6 .cs-header-anchor[data-v-08ff1539]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-08ff1539],h2:hover .cs-header-anchor[data-v-08ff1539],h3:hover .cs-header-anchor[data-v-08ff1539],h4:hover .cs-header-anchor[data-v-08ff1539],h5:hover .cs-header-anchor[data-v-08ff1539],h6:hover .cs-header-anchor[data-v-08ff1539]{opacity:1}.cs-toc-dom[data-v-08ff1539]{display:none}.cs-statement[data-v-08ff1539]{text-align:center;font-size:14px}.cs-statement hr[data-v-08ff1539]{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-statement__text[data-v-08ff1539]{margin:8px 0;line-height:1.7;color:var(--text-normal)}.cs-statement__reward-code[data-v-08ff1539]{margin-top:50px;max-width:30%;height:auto}@media (max-width:375px){.cs-statement .cs-statement__reward-code[data-v-08ff1539]{max-width:76%!important}}body[data-v-2002d74b]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-2002d74b]{font-weight:700}body.dark[data-v-2002d74b]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-2002d74b]{font-weight:400}body.dark img[data-v-2002d74b]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-2002d74b]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-2002d74b]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-2002d74b]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-2002d74b]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-2002d74b],.cs-title sup[data-v-2002d74b]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-2002d74b]{position:relative;top:-12px}.cs-text[data-v-2002d74b]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-2002d74b]{text-decoration:underline}.cs-text small[data-v-2002d74b]{font-size:.6em}.cs-list[data-v-2002d74b]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-2002d74b]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-2002d74b]{float:left}.fr[data-v-2002d74b]{float:right}a[data-v-2002d74b]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-2002d74b],h2[data-v-2002d74b],h3[data-v-2002d74b],h4[data-v-2002d74b],h5[data-v-2002d74b],h6[data-v-2002d74b]{font-family:Montserrat,serif}h1 a[data-v-2002d74b],h2 a[data-v-2002d74b],h3 a[data-v-2002d74b],h4 a[data-v-2002d74b],h5 a[data-v-2002d74b],h6 a[data-v-2002d74b]{color:var(--text-title)}h1 .cs-header-anchor[data-v-2002d74b],h2 .cs-header-anchor[data-v-2002d74b],h3 .cs-header-anchor[data-v-2002d74b],h4 .cs-header-anchor[data-v-2002d74b],h5 .cs-header-anchor[data-v-2002d74b],h6 .cs-header-anchor[data-v-2002d74b]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-2002d74b],h2:hover .cs-header-anchor[data-v-2002d74b],h3:hover .cs-header-anchor[data-v-2002d74b],h4:hover .cs-header-anchor[data-v-2002d74b],h5:hover .cs-header-anchor[data-v-2002d74b],h6:hover .cs-header-anchor[data-v-2002d74b]{opacity:1}.cs-toc-dom[data-v-2002d74b]{display:none}.cs-toc[data-v-2002d74b]{display:inline-block;position:fixed;top:50%;left:50%;transform:translate3d(315px,-50%,0);max-height:550px;overflow-y:scroll}.cs-toc:hover .cs-toc__text[data-v-2002d74b]{opacity:1}.cs-toc__item[data-v-2002d74b]{height:16px;overflow:hidden}.cs-toc__item+.cs-toc__item[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor[data-v-2002d74b]{display:block;box-shadow:none}.cs-toc__anchor.is-active[data-v-2002d74b]:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor.is-active .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color);opacity:1}.cs-toc__text[data-v-2002d74b]{padding-left:16px;max-width:200px;overflow:hidden;line-height:1.4;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;font-size:13px;font-weight:700;color:var(--article-nav-text-color);white-space:nowrap;text-overflow:ellipsis;opacity:0;transition:opacity .5s}.cs-toc__anchor[data-v-2002d74b]:before,.cs-toc__text[data-v-2002d74b]{position:relative;top:-2px;display:inline-block;vertical-align:middle}.cs-toc__anchor[data-v-2002d74b]:before{content:"";width:16px;height:4px;border-radius:20px;background:var(--article-nav-dot-color);transition:background .5s}.cs-toc__anchor[data-v-2002d74b]:hover:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor:hover .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color)}.cs-toc__anchor+.cs-toc__anchor[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor--sub[data-v-2002d74b]:before{width:10px}.cs-toc__anchor--sub .cs-toc__text[data-v-2002d74b]{margin-left:6px;font-size:12px;font-weight:400}#__nuxt{position:relative;min-height:100%}body[data-v-11bea6b1]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-11bea6b1]{font-weight:700}body.dark[data-v-11bea6b1]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-11bea6b1]{font-weight:400}body.dark img[data-v-11bea6b1]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-11bea6b1]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-11bea6b1]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-11bea6b1]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-11bea6b1]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-11bea6b1],.cs-title sup[data-v-11bea6b1]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-11bea6b1]{position:relative;top:-12px}.cs-text[data-v-11bea6b1]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-11bea6b1]{text-decoration:underline}.cs-text small[data-v-11bea6b1]{font-size:.6em}.cs-list[data-v-11bea6b1]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-11bea6b1]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-11bea6b1]{float:left}.fr[data-v-11bea6b1]{float:right}a[data-v-11bea6b1]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-11bea6b1],h2[data-v-11bea6b1],h3[data-v-11bea6b1],h4[data-v-11bea6b1],h5[data-v-11bea6b1],h6[data-v-11bea6b1]{font-family:Montserrat,serif}h1 a[data-v-11bea6b1],h2 a[data-v-11bea6b1],h3 a[data-v-11bea6b1],h4 a[data-v-11bea6b1],h5 a[data-v-11bea6b1],h6 a[data-v-11bea6b1]{color:var(--text-title)}h1 .cs-header-anchor[data-v-11bea6b1],h2 .cs-header-anchor[data-v-11bea6b1],h3 .cs-header-anchor[data-v-11bea6b1],h4 .cs-header-anchor[data-v-11bea6b1],h5 .cs-header-anchor[data-v-11bea6b1],h6 .cs-header-anchor[data-v-11bea6b1]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-11bea6b1],h2:hover .cs-header-anchor[data-v-11bea6b1],h3:hover .cs-header-anchor[data-v-11bea6b1],h4:hover .cs-header-anchor[data-v-11bea6b1],h5:hover .cs-header-anchor[data-v-11bea6b1],h6:hover .cs-header-anchor[data-v-11bea6b1]{opacity:1}.cs-toc-dom[data-v-11bea6b1]{display:none}.cs-footer[data-v-11bea6b1]{position:absolute;bottom:0;left:0;right:0;margin:0 auto}.cs-footer__wrapper[data-v-11bea6b1]{margin:50px auto 0;padding:28px 21px;max-width:630px;font-family:Merriweather,Georgia,serif;font-size:14px;cursor:pointer}.cs-footer__wrapper>a[data-v-11bea6b1]{margin-right:5px;color:var(--main);box-shadow:0 1px 0 0 currentColor}@media (max-width:500px){.cs-footer__wrapper[data-v-11bea6b1]{text-align:center}}.cs-footer__bottom[data-v-11bea6b1]{display:flex;align-items:center;margin-top:40px;overflow:hidden}.cs-footer__logo[data-v-11bea6b1]{margin-right:10px;width:20px;height:20px}@media (max-width:500px){.cs-footer__slogan[data-v-11bea6b1] .cs-color-slogan__start-text{display:none}}body[data-v-a8c8150c]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-a8c8150c]{font-weight:700}body.dark[data-v-a8c8150c]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-a8c8150c]{font-weight:400}body.dark img[data-v-a8c8150c]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-a8c8150c]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-a8c8150c]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-a8c8150c]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-a8c8150c]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-a8c8150c],.cs-title sup[data-v-a8c8150c]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-a8c8150c]{position:relative;top:-12px}.cs-text[data-v-a8c8150c]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-a8c8150c]{text-decoration:underline}.cs-text small[data-v-a8c8150c]{font-size:.6em}.cs-list[data-v-a8c8150c]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-a8c8150c]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-a8c8150c]{float:left}.fr[data-v-a8c8150c]{float:right}a[data-v-a8c8150c]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-a8c8150c],h2[data-v-a8c8150c],h3[data-v-a8c8150c],h4[data-v-a8c8150c],h5[data-v-a8c8150c],h6[data-v-a8c8150c]{font-family:Montserrat,serif}h1 a[data-v-a8c8150c],h2 a[data-v-a8c8150c],h3 a[data-v-a8c8150c],h4 a[data-v-a8c8150c],h5 a[data-v-a8c8150c],h6 a[data-v-a8c8150c]{color:var(--text-title)}h1 .cs-header-anchor[data-v-a8c8150c],h2 .cs-header-anchor[data-v-a8c8150c],h3 .cs-header-anchor[data-v-a8c8150c],h4 .cs-header-anchor[data-v-a8c8150c],h5 .cs-header-anchor[data-v-a8c8150c],h6 .cs-header-anchor[data-v-a8c8150c]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-a8c8150c],h2:hover .cs-header-anchor[data-v-a8c8150c],h3:hover .cs-header-anchor[data-v-a8c8150c],h4:hover .cs-header-anchor[data-v-a8c8150c],h5:hover .cs-header-anchor[data-v-a8c8150c],h6:hover .cs-header-anchor[data-v-a8c8150c]{opacity:1}.cs-toc-dom[data-v-a8c8150c]{display:none}.cs-color-slogan[data-v-a8c8150c]{display:inline-block;position:relative;font-family:Merriweather,Georgia,serif;color:var(--text-normal);background-color:transparent}.cs-color-slogan__placeholder[data-v-a8c8150c]{opacity:0}.cs-color-slogan__wrapper[data-v-a8c8150c]{position:absolute;top:0;white-space:nowrap}</style><link rel="preload" href="/_nuxt/static/1600180271/post/prevent-duplicate-requests/payload.js" as="script">
+  </head>
+  <body>
+    <div data-server-rendered="true" id="__nuxt"><!----><div id="__layout"><div><section class="cs-post cs-container"><div class="cs-theme-toggle cs-post__toggle is-dark" data-v-447e03ac><img src="/_nuxt/img/moon.b276b99.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <img src="/_nuxt/img/sun.9e5c5e6.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <button class="cs-theme-toggle__thumb" data-v-447e03ac></button></div> <h3 class="cs-post__blog-name"><a href="/" class="nuxt-link-active">Curtis' Spot</a></h3> <h2 class="cs-post__title">控制前端业务重复请求的一个新思路</h2> <p class="cs-post__info">13, Sep, 2020 • 3.3k words • ☕️☕️☕️ 13 min read</p> <article class="cs-post__article"><p></p><div class="cs-toc-dom"><ul><li><a href="#xuqiubeijing">需求背景</a><ul><li><a href="#zhongfuqingqiudehuaichu">重复请求的坏处</a></li><li><a href="#zhongfuqingqiuchulifenxi">重复请求处理分析</a></li></ul></li><li><a href="#zailanjieqiliguanlizhongfuqingqiu">在拦截器里管理重复请求</a><ul><li><a href="#lanjieqideshixianyuanli">拦截器的实现原理</a></li><li><a href="#shixianzhongfuqingqiuguanliqi">实现重复请求管理器</a></li></ul></li><li><a href="#weishimoshiflybushiaxios">为什么是 fly 不是 axios？</a><ul><li><a href="#axiosguanjianyuanmafenxi">axios 关键源码分析</a></li><li><a href="#flyguanjianyuanmafenxi">fly 关键源码分析</a></li><li><a href="#nengfoushiyongaxiosdadaomude">能否使用 axios 达到目的？</a></li></ul></li><li><a href="#jieyan">结言</a></li></ul></div><p></p>
+<h2 id="xuqiubeijing"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xuqiubeijing")'>¶</a> 需求背景</h2>
+<p>在上一家公司的时候，因为业务重组，笔者被分配到一个电商项目组，负责项目中 hybrid app 的前端模块功能迭代。该项目代码已经具有一定规模，长期的快速业务需求迭代，导致前端模块耦合的程度也到了不容忽视的时候，而且还存在一些小 bug。比如，没有对可能导致重复请求的场景进行处理。</p>
+<h3 id="zhongfuqingqiudehuaichu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhongfuqingqiudehuaichu")'>¶</a> 重复请求的坏处</h3>
+<p>前端重复请求如果不及时处理可能会带来以下几个坏处：</p>
+<ul>
+<li>消耗额外的 <strong>服务器/客户端</strong> 资源；</li>
+<li>后端若未对请求做幂等处理，造成后端脏数据；</li>
+<li>多个重复请求占据请求队列，达到浏览器并发请求上限，导致正常请求阻塞；</li>
+</ul>
+<h3 id="zhongfuqingqiuchulifenxi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhongfuqingqiuchulifenxi")'>¶</a> 重复请求处理分析</h3>
+<p>因此，在新的需求没来之前，第一件事就是着手处理这个问题。众所周知，拦截重复请求的常规手段不外乎以下几种：</p>
+<ol>
+<li><strong>请求发起后，前端添加 遮罩层+loading 提示。</strong></li>
+<li><strong>对请求方法进行防抖和节流。</strong></li>
+<li><strong>利用流行前端 ajax 库中的拦截器进行拦截取消，如 <a href="https://github.com/axios/axios" target="_blank">axios</a> 的 cancelToken。</strong></li>
+</ol>
+<p>因为是新接手的具有一定规模的项目，使用一、二种方法去处理的话需要短时间内投入大量的工作量，而且还不能保证做到百分百的覆盖。第三种方法看来很适合，在统一的进出口进行处理，就不会有前两种方法的问题，但是这种捕捉到重复请求就立马取消，一刀切式的方式真的适合吗？</p>
+<p>试想一下是不是会有这样的业务场景存在？</p>
+<ul>
+<li>A 页面作为总的页面入口，具有 BCDEF 等子页面。A 页面依赖请求 X 的数据；</li>
+<li>B 页面也依赖请求 X 的数据，但 CDEF 不依赖请求 X 的数据；</li>
+<li>进入 A 页面时有可能在 X 请求前未返回前直接跳转到 B 页面；</li>
+<li>B 页面可能会作为独立的营销页对外公开；</li>
+</ul>
+<p>如果进行了一刀切处理，在遇到「进入 A 页面时有可能在 X 请求前未返回前直接跳转到 B 页面」这种情况时，B 页面所依赖的 X 数据就再也拿不到了。如果在 B 页面添加额外处理逻辑，就会遇到第一二种方法同样的问题。</p>
+<p>虽然方法三也不可行，但在统一的出入口进行处理这个思路是没有问题的。我们需要改进一下这个一刀切的操作，在避免重复请求的同时保证原来的业务逻辑不能受到影响。</p>
+<p>如何改进？首先先来看看拦截器的实现原理是怎样的。</p>
+<h2 id="zailanjieqiliguanlizhongfuqingqiu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zailanjieqiliguanlizhongfuqingqiu")'>¶</a> 在拦截器里管理重复请求</h2>
+<h3 id="lanjieqideshixianyuanli"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#lanjieqideshixianyuanli")'>¶</a> 拦截器的实现原理</h3>
+<p>在使用了如 axios 的前端请求库的请求过程一般如下图所示，在调用请求方法时，传入<code>Options</code>，然后这个请求配置会经过请求拦截器<code>RequestInterceptor</code>处理，过后配置传到<code>Request</code>方法中进行正式请求，待请求从服务端返回后将请求交给响应拦截器<code>ResponseInterceptor</code>进行处理，处理完成后将数据交给业务逻辑：</p>
+<pre class="language-text"><code class="language-text">         ┌─────────┐
+         │ Options │
+         └─────────┘
+              │
+┌ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─┐ ─ ─ ─ ─┐
+              ▼
+│  ┌────────────────────┐  │        │
+   │ RequestInterceptor │
+│  └────────────────────┘  │        │
+              │
+│             ▼            │        │
+   ┌────────────────────┐
+│  │  Request(Options)  │  │     请求过程
+   └────────────────────┘
+│             │            │        │
+              ▼
+│  ┌────────────────────┐  │        │
+   │ ResponseInterceptor│
+│  └────────────────────┘  │        │
+              │
+└ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─┘ ─ ─ ─ ─┘
+              │
+              ▼
+         ┌─────────┐
+         │ bsLogic │
+         └─────────┘
+</code></pre><p>那么 axios 等类库是如何将这个过程串成一条链的呢？答案就是 promise。下来就用简单的代码示例讲解拦截器的实现原理。</p>
+<p>首先创建一些请求拦截器和响应拦截器，在每个拦截器里面打印自身名称，方便请求时观察触发顺序：</p>
+<pre class="language-js"><code class="language-js">// 模拟配置
+const config = { url: 'https://lkangd.com/', count: 0 };
+
+// 模拟请求拦截器s
+const reqInterceptor1 = config => {
+  config.count++;
+  console.log('reqInterceptor1');
+  return config;
+};
+const reqInterceptor2 = config => {
+  config.count++;
+  console.log('reqInterceptor2');
+  return config;
+};
+const reqInterceptor3 = config => {
+  config.count++;
+  console.log('reqInterceptor3');
+  return config;
+};
+// 按倒序插入
+const reqInterceptors = [reqInterceptor3, reqInterceptor2, reqInterceptor1];
+
+// 模拟响应拦截器s
+const resInterceptor1 = config => {
+  config.count++;
+  console.log('resInterceptor1');
+  return config;
+};
+const resInterceptor2 = config => {
+  console.log('resInterceptor2');
+  config.count++;
+  return config;
+};
+const resInterceptor3 = config => {
+  console.log('resInterceptor3');
+  config.count++;
+  return config;
+};
+// 按正序插入
+const resInterceptors = [resInterceptor1, resInterceptor2, resInterceptor3];
+</code></pre><p>promise 的 then 方法会默认返回一个新的 promise，我们可以利用这个特性，将所有拦截器包装起来，然后串成一条链：</p>
+<pre data-line="19-22" class="language-js"><code data-line="19-22" class="language-js">const request = (config, reqInterceptors, resInterceptors) => {
+  const makeRequest = config => {
+    console.log('makeRequest!');
+    return new Promise((resolve, reject) => {
+      // 模拟请求延时
+      setTimeout(() => {
+        resolve({ data: 'response', ...config });
+      }, 3000);
+    });
+  };
+  const chain = [makeRequest];
+  let promise = Promise.resolve(config);
+
+  // 将请求拦截器放在请求前
+  reqInterceptors.forEach(ri => chain.unshift(ri));
+  // 将响应拦截器放在请求后
+  resInterceptors.forEach(ri => chain.push(ri));
+
+  // 将 chain 串成一条 promise 链
+  while (chain.length) {
+    promise = promise.then(chain.shift()); // then 的默认行为是返回一个新的 promise
+  }
+  // 将 promise 链返回
+  return promise;
+};
+</code></pre><p>调用<code>request</code>方法，按参数顺序传入，配置、请求拦截器，响应拦截器，看打印结果：</p>
+<pre class="language-js"><code class="language-js">request(config, reqInterceptors, resInterceptors).then(data => {
+  console.log(data);
+});
+// 留意触发顺序
+// reqInterceptor1
+// reqInterceptor2
+// reqInterceptor3
+// makeRequest!
+// Promise {&lt;pending>} 3 秒后打印下面的内容
+// resInterceptor1
+// resInterceptor2
+// resInterceptor3
+// {data: "response", url: "https://lkangd.com/", count: 6}，count 被处理了 6 次
+</code></pre><h3 id="shixianzhongfuqingqiuguanliqi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shixianzhongfuqingqiuguanliqi")'>¶</a> 实现重复请求管理器</h3>
+<p>知道了拦截器的实现原理之后，答案就呼之欲出了，我们不是直接取消掉后续的重复请求，而是将这些重复请求挂起，等到第一个元子请求的结果返回后，将这个结果传递给挂起的重复请求。这样就做到了重复请求只发出一次，但是业务逻辑不用做额外的处理，整个处理流程图如下所示：</p>
+<pre class="language-text"><code class="language-text">         ┌─────────┐
+         │ Options │
+         └─────────┘
+              │
+┌ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ──┐ ─ ─ ─ ─┐
+              ▼
+│  ┌────────────────────┐   Yes    ┌───────────────────┐  │        │
+   │   hasRequesting?   │ ───────> │ waitForRequesting │
+│  └────────────────────┘    ▲     └───────────────────┘  │        │
+           No │              │ resolve        │
+│             ▼              │                │           │        │
+   ┌────────────────────┐    │                │
+│  │   addRequesting    │    │                │           │        │
+   └────────────────────┘    │                │
+│             │              │                │           │        │
+              ▼              │                │
+│  ┌────────────────────┐    │                │           │        │
+   │ requestInterceptor │    │                │
+│  └────────────────────┘    │                │           │        │
+              │              │                │
+│             ▼              │                │           │     请求过程
+   ┌────────────────────┐    │                │
+│  │  request(Options)  │    │                │           │        │
+   └────────────────────┘    │                │
+│             │              │                │           │        │
+              ▼              │                │
+│  ┌────────────────────┐    │                │           │        │
+   │ ResponseInterceptor│    │                │
+│  └────────────────────┘    │                │           │        │
+              │              │                │
+│             ▼              │                │           │        │
+   ┌────────────────────┐    │                │
+│  │  resolveRequesting │ ───┘                │           │        │
+   └────────────────────┘                     │
+│             │&lt;──────────────────────────────┘           │        │
+              │
+└ ─ ─ ─ ─ ─ ─ ┼ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘ ─ ─ ─ ─┘
+              │
+              ▼
+         ┌─────────┐
+         │ bsLogic │
+         └─────────┘
+</code></pre><p>第一步，如何识别多个请求是否重复请求？很简单，只要将每个新请求中的<code>method(请求方法)</code>、<code>params(请求参数)</code>、<code>body(请求体)</code>和<code>url(请求地址)</code>组装成一个新对象，然后对这个新对象进行 JSON 序列化，获得的字符串就是这个请求的唯一标识，如下所示：</p>
+<pre class="language-js"><code class="language-js">const { method, params, body, url } = request;
+const _serialization = JSON.stringify({ method, params, body, url });
+</code></pre><p>有了唯一标识后，第二步就是将<strong>已经发出但是还未返回</strong>的请求存储起来，在这个请求未返回期间，如果识别到具有同一标识的请求发生，就分配一个处于<code>pending</code>状态的 promise ，待请求结束后将请求结果去<code>resolve</code>所有<code>pending</code>状态中的 promise：</p>
+<pre data-line="9,14,20,21" class="language-js"><code data-line="9,14,20,21" class="language-js">// 最简实现原理
+const repeatRecord = {};
+let count = 0;
+
+function requestInterceptor(request) {
+  const { method, params, body, url } = request;
+  const _serialization = JSON.stringify({ method, params, body, url });
+
+  if (repeatRecord[_serialization]) return repeatRecord[_serialization]; // 存在则立即返回
+
+  return new Promise(resolve => {
+    let resolveRepeat;
+    repeatRecord[_serialization] = new Promise(resolve => {
+      resolveRepeat = resolve; // 将新 promise 的 resolver 存储起来
+    });
+
+    setTimeout(() => {
+      const result = `done! ${++count}`;
+      // 使用结果同时 resolve 两个 promise
+      resolve(result);
+      resolveRepeat(result);
+      delete repeatRecord[_serialization]; // 请求结束后删除状态
+    }, 3000);
+  });
+}
+
+// 进行 4 次重复请求，count 只累加了一次
+const request = { method: 'GET', params: { p1: 'p1' }, body: { b1: 'b1' }, url: 'https://lkangd.com/' };
+requestInterceptor(request).then(res => {
+  console.log(res); // done! 1
+});
+requestInterceptor(request).then(res => {
+  console.log(res); // done! 1
+});
+requestInterceptor(request).then(res => {
+  console.log(res); // done! 1
+});
+requestInterceptor(request).then(res => {
+  console.log(res); // done! 1
+});
+</code></pre><p>关键代码和思路已经具备，接下来就是完善整个管理器的实现了，除了请求成功的状态当然还会有请求失败的状态：</p>
+<pre class="language-js"><code class="language-js">const requestManager = {
+  data: {}, // 存储请求
+  resolvers: {}, // 存储每一个请求的 promise 的 resolve 回调
+  rejecters: {}, // 存储每一个请求的 promise 的 reject 回调
+  // 将新请求存入 data
+  add(request) {
+    const serialized = this._serialization(request);
+    return (this.data[serialized] = new Promise((resolve, reject) => {
+      this.resolvers[serialized] = resolve;
+      this.rejecters[serialized] = reject;
+    }));
+  },
+  // 获取请求中的请求
+  get(request) {
+    const serialized = this._serialization(request);
+    return this.data[serialized];
+  },
+  // 请求成功时调用
+  success(request, response) {
+    const serialized = this._serialization(request);
+    this.resolvers[serialized] && this.resolvers[serialized](response);
+    this._clean(request);
+  },
+  // 请求失败时调用
+  fail(request, error) {
+    const serialized = this._serialization(request);
+    this.rejecters[serialized] && this.rejecters[serialized](error);
+    this._clean(request);
+  },
+  // 清除存储的请求
+  _clean(request) {
+    const serialized = this._serialization(request);
+    delete this.resolvers[serialized];
+    delete this.rejecters[serialized];
+    delete this.data[serialized];
+  },
+  // 对请求的配置进行序列化，获得请求的唯一序列
+  _serialization(request) {
+    const { method, params, body, url } = request;
+    return JSON.stringify({ method, params, body, url });
+  },
+};
+</code></pre><p>最后就是在拦截器里面加入重复请求管理器的逻辑，有一个需要注意的地方是，这里笔者选择使用的是 <a href="https://github.com/wendux/fly" target="_blank">fly</a> 而不是 axios（原因后面再说），如下所示：</p>
+<pre class="language-js"><code class="language-js">import Flyio from 'flyio/dist/npm/fly';
+const flyInstance = new Flyio();
+
+const requestInterceptor = request => {
+  const repeatedRequest = requestManager.get(request);
+  if (repeatedRequest) return repeatedRequest; // 判断是否有相同请求正在进行中，有的话直接返回
+
+  requestManager.add(request); // 添加新请求
+
+  // do some stuff...
+
+  return request;
+};
+
+const responseInterceptor = [
+  response => {
+    requesting.success(response.request, response.data); // 请求成功，响应其它重复请求的成功回调
+
+    // do some stuff...
+
+    return response.data;
+  },
+  error => {
+    requesting.fail(error.request, error); // 请求失败，响应其它重复请求的失败回调
+
+    // do some stuff...
+
+    return Promise.reject(error);
+  },
+];
+
+flyInstance.interceptors.request.use(requestInterceptor);
+flyInstance.interceptors.response.use(...responseInterceptor);
+</code></pre><h2 id="weishimoshiflybushiaxios"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#weishimoshiflybushiaxios")'>¶</a> 为什么是 fly 不是 axios？</h2>
+<h3 id="axiosguanjianyuanmafenxi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#axiosguanjianyuanmafenxi")'>¶</a> axios 关键源码分析</h3>
+<p>我们打开 axios 的源码中的 <a href="https://github.com/axios/axios/blob/master/lib/core/Axios.js#L49" target="_blank">request</a>部分，可以看到在 promise 链的正中是<code>dispatchRequest</code>进行请求：</p>
+<pre data-line="3" class="language-js"><code data-line="3" class="language-js">Axios.prototype.request = function request(config) {
+  // ...
+  var chain = [dispatchRequest, undefined]; // 默认调用方法是 dispatchRequest
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+</code></pre><p><a href="https://github.com/axios/axios/blob/master/lib/core/dispatchRequest.js#L52" target="_blank"><code>dispatchRequest</code></a> 返回 adapter 对传入 config 进行处理后的结果：</p>
+<pre data-line="3" class="language-js"><code data-line="3" class="language-js">module.exports = function dispatchRequest(config) {
+  // ...
+  return adapter(config); // ...
+};
+</code></pre><p>axios 默认的 adapter 是 xhr，最后去看看 adapter 的实现，发现最终<code>new XMLHttpRequest()</code>使用 config 中的 <a href="https://github.com/axios/axios/blob/master/lib/adapters/xhr.js#L14" target="_blank">data</a> 作为数据进行发送，如果传入的是 promise，肯定是不存在 data 属性的，最后只能产生错误。</p>
+<pre class="language-js"><code class="language-js">module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+
+    // ...
+
+    var request = new XMLHttpRequest();
+
+    // ...
+
+    request.send(requestData);
+  });
+};
+</code></pre><h3 id="flyguanjianyuanmafenxi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#flyguanjianyuanmafenxi")'>¶</a> fly 关键源码分析</h3>
+<p>而 fly 在请求方法会对传入的 options 进行判断，如果经过请求拦截器处理后返回的结果不是 options，则将这个结果直接返回，所以就能达到我们上面流程图想要的结果：</p>
+<pre data-line="18,26-30" class="language-js"><code data-line="18,26-30" class="language-js">// ...
+class Fly {
+  // ...
+  request(url, data, options) {
+    // ...
+    enqueueIfLocked(requestInterceptor.p, () => {
+      utils.merge(options, JSON.parse(JSON.stringify(this.config)));
+      let headers = options.headers;
+      headers[contentType] = headers[contentType] || headers[contentTypeLowerCase] || '';
+      delete headers[contentTypeLowerCase];
+      options.body = data || options.body;
+      url = utils.trim(url || '');
+      options.method = options.method.toUpperCase();
+      options.url = url;
+      let ret = options;
+      if (requestInterceptorHandler) {
+        // 处理请求拦截器逻辑
+        ret = requestInterceptorHandler.call(requestInterceptor, options, Promise) || options;
+      }
+      if (!isPromise(ret)) {
+        ret = Promise.resolve(ret);
+      }
+      ret.then(
+        d => {
+          //if options continue
+          if (d === options) {
+            makeRequest(d);
+          } else {
+            resolve(d); // 如果请求拦截器返回了非 options 结果，则跳过了请求阶段
+          }
+        },
+        err => {
+          reject(err);
+        },
+      );
+    });
+    // ...
+  }
+  // ...
+}
+// ...
+</code></pre><h3 id="nengfoushiyongaxiosdadaomude"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#nengfoushiyongaxiosdadaomude")'>¶</a> 能否使用 axios 达到目的？</h3>
+<p>我们知道，axios 和 fly 都支持使用自定义的 adapter 来作为请求发送器的，理论上，在 axios 生成实例的时候将原来默认的 adapter 包装一下，判断一下传入 config 是否为 promise，然后直接返回，应该是可以得到支持的。</p>
+<pre class="language-js"><code class="language-js">import Axios from 'axios';
+const wrappedAdapter = config => {
+  if ('function' == typeof config.then) return config;
+  return Axios.defaults.adapter(config);
+};
+
+const instance = Axios.createInstance({ adapter: wrappedAdapter });
+</code></pre><p>然后，理想很丰满，现实却是骨感的。因为 axios 在真正发送请求前，会在 dispatchRequest 方法内对传入的 config 进行多个特殊处理，而 dispatchRequest 的实现是不对外暴露的，所以如果此时 config 的类型为 promise，可能会产生很多意想不到的错误。因此，不建议对 axios 进行类似的包装操作。</p>
+<pre data-line="2-25" class="language-js"><code data-line="2-25" class="language-js">module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(config.data, config.headers, config.transformRequest);
+
+  // Flatten headers
+  config.headers = utils.merge(config.headers.common || {}, config.headers[config.method] || {}, config.headers || {});
+
+  utils.forEach(['delete', 'get', 'head', 'post', 'put', 'patch', 'common'], function cleanHeaderConfig(method) {
+    delete config.headers[method];
+  });
+
+  var adapter = config.adapter || defaults.adapter;
+
+  // 上面的代码都是对传入 config 的处理
+  return adapter(config).then(
+    function onAdapterResolution(response) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      response.data = transformData(response.data, response.headers, config.transformResponse);
+
+      return response;
+    },
+    function onAdapterRejection(reason) {
+      if (!isCancel(reason)) {
+        throwIfCancellationRequested(config);
+
+        // Transform response data
+        if (reason && reason.response) {
+          reason.response.data = transformData(reason.response.data, reason.response.headers, config.transformResponse);
+        }
+      }
+
+      return Promise.reject(reason);
+    },
+  );
+};
+</code></pre><h2 id="jieyan"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jieyan")'>¶</a> 结言</h2>
+<p>本文铺垫了一个特定的业务场景，讲述了前端重复请求会带来的几种危害，并且陈列了几种常规的前端控制重复请求的方法，然后针对每种方法进行简单分析，在不违反开放-封闭原则的前提下，对其中一种方法进行改进后达到了我们想要的结果。</p>
+<p>这次优化给笔者带来的最大启发就是，我们在使用流行框架、库的时候，不应当仅仅学习其 api，更应该对其实现进行分析研究，这样在我们遇到特殊难题的时候可以获得更广阔的视野，从而获得更好的解决方案。</p>
+</article> <hr> <div class="cs-post__link-wrapper"><a href="/post/new-for-vue-3/" class="cs-outside-link">← 一文看全 Vue 3.X 带来的新变化</a> <a href="/post/virtual-infinite-scroll/" class="cs-outside-link">剖析无限滚动虚拟列表的实现原理 →</a></div> <hr> <form action="https://app.convertkit.com/forms/1488259/subscriptions" method="post" data-sv-form="1488259" data-uid="51a87aa3a3" data-format="inline" data-version="5" min-width="400 500 600 700" class="cs-subscribe cs-container" data-v-011cff22><div class="cs-subscribe__wrapper" data-v-011cff22><h3 class="cs-subscribe__title" data-v-011cff22>订阅本博客的最新内容</h3> <p class="cs-subscribe__describe" data-v-011cff22>如果我有新的想法，会第一时间通过邮件与你分享.</p> <svg xmlns="http://www.w3.org/2000/svg" class="cs-subscribe__icon icon sprite-icons" data-v-011cff22 data-v-011cff22><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" data-v-011cff22 data-v-011cff22></use></svg></div> <div class="cs-subscribe__wrapper" data-v-011cff22><input aria-label="Your first name" name="fields[first_name]" placeholder="你的昵称" required class="cs-subscribe__input" data-v-011cff22> <input type="email" name="email_address" aria-label="Your email address" placeholder="你的邮件地址" required class="cs-subscribe__input" data-v-011cff22> <button data-element="submit" class="cs-subscribe__submit-btn" data-v-011cff22><span data-v-011cff22>立即订阅</span></button> <p class="cs-subscribe__tips" data-v-011cff22>请放心我不会发送任何辣鸡邮件给你.</p> <p class="cs-subscribe__tips" data-v-011cff22>
+      你可以
+      <em data-v-011cff22>随时</em> 取消订阅.
+    </p></div></form> <section class="cs-statement" data-v-08ff1539><p class="cs-statement__text" data-v-08ff1539>
+    讨论请发邮件到
+    <a href="mailto:lkangd@gmail.com" target="_blank" data-v-08ff1539>lkangd@gmail.com</a></p> <p class="cs-statement__text" data-v-08ff1539>未经授权，禁止转载</p> <p class="cs-statement__text" data-v-08ff1539>通过支付宝 lkangd@foxmail.com 或赞赏码赞助此文</p> <img alt="reward-code" src="/_nuxt/img/wechat-reward-code.3b0f29f.jpg" class="cs-statement__reward-code theme-ignore" data-v-08ff1539></section> <ul class="cs-toc" data-v-2002d74b></ul></section> <footer class="cs-footer" data-v-11bea6b1><div class="cs-footer__wrapper" data-v-11bea6b1><a href="/about/" class="fl" data-v-11bea6b1>About</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/tech/" class="fl" data-v-11bea6b1>Tech</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/think/" class="fl" data-v-11bea6b1>Think</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/fun/" class="fl" data-v-11bea6b1>Fun</a> <a href="/sitemap.xml" target="_blank" class="fr" data-v-11bea6b1>Sitemap</a> <span class="fr" data-v-11bea6b1>• </span> <a href="/feed.xml" target="_blank" class="fr" data-v-11bea6b1>RSS</a> <div class="cs-footer__bottom" data-v-11bea6b1><svg xmlns="http://www.w3.org/2000/svg" class="cs-footer__logo icon sprite-icons" data-v-11bea6b1 data-v-11bea6b1><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" data-v-11bea6b1 data-v-11bea6b1></use></svg>
+      2017-2020 Curtis' Spot
+      <span style="margin:0 5px" data-v-11bea6b1>•</span> <div class="cs-color-slogan cs-footer__slogan" data-v-a8c8150c data-v-11bea6b1><span class="cs-color-slogan__start-text" data-v-a8c8150c>Work With </span> <span class="cs-color-slogan__placeholder" data-v-a8c8150c></span> <span class="cs-color-slogan__wrapper" data-v-a8c8150c>
+     
+    <span data-v-a8c8150c></span></span></div></div></div></footer></div></div></div><script>window.__NUXT__={staticAssetsBase:"/_nuxt/static/1600180271",layout:"post",error:null,serverRendered:!0,routePath:"/post/prevent-duplicate-requests",config:{}}</script><script src="/_nuxt/runtime.2b486dc.js" defer></script><script src="/_nuxt/pages/post/_id.293b655.js" defer></script><script src="/_nuxt/node_modules/commons.82dad87.js" defer></script><script src="/_nuxt/app.ab1a4d4.js" defer></script><script data-n-head="ssr" type="text/javascript" data-body="true">!function(){function t(e){r=e,document.body.className=e}var r,a={light:"light",dark:"dark"};try{r=localStorage.getItem("theme")}catch(e){}window.__setPreferredTheme=function(e){t(e);try{localStorage.setItem("theme",e)}catch(e){}};var e=window.matchMedia("(prefers-color-scheme: dark)");e.addListener(function(e){window.__setPreferredTheme(a[r]||(e.matches?"dark":"light"))}),t(a[r]||(e.matches?"dark":"light"))}()</script>
+  </body>
+</html>

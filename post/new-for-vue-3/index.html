@@ -1,0 +1,1863 @@
+<!doctype html>
+<html data-n-head-ssr>
+  <head>
+    <title>一文看全 Vue 3.X 带来的新变化 - Curtis' Spot</title><meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="google-site-verification" content="kfF1FRzuuywPcdFndPOA2Lc_CY77xywarjgy_EHl-h8"><meta data-n-head="ssr" name="viewport" content="width=device-width,user-scalable=no,initial-scale=1"><meta data-n-head="ssr" data-hid="description" name="description" content="Front-end Engineer. Blogging about life, tech & everything I love."><base href="/"><link data-n-head="ssr" rel="icon" type="image/x-icon" href="/favicon.png"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC&display=swap"><link data-n-head="ssr" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:900&display=swap"><link rel="preload" href="/_nuxt/runtime.2b486dc.js" as="script"><link rel="preload" href="/_nuxt/node_modules/commons.82dad87.js" as="script"><link rel="preload" href="/_nuxt/app.ab1a4d4.js" as="script"><link rel="preload" href="/_nuxt/pages/post/_id.293b655.js" as="script"><style data-vue-ssr-id="27366e46:0 563f3fe6:0 bd3e5fbe:0 3d8525fc:0 b59d545e:0 44ce5391:0 1728c230:0 66187182:0 7e4cdd9a:0 2aeaee0a:0 6c57b7be:0">a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,html,i,iframe,img,input,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{box-sizing:border-box;margin:0;padding:0;border:0;font-size:100%;font-weight:400;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,menu,nav,section{display:block}body{line-height:1}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:none}table{border-collapse:collapse;border-spacing:0}a,button,input{background-color:transparent;text-decoration:none;border:none;outline:0;-webkit-tap-highlight-color:transparent}a:active,a:focus,button:active,button:focus,input:active,input:focus{outline:0!important}li{list-style:none}body,html{font-family:"PingFang SC",STHeitiSC-Light,Helvetica-Light,arial,sans-serif,"Droid Sans Fallback"}body{-webkit-text-size-adjust:none;-webkit-tap-highlight-color:transparent}*{box-sizing:border-box}html{font-size:14px!important}body,html{height:100%;line-height:1;font-family:Merriweather,Georgia,serif;-webkit-tap-highlight-color:transparent;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}body{margin:0 auto;scroll-behavior:smooth}strong{font-weight:700}a,button{color:inherit;outline:0;border:none;background-color:transparent;-webkit-tap-highlight-color:transparent;transition:text-shadow .3s;white-space:pre-wrap;word-break:break-all;cursor:pointer}a:active,a:focus,button:active,button:focus{outline:0!important}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}code[class*=language-],pre[class*=language-]{color:#fff;background:0 0;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-feature-settings:normal;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.5;margin-bottom:0;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{overflow:auto;padding:1.3125rem}pre[class*=language-]::-moz-selection{background:#27292a}pre[class*=language-]::selection{background:#27292a}pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:hsla(0,0%,100%,.15)}pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:hsla(0,0%,100%,.15)}:not(pre)>code[class*=language-]{border-radius:.3em;background:var(--inline-code-bg);color:var(--inline-code-fg);padding:.15em .2em .05em;white-space:normal}.token{position:relative;z-index:1}.token.attr-name{color:#addb67;font-style:italic}.token.comment{color:#809393}.token.string,.token.url{color:#addb67}.token.variable{color:#d6deeb}.token.number{color:#f78c6c}.token.builtin,.token.char,.token.constant,.token.function{color:#82aaff}.token.punctuation{color:#c792ea}.token.doctype,.token.selector{color:#c792ea;font-style:italic}.token.class-name{color:#ffcb8b}.token.keyword,.token.operator,.token.tag{color:var(--main)}.token.boolean{color:#ff5874}.token.property{color:#80cbc4}.token.namespace{color:#b2ccd6}pre[data-line]{padding:1em 0 1em 3em;position:relative}.gatsby-highlight-code-line{background-color:#022a4b;display:block;padding-right:1em;padding-left:1.25em;border-left:.25em solid var(--main)}.gatsby-highlight,.gatsby-highlight-code-line{margin-right:-1.3125rem;margin-left:-1.3125rem}.gatsby-highlight{margin-bottom:1.75rem;border-radius:10px;-webkit-overflow-scrolling:touch;overflow:auto}@media (max-width:672px){.gatsby-highlight{border-radius:0}}.gatsby-highlight pre[class*=language-]{float:left;min-width:100%}.line-highlight{z-index:-1;border-left:4px solid var(--main);background:rgba(2,42,75,.8)!important}.line-highlight:after,.line-highlight:before{display:none}body[data-v-377fcad6]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-377fcad6]{font-weight:700}body.dark[data-v-377fcad6]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-377fcad6]{font-weight:400}body.dark img[data-v-377fcad6]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-377fcad6]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-377fcad6]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-377fcad6]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-377fcad6]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-377fcad6],.cs-title sup[data-v-377fcad6]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-377fcad6]{position:relative;top:-12px}.cs-text[data-v-377fcad6]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-377fcad6]{text-decoration:underline}.cs-text small[data-v-377fcad6]{font-size:.6em}.cs-list[data-v-377fcad6]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-377fcad6]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-377fcad6]{float:left}.fr[data-v-377fcad6]{float:right}a[data-v-377fcad6]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-377fcad6],h2[data-v-377fcad6],h3[data-v-377fcad6],h4[data-v-377fcad6],h5[data-v-377fcad6],h6[data-v-377fcad6]{font-family:Montserrat,serif}h1 a[data-v-377fcad6],h2 a[data-v-377fcad6],h3 a[data-v-377fcad6],h4 a[data-v-377fcad6],h5 a[data-v-377fcad6],h6 a[data-v-377fcad6]{color:var(--text-title)}h1 .cs-header-anchor[data-v-377fcad6],h2 .cs-header-anchor[data-v-377fcad6],h3 .cs-header-anchor[data-v-377fcad6],h4 .cs-header-anchor[data-v-377fcad6],h5 .cs-header-anchor[data-v-377fcad6],h6 .cs-header-anchor[data-v-377fcad6]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-377fcad6],h2:hover .cs-header-anchor[data-v-377fcad6],h3:hover .cs-header-anchor[data-v-377fcad6],h4:hover .cs-header-anchor[data-v-377fcad6],h5:hover .cs-header-anchor[data-v-377fcad6],h6:hover .cs-header-anchor[data-v-377fcad6]{opacity:1}.cs-toc-dom[data-v-377fcad6]{display:none}.cs-loading[data-v-377fcad6]{position:fixed;top:0;left:0;z-index:100;width:100%;height:100%;background-color:var(--bg);will-change:opacity;transition:opacity .5s .4s}.cs-loading.loaded[data-v-377fcad6]{opacity:0}.cs-loading .main[data-v-377fcad6]{position:absolute;top:calc(50% - 63px);left:calc(50% - 63px);z-index:1;width:126px;height:126px}.cs-loading .main.out-of-window .line1-2[data-v-377fcad6],.cs-loading .main.out-of-window .line1[data-v-377fcad6],.cs-loading .main.out-of-window .line3-2[data-v-377fcad6],.cs-loading .main.out-of-window .line3[data-v-377fcad6],.cs-loading .main.out-of-window .line5[data-v-377fcad6],.cs-loading .main.out-of-window .line7[data-v-377fcad6],.cs-loading .main.out-of-window .line9[data-v-377fcad6]{transform:rotate(45deg) translateY(100vh)}.cs-loading .main.out-of-window .line10[data-v-377fcad6],.cs-loading .main.out-of-window .line2-2[data-v-377fcad6],.cs-loading .main.out-of-window .line2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-2[data-v-377fcad6],.cs-loading .main.out-of-window .line4-3[data-v-377fcad6],.cs-loading .main.out-of-window .line4[data-v-377fcad6],.cs-loading .main.out-of-window .line6[data-v-377fcad6],.cs-loading .main.out-of-window .line8-1[data-v-377fcad6],.cs-loading .main.out-of-window .line8[data-v-377fcad6]{transform:rotate(45deg) translateY(-100vh)}.cs-loading .main.out-of-window .text[data-v-377fcad6]{opacity:0;transition:opacity .5s}.cs-loading .main .line[data-v-377fcad6]{position:absolute;z-index:3;width:7px;background:var(--text-normal);will-change:transform;transform:rotate(45deg)}.cs-loading .main .line.line1[data-v-377fcad6]{top:51px;left:5px;height:17px;transition:transform .5s}.cs-loading .main .line.line1-2[data-v-377fcad6]{top:-3px;left:50px;height:36px;transition:transform .5s}.cs-loading .main .line.line2[data-v-377fcad6]{top:55px;left:9px;height:27px;transition:transform .5s}.cs-loading .main .line.line2-2[data-v-377fcad6]{top:-5px;left:56px;height:53px;transition:transform .5s}.cs-loading .main .line.line3[data-v-377fcad6]{top:58px;left:15px;height:35px;transition:transform .5s .1s}.cs-loading .main .line.line3-2[data-v-377fcad6]{top:-2px;left:63px;height:59px;transition:transform .5s .1s}.cs-loading .main .line.line4[data-v-377fcad6]{top:55px;left:24px;height:48px;transition:transform .5s .1s}.cs-loading .main .line.line4-2[data-v-377fcad6]{top:27px;left:60px;height:33px;transition:transform .5s .1s}.cs-loading .main .line.line4-3[data-v-377fcad6]{top:9px;left:84px;height:21px;transition:transform .5s .1s}.cs-loading .main .line.line5[data-v-377fcad6]{top:4px;left:54px;height:117px;transition:transform .5s .2s}.cs-loading .main .line.line6[data-v-377fcad6]{top:15px;left:59px;height:111px;transition:transform .5s .2s}.cs-loading .main .line.line7[data-v-377fcad6]{top:16px;left:69px;height:115px;transition:transform .5s .3s}.cs-loading .main .line.line8[data-v-377fcad6]{top:56px;left:63px;height:72px;transition:transform .5s .3s}.cs-loading .main .line.line8-1[data-v-377fcad6]{top:30px;left:116px;height:18px;transition:transform .5s .3s}.cs-loading .main .line.line9[data-v-377fcad6]{top:67px;left:70px;height:61px;transition:transform .5s .4s}.cs-loading .main .line.line10[data-v-377fcad6]{top:82px;left:78px;height:40px;transition:transform .5s .4s}.cs-loading .main .text[data-v-377fcad6]{position:absolute;bottom:-18%;left:0;width:100%;font-size:16px;font-weight:700;color:var(--text-normal);text-align:center;will-change:opacity;transition:opacity .5s .5s}body{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a{font-weight:700}body.dark{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a{font-weight:400}body.dark img:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}::-moz-selection{background:rgba(34,241,179,.6)}::selection{background:rgba(34,241,179,.6)}.cs-container{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub,.cs-title sup{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup{position:relative;top:-12px}.cs-text{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a{text-decoration:underline}.cs-text small{font-size:.6em}.cs-list{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl{float:left}.fr{float:right}a{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1,h2,h3,h4,h5,h6{font-family:Montserrat,serif}h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:var(--text-title)}h1 .cs-header-anchor,h2 .cs-header-anchor,h3 .cs-header-anchor,h4 .cs-header-anchor,h5 .cs-header-anchor,h6 .cs-header-anchor{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor,h2:hover .cs-header-anchor,h3:hover .cs-header-anchor,h4:hover .cs-header-anchor,h5:hover .cs-header-anchor,h6:hover .cs-header-anchor{opacity:1}.cs-toc-dom{display:none}.cs-post{position:relative;padding:42px 21px!important;background-color:transparent}.cs-post__toggle{position:absolute;top:52px;right:21px}.cs-post__blog-name{margin-bottom:42px;height:42px;font-family:Montserrat,sans-serif;font-size:23px;font-weight:900;line-height:2.625rem}.cs-post__blog-name>a{color:var(--main)!important;box-shadow:none}.cs-post__title{margin-top:56px;line-height:44px;font-size:40px;font-family:Montserrat,serif;font-weight:900;color:var(--text-title)}.cs-post__info{margin-bottom:28px;line-height:2;font-size:14px;font-family:Merriweather,Georgia,serif;word-spacing:2px}.cs-post hr{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__link-wrapper{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between}.cs-post__link-wrapper>a{margin:20px 0}.cs-post__article a{padding:0 4px;text-decoration:underline}.cs-post__article h1{margin:50px 0 24px;font-size:28px;font-weight:700}.cs-post__article h2{margin:50px 0 24px;font-size:25px;font-weight:700}.cs-post__article h3{margin:50px 0 24px;font-size:22px;font-weight:700}.cs-post__article h4{margin:30px 0 24px;font-size:19px;font-weight:700}.cs-post__article h5{margin:30px 0 24px;font-size:16px;font-weight:700}.cs-post__article h6{margin:30px 0 24px;font-size:13px;font-weight:700}.cs-post__article li,.cs-post__article p,.cs-post__article td{margin:0;font-size:14px;line-height:28px;color:var(--text-normal)}.cs-post__article p{margin-bottom:24px}.cs-post__article code:not([class*=language-]){margin:0 4px;padding:0 4px;font-family:Consolas,Menlo,Monaco,source-code-pro,Courier New,monospace;font-weight:700;color:var(--inline-code-fg);background-color:var(--inline-code-bg);border-radius:3px}.cs-post__article strong em{margin:0 6px;font-weight:700}.cs-post__article hr{margin:30px 0;border:0;border-bottom:1px solid var(--hr)}.cs-post__article em{margin:0 6px}.cs-post__article pre{margin:24px 0;font-size:12px;border-radius:10px;background-color:#011627;opacity:.99}.cs-post__article blockquote{background:var(--blockquote-bg);border-left:6px solid var(--blockquote-bl);margin:24px 6px;padding:16px 10px;quotes:"“" "”" "‘" "’"}.cs-post__article blockquote p:last-child{margin-bottom:0}.cs-post__article li+li{margin-top:10px}.cs-post__article ul{margin:24px 0;padding-left:30px}.cs-post__article ul li{text-align:-webkit-match-parent;line-height:28px;list-style:disc}.cs-post__article ul li ul li{list-style:circle}.cs-post__article ol{margin:24px 0;padding-left:40px}.cs-post__article ol li{list-style:decimal}.cs-post__article img{display:block;margin:50px auto;max-width:80%;height:auto}.cs-post__article table{display:inline-block;margin:0 0 24px;max-width:100%;border:1px solid #dee2e6;overflow:scroll}.cs-post__article table thead tr th{padding:12px;font-weight:700;color:#495057;background-color:#e9ecef;border-bottom:2px solid #dee2e6}.cs-post__article table thead tr th+th{border-left:1px solid #dee2e6}.cs-post__article table tbody tr td{padding:12px}.cs-post__article table tbody tr td+td{border-left:1px solid #dee2e6}.cs-post__article table tbody tr+tr{border-top:1px solid #dee2e6}body[data-v-447e03ac]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-447e03ac]{font-weight:700}body.dark[data-v-447e03ac]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-447e03ac]{font-weight:400}body.dark img[data-v-447e03ac]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-447e03ac]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-447e03ac]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-447e03ac]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-447e03ac]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-447e03ac],.cs-title sup[data-v-447e03ac]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-447e03ac]{position:relative;top:-12px}.cs-text[data-v-447e03ac]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-447e03ac]{text-decoration:underline}.cs-text small[data-v-447e03ac]{font-size:.6em}.cs-list[data-v-447e03ac]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-447e03ac]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-447e03ac]{float:left}.fr[data-v-447e03ac]{float:right}a[data-v-447e03ac]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-447e03ac],h2[data-v-447e03ac],h3[data-v-447e03ac],h4[data-v-447e03ac],h5[data-v-447e03ac],h6[data-v-447e03ac]{font-family:Montserrat,serif}h1 a[data-v-447e03ac],h2 a[data-v-447e03ac],h3 a[data-v-447e03ac],h4 a[data-v-447e03ac],h5 a[data-v-447e03ac],h6 a[data-v-447e03ac]{color:var(--text-title)}h1 .cs-header-anchor[data-v-447e03ac],h2 .cs-header-anchor[data-v-447e03ac],h3 .cs-header-anchor[data-v-447e03ac],h4 .cs-header-anchor[data-v-447e03ac],h5 .cs-header-anchor[data-v-447e03ac],h6 .cs-header-anchor[data-v-447e03ac]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-447e03ac],h2:hover .cs-header-anchor[data-v-447e03ac],h3:hover .cs-header-anchor[data-v-447e03ac],h4:hover .cs-header-anchor[data-v-447e03ac],h5:hover .cs-header-anchor[data-v-447e03ac],h6:hover .cs-header-anchor[data-v-447e03ac]{opacity:1}.cs-toc-dom[data-v-447e03ac]{display:none}.cs-theme-toggle[data-v-447e03ac]{position:absolute;display:flex;align-items:center;justify-content:space-between;padding:0 4px;width:50px;height:24px;background-color:#0f1114;border-radius:500px;cursor:pointer}.cs-theme-toggle__icon[data-v-447e03ac]{width:16px;height:16px}.cs-theme-toggle__thumb[data-v-447e03ac]{position:absolute;top:1px;left:1px;width:22px;height:22px;background-color:#fff;border-radius:100%;transition:all .2s ease}.cs-theme-toggle.is-dark .cs-theme-toggle__thumb[data-v-447e03ac]{transform:translateX(26px);box-shadow:0 0 4px 2px var(--main)}body[data-v-011cff22]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-011cff22]{font-weight:700}body.dark[data-v-011cff22]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-011cff22]{font-weight:400}body.dark img[data-v-011cff22]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-011cff22]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-011cff22]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-011cff22]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-011cff22]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-011cff22],.cs-title sup[data-v-011cff22]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-011cff22]{position:relative;top:-12px}.cs-text[data-v-011cff22]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-011cff22]{text-decoration:underline}.cs-text small[data-v-011cff22]{font-size:.6em}.cs-list[data-v-011cff22]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-011cff22]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-011cff22]{float:left}.fr[data-v-011cff22]{float:right}a[data-v-011cff22]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-011cff22],h2[data-v-011cff22],h3[data-v-011cff22],h4[data-v-011cff22],h5[data-v-011cff22],h6[data-v-011cff22]{font-family:Montserrat,serif}h1 a[data-v-011cff22],h2 a[data-v-011cff22],h3 a[data-v-011cff22],h4 a[data-v-011cff22],h5 a[data-v-011cff22],h6 a[data-v-011cff22]{color:var(--text-title)}h1 .cs-header-anchor[data-v-011cff22],h2 .cs-header-anchor[data-v-011cff22],h3 .cs-header-anchor[data-v-011cff22],h4 .cs-header-anchor[data-v-011cff22],h5 .cs-header-anchor[data-v-011cff22],h6 .cs-header-anchor[data-v-011cff22]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-011cff22],h2:hover .cs-header-anchor[data-v-011cff22],h3:hover .cs-header-anchor[data-v-011cff22],h4:hover .cs-header-anchor[data-v-011cff22],h5:hover .cs-header-anchor[data-v-011cff22],h6:hover .cs-header-anchor[data-v-011cff22]{opacity:1}.cs-toc-dom[data-v-011cff22]{display:none}.cs-subscribe[data-v-011cff22]{display:flex;align-items:top;margin:40px auto;padding:0;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;background-color:var(--bg);box-shadow:var(--form-shadow);border-radius:6px;overflow:hidden}@media (max-width:500px){.cs-subscribe[data-v-011cff22]{flex-direction:column}}.cs-subscribe__wrapper[data-v-011cff22]{flex:1;padding:40px;background-color:var(--bg)}.cs-subscribe__wrapper[data-v-011cff22]:first-child{background-color:var(--bg-secondary)}.cs-subscribe__title[data-v-011cff22]{margin-bottom:20px;line-height:1.2;font-size:20px;font-weight:700}.cs-subscribe__describe[data-v-011cff22]{line-height:1.8;font-size:14px;font-weight:400}.cs-subscribe__icon[data-v-011cff22]{margin-top:20px;width:46px;height:46px}.cs-subscribe__input[data-v-011cff22]{display:block;padding:12px;width:100%;background-color:#fff;border:1px solid #e3e3e3;border-radius:4px}.cs-subscribe__input+.cs-subscribe__input[data-v-011cff22]{margin-top:10px}.cs-subscribe__input[data-v-011cff22]::-moz-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]:-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::-ms-input-placeholder{color:#bdbdbd}.cs-subscribe__input[data-v-011cff22]::placeholder{color:#bdbdbd}.cs-subscribe__submit-btn[data-v-011cff22]{margin:14px 0;padding:12px 24px;color:#fff;border-radius:500px;background-color:var(--main)}.cs-subscribe__submit-btn>span[data-v-011cff22]{font-weight:700}.cs-subscribe__tips[data-v-011cff22]{line-height:2;font-size:12px}body[data-v-08ff1539]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-08ff1539]{font-weight:700}body.dark[data-v-08ff1539]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-08ff1539]{font-weight:400}body.dark img[data-v-08ff1539]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-08ff1539]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-08ff1539]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-08ff1539]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-08ff1539]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-08ff1539],.cs-title sup[data-v-08ff1539]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-08ff1539]{position:relative;top:-12px}.cs-text[data-v-08ff1539]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-08ff1539]{text-decoration:underline}.cs-text small[data-v-08ff1539]{font-size:.6em}.cs-list[data-v-08ff1539]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-08ff1539]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-08ff1539]{float:left}.fr[data-v-08ff1539]{float:right}a[data-v-08ff1539]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-08ff1539],h2[data-v-08ff1539],h3[data-v-08ff1539],h4[data-v-08ff1539],h5[data-v-08ff1539],h6[data-v-08ff1539]{font-family:Montserrat,serif}h1 a[data-v-08ff1539],h2 a[data-v-08ff1539],h3 a[data-v-08ff1539],h4 a[data-v-08ff1539],h5 a[data-v-08ff1539],h6 a[data-v-08ff1539]{color:var(--text-title)}h1 .cs-header-anchor[data-v-08ff1539],h2 .cs-header-anchor[data-v-08ff1539],h3 .cs-header-anchor[data-v-08ff1539],h4 .cs-header-anchor[data-v-08ff1539],h5 .cs-header-anchor[data-v-08ff1539],h6 .cs-header-anchor[data-v-08ff1539]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-08ff1539],h2:hover .cs-header-anchor[data-v-08ff1539],h3:hover .cs-header-anchor[data-v-08ff1539],h4:hover .cs-header-anchor[data-v-08ff1539],h5:hover .cs-header-anchor[data-v-08ff1539],h6:hover .cs-header-anchor[data-v-08ff1539]{opacity:1}.cs-toc-dom[data-v-08ff1539]{display:none}.cs-statement[data-v-08ff1539]{text-align:center;font-size:14px}.cs-statement hr[data-v-08ff1539]{margin:64px 0;border:0;border-bottom:1px solid var(--hr)}.cs-statement__text[data-v-08ff1539]{margin:8px 0;line-height:1.7;color:var(--text-normal)}.cs-statement__reward-code[data-v-08ff1539]{margin-top:50px;max-width:30%;height:auto}@media (max-width:375px){.cs-statement .cs-statement__reward-code[data-v-08ff1539]{max-width:76%!important}}body[data-v-2002d74b]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-2002d74b]{font-weight:700}body.dark[data-v-2002d74b]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-2002d74b]{font-weight:400}body.dark img[data-v-2002d74b]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-2002d74b]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-2002d74b]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-2002d74b]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-2002d74b]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-2002d74b],.cs-title sup[data-v-2002d74b]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-2002d74b]{position:relative;top:-12px}.cs-text[data-v-2002d74b]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-2002d74b]{text-decoration:underline}.cs-text small[data-v-2002d74b]{font-size:.6em}.cs-list[data-v-2002d74b]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-2002d74b]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-2002d74b]{float:left}.fr[data-v-2002d74b]{float:right}a[data-v-2002d74b]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-2002d74b],h2[data-v-2002d74b],h3[data-v-2002d74b],h4[data-v-2002d74b],h5[data-v-2002d74b],h6[data-v-2002d74b]{font-family:Montserrat,serif}h1 a[data-v-2002d74b],h2 a[data-v-2002d74b],h3 a[data-v-2002d74b],h4 a[data-v-2002d74b],h5 a[data-v-2002d74b],h6 a[data-v-2002d74b]{color:var(--text-title)}h1 .cs-header-anchor[data-v-2002d74b],h2 .cs-header-anchor[data-v-2002d74b],h3 .cs-header-anchor[data-v-2002d74b],h4 .cs-header-anchor[data-v-2002d74b],h5 .cs-header-anchor[data-v-2002d74b],h6 .cs-header-anchor[data-v-2002d74b]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-2002d74b],h2:hover .cs-header-anchor[data-v-2002d74b],h3:hover .cs-header-anchor[data-v-2002d74b],h4:hover .cs-header-anchor[data-v-2002d74b],h5:hover .cs-header-anchor[data-v-2002d74b],h6:hover .cs-header-anchor[data-v-2002d74b]{opacity:1}.cs-toc-dom[data-v-2002d74b]{display:none}.cs-toc[data-v-2002d74b]{display:inline-block;position:fixed;top:50%;left:50%;transform:translate3d(315px,-50%,0);max-height:550px;overflow-y:scroll}.cs-toc:hover .cs-toc__text[data-v-2002d74b]{opacity:1}.cs-toc__item[data-v-2002d74b]{height:16px;overflow:hidden}.cs-toc__item+.cs-toc__item[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor[data-v-2002d74b]{display:block;box-shadow:none}.cs-toc__anchor.is-active[data-v-2002d74b]:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor.is-active .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color);opacity:1}.cs-toc__text[data-v-2002d74b]{padding-left:16px;max-width:200px;overflow:hidden;line-height:1.4;font-family:-apple-system,BlinkMacSystemFont,PingFang SC,Hiragino Sans GB,Microsoft YaHei,"\5FAE\8F6F\96C5\9ED1",helvetica neue,helvetica,ubuntu,roboto,noto,segoe ui,Arial,sans-serif;font-size:13px;font-weight:700;color:var(--article-nav-text-color);white-space:nowrap;text-overflow:ellipsis;opacity:0;transition:opacity .5s}.cs-toc__anchor[data-v-2002d74b]:before,.cs-toc__text[data-v-2002d74b]{position:relative;top:-2px;display:inline-block;vertical-align:middle}.cs-toc__anchor[data-v-2002d74b]:before{content:"";width:16px;height:4px;border-radius:20px;background:var(--article-nav-dot-color);transition:background .5s}.cs-toc__anchor[data-v-2002d74b]:hover:before{background:var(--article-nav-dot-active-color)}.cs-toc__anchor:hover .cs-toc__text[data-v-2002d74b]{color:var(--article-nav-text-active-color)}.cs-toc__anchor+.cs-toc__anchor[data-v-2002d74b]{margin-top:10px}.cs-toc__anchor--sub[data-v-2002d74b]:before{width:10px}.cs-toc__anchor--sub .cs-toc__text[data-v-2002d74b]{margin-left:6px;font-size:12px;font-weight:400}#__nuxt{position:relative;min-height:100%}body[data-v-11bea6b1]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-11bea6b1]{font-weight:700}body.dark[data-v-11bea6b1]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-11bea6b1]{font-weight:400}body.dark img[data-v-11bea6b1]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-11bea6b1]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-11bea6b1]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-11bea6b1]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-11bea6b1]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-11bea6b1],.cs-title sup[data-v-11bea6b1]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-11bea6b1]{position:relative;top:-12px}.cs-text[data-v-11bea6b1]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-11bea6b1]{text-decoration:underline}.cs-text small[data-v-11bea6b1]{font-size:.6em}.cs-list[data-v-11bea6b1]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-11bea6b1]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-11bea6b1]{float:left}.fr[data-v-11bea6b1]{float:right}a[data-v-11bea6b1]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-11bea6b1],h2[data-v-11bea6b1],h3[data-v-11bea6b1],h4[data-v-11bea6b1],h5[data-v-11bea6b1],h6[data-v-11bea6b1]{font-family:Montserrat,serif}h1 a[data-v-11bea6b1],h2 a[data-v-11bea6b1],h3 a[data-v-11bea6b1],h4 a[data-v-11bea6b1],h5 a[data-v-11bea6b1],h6 a[data-v-11bea6b1]{color:var(--text-title)}h1 .cs-header-anchor[data-v-11bea6b1],h2 .cs-header-anchor[data-v-11bea6b1],h3 .cs-header-anchor[data-v-11bea6b1],h4 .cs-header-anchor[data-v-11bea6b1],h5 .cs-header-anchor[data-v-11bea6b1],h6 .cs-header-anchor[data-v-11bea6b1]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-11bea6b1],h2:hover .cs-header-anchor[data-v-11bea6b1],h3:hover .cs-header-anchor[data-v-11bea6b1],h4:hover .cs-header-anchor[data-v-11bea6b1],h5:hover .cs-header-anchor[data-v-11bea6b1],h6:hover .cs-header-anchor[data-v-11bea6b1]{opacity:1}.cs-toc-dom[data-v-11bea6b1]{display:none}.cs-footer[data-v-11bea6b1]{position:absolute;bottom:0;left:0;right:0;margin:0 auto}.cs-footer__wrapper[data-v-11bea6b1]{margin:50px auto 0;padding:28px 21px;max-width:630px;font-family:Merriweather,Georgia,serif;font-size:14px;cursor:pointer}.cs-footer__wrapper>a[data-v-11bea6b1]{margin-right:5px;color:var(--main);box-shadow:0 1px 0 0 currentColor}@media (max-width:500px){.cs-footer__wrapper[data-v-11bea6b1]{text-align:center}}.cs-footer__bottom[data-v-11bea6b1]{display:flex;align-items:center;margin-top:40px;overflow:hidden}.cs-footer__logo[data-v-11bea6b1]{margin-right:10px;width:20px;height:20px}@media (max-width:500px){.cs-footer__slogan[data-v-11bea6b1] .cs-color-slogan__start-text{display:none}}body[data-v-a8c8150c]{--main:#1cc794;--main-convert:#fff;--bg:#fff;--bg-secondary:#f9fafb;--text-normal:#000;--text-title:#222;--text-link:#d23669;--hr:#cfd4dd;--footer-bg:#fafafa;--logo:#000;--site-desc:#65737e;--site-nav:#343d46;--inline-code-fg:rgba(49,51,51,0.9);--inline-code-bg:rgba(34,241,179,0.2);--blockquote-bg:#f9f9f9;--blockquote-bl:#ccc;--form-shadow:rgba(210,214,220,0.5) 0px 2px 15px 0px;--article-nav-text-color:#655e5e;--article-nav-text-active-color:#292525;--article-nav-dot-color:#e5e5e5;--article-nav-dot-active-color:#8e8787;color:var(--text-normal);background-color:var(--bg)}body a[data-v-a8c8150c]{font-weight:700}body.dark[data-v-a8c8150c]{--main:#20f1b4;--main-convert:#20f1b4;--text-title:#fff;--bg:#282c35;--bg-secondary:#363c48;--header:#fff;--text-normal:hsla(0,0%,100%,0.88);--hr:hsla(0,0%,100%,0.2);--footer-bg:#242830;--logo:#fff;--site-desc:hsla(0,0%,100%,0.88);--site-nav:hsla(0,0%,100%,0.88);--inline-code-fg:#e6e6e6;--inline-code-bg:#373c49;--blockquote-bg:#323741;--blockquote-bl:#ccc;--form-shadow:rgba(26,26,27,0.635) 0px 2px 15px 0px;--article-nav-text-color:#d0d0d0;--article-nav-text-active-color:#fff;--article-nav-dot-color:#8e8787;--article-nav-dot-active-color:#e5e5e5;-webkit-font-smoothing:antialiased}body.dark a[data-v-a8c8150c]{font-weight:400}body.dark img[data-v-a8c8150c]:not([class*=theme-ignore]){-webkit-filter:brightness(75%);filter:brightness(75%)}[data-v-a8c8150c]::-moz-selection{background:rgba(34,241,179,.6)}[data-v-a8c8150c]::selection{background:rgba(34,241,179,.6)}.cs-container[data-v-a8c8150c]{margin:0 auto;padding:0 21px 42px;max-width:630px}.cs-title[data-v-a8c8150c]{margin:20px auto;font-size:24px;line-height:34px;font-weight:700;font-family:Montserrat,serif;color:var(--text-title)}.cs-title sub[data-v-a8c8150c],.cs-title sup[data-v-a8c8150c]{font-family:Arial,Helvetica,sans-serif;font-size:10px}.cs-title sup[data-v-a8c8150c]{position:relative;top:-12px}.cs-text[data-v-a8c8150c]{margin-bottom:10px;line-height:1.3;font-size:14px;color:var(--text-normal);word-break:break-all;white-space:wrap}.cs-text a[data-v-a8c8150c]{text-decoration:underline}.cs-text small[data-v-a8c8150c]{font-size:.6em}.cs-list[data-v-a8c8150c]{margin:16px auto;padding-left:30px;list-style-type:disc}.cs-list__item[data-v-a8c8150c]{display:list-item;list-style:inherit;line-height:1.5;word-break:break-all;white-space:wrap}.fl[data-v-a8c8150c]{float:left}.fr[data-v-a8c8150c]{float:right}a[data-v-a8c8150c]{color:var(--main);text-decoration:none!important;box-shadow:0 1px 0 0 currentColor}h1[data-v-a8c8150c],h2[data-v-a8c8150c],h3[data-v-a8c8150c],h4[data-v-a8c8150c],h5[data-v-a8c8150c],h6[data-v-a8c8150c]{font-family:Montserrat,serif}h1 a[data-v-a8c8150c],h2 a[data-v-a8c8150c],h3 a[data-v-a8c8150c],h4 a[data-v-a8c8150c],h5 a[data-v-a8c8150c],h6 a[data-v-a8c8150c]{color:var(--text-title)}h1 .cs-header-anchor[data-v-a8c8150c],h2 .cs-header-anchor[data-v-a8c8150c],h3 .cs-header-anchor[data-v-a8c8150c],h4 .cs-header-anchor[data-v-a8c8150c],h5 .cs-header-anchor[data-v-a8c8150c],h6 .cs-header-anchor[data-v-a8c8150c]{float:left;margin-left:-30px;color:var(--main);box-shadow:none;opacity:0;transition:opacity .3s}h1:hover .cs-header-anchor[data-v-a8c8150c],h2:hover .cs-header-anchor[data-v-a8c8150c],h3:hover .cs-header-anchor[data-v-a8c8150c],h4:hover .cs-header-anchor[data-v-a8c8150c],h5:hover .cs-header-anchor[data-v-a8c8150c],h6:hover .cs-header-anchor[data-v-a8c8150c]{opacity:1}.cs-toc-dom[data-v-a8c8150c]{display:none}.cs-color-slogan[data-v-a8c8150c]{display:inline-block;position:relative;font-family:Merriweather,Georgia,serif;color:var(--text-normal);background-color:transparent}.cs-color-slogan__placeholder[data-v-a8c8150c]{opacity:0}.cs-color-slogan__wrapper[data-v-a8c8150c]{position:absolute;top:0;white-space:nowrap}</style><link rel="preload" href="/_nuxt/static/1600180271/post/new-for-vue-3/payload.js" as="script">
+  </head>
+  <body>
+    <div data-server-rendered="true" id="__nuxt"><!----><div id="__layout"><div><section class="cs-post cs-container"><div class="cs-theme-toggle cs-post__toggle is-dark" data-v-447e03ac><img src="/_nuxt/img/moon.b276b99.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <img src="/_nuxt/img/sun.9e5c5e6.png" class="cs-theme-toggle__icon theme-ignore" data-v-447e03ac> <button class="cs-theme-toggle__thumb" data-v-447e03ac></button></div> <h3 class="cs-post__blog-name"><a href="/" class="nuxt-link-active">Curtis' Spot</a></h3> <h2 class="cs-post__title">一文看全 Vue 3.X 带来的新变化</h2> <p class="cs-post__info">19, Jul, 2020 • 8.4k words • 🍱🍱🍱 39 min read</p> <article class="cs-post__article"><p></p><div class="cs-toc-dom"><ul><li><a href="#NEWxinzenggongnengtexing">NEW | 新增功能特性</a><ul><li><a href="#jichuxiangyingshiAPIReactivity">基础响应式 API Reactivity</a></li><li><a href="#Refs">Refs</a></li><li><a href="#Computed">Computed</a></li><li><a href="#WatchEffect">WatchEffect</a></li><li><a href="#Watch">Watch</a></li><li><a href="#setup">setup</a></li><li><a href="#setupzhuanyongshengmingzhouqigouzi">setup 专用生命周期钩子</a></li><li><a href="#Teleport">Teleport</a></li><li><a href="#duogenyuansuFragmentsmultirootnode">多根元素 Fragments(multi-root node)</a></li><li><a href="#Suspense">Suspense</a></li><li><a href="#zidingyishijianEvents">自定义事件 Events</a></li><li><a href="#zidingyixuanranqiRenderer">自定义渲染器 Renderer</a></li></ul></li><li><a href="#BREAKINGpohuaixinggenggai">BREAKING | 破坏性更改</a><ul><li><a href="#quanjuAPIGlobal">全局 API Global</a></li><li><a href="#shuangxiangbangdingvmodel">双向绑定 v-model</a></li><li><a href="#xuanranhanshuAPIRender">渲染函数 API Render</a></li><li><a href="#hanshushizujianFunctionalComponent">函数式组件 Functional Component</a></li><li><a href="#yibuzujianAsyncComponent">异步组件 Async Component</a></li><li><a href="#Dataxuanxiang">Data 选项</a></li><li><a href="#zidingyiyuansuElements">自定义元素 Elements</a></li><li><a href="#chacaoSlots">插槽 Slots</a></li><li><a href="#dongtaibangdingshuxingchuli">动态绑定属性处理</a></li><li><a href="#zidingyizhilingDirectives">自定义指令 Directives</a></li><li><a href="#donghuazujianTransitionComponent">动画组件 Transition Component</a></li><li><a href="#zhentingqiAPIWatch">侦听器 API Watch</a></li><li><a href="#xiangyingshizhuruProvideInject">响应式注入 Provide / Inject</a></li></ul></li><li><a href="#REMOVEDfeiqigongnengtexing">REMOVED | 废弃功能特性</a><ul><li><a href="#shijianAPIEvents">事件 API Events</a></li><li><a href="#shijianxiushifuKeyCode">事件修饰符 KeyCode</a></li><li><a href="#guolvqiFilters">过滤器 Filters</a></li><li><a href="#hangneimobanshuxinginlinetemplate">行内模板属性 inline-template</a></li></ul></li><li><a href="#zongjie">总结</a></li></ul></div><p></p>
+<p>昨天(2020-07-18)，Vue 宣布 3.X 版本正式进入 <a href="https://github.com/vuejs/rfcs/issues/189" target="_blank">RC</a>阶段，进入 RC 阶段意味着 Vue 3.x 的核心实现已经趋于稳定，原则上在最终发布前不会再引入新的主要特性和破坏性更改，所以现在正是开始学习 Vue 3.x 的最好时机。</p>
+<p>在通读了 Vue 3.x 最新的<a href="https://v3.vuejs.org/" target="_blank">官方文档</a>后，我总结了一下 Vue 3.x 对于 Vue 2.x 的一些主要变化，分别从新功能、破坏性更改和废弃特性三个方面进行汇总，方便在开发基于 Vue 3.x 新版本应用的时候进行快速查阅。可点击右侧 TOC 导航栏进行快速查看（PC 端）。</p>
+<h2 id="NEWxinzenggongnengtexing"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#NEWxinzenggongnengtexing")'>¶</a> NEW | 新增功能特性</h2>
+<h3 id="jichuxiangyingshiAPIReactivity"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#jichuxiangyingshiAPIReactivity")'>¶</a> 基础响应式 API Reactivity</h3>
+<h5 id="bianhuamiaoshu"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu")'>¶</a> 变化描述：</h5>
+<ul>
+<li>新增<code>reactive</code>全局 API，调用后返回一个响应式的<code>proxy</code>对象；</li>
+<li>新增<code>readonly</code>全局 API，调用后根据源对象返回一个只读的<code>proxy</code>对象，如果源对象是响应式的，源对象发生变化时会同步变化；</li>
+<li>新增<code>isProxy</code>全局 API，检查指定对象是否由<code>reactive</code>或者<code>readonly</code>创建；</li>
+<li>新增<code>isReactive</code>全局 API，检查指定对象是否由<code>reactive</code>创建（经<code>readonly</code>创建的<code>reactive</code>值认为 true，e.g.，isReactive(readonly(reactive({}))) === true）；</li>
+<li>新增<code>isReadonly</code>全局 API，检查指定对象是否由<code>readonly</code>创建；</li>
+<li>新增<code>toRaw</code>全局 API，调用后返回一个<code>reactive</code>对象的原始对象；</li>
+<li>新增<code>markRaw</code>全局 API，调用后返回一个不可被<code>reactive</code>将其作为源的对象；</li>
+<li>新增<code>shallowReactive</code>全局 API，浅<code>reactive</code>，只将对象的顶层<code>reactive</code>；</li>
+<li>新增<code>shallowReadonly</code>全局 API，浅<code>readonly</code>，只将对象的顶层<code>readonly</code>；</li>
+</ul>
+<h5 id="daimashili"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili")'>¶</a> 代码示例：</h5>
+<p><code>reactive</code>：</p>
+<p>调用后返回一个响应式的<code>proxy</code>对象。</p>
+<pre class="language-js"><code class="language-js">const obj = reactive({ count: 0 });
+</code></pre><hr>
+<p><code>readonly</code>：</p>
+<p>调用后根据源对象返回一个只读的<code>proxy</code>对象，如果源对象是响应式的，源对象发生变化时会同步变化。</p>
+<pre class="language-js"><code class="language-js">const original = reactive({ count: 0 });
+
+const copy = readonly(original);
+
+watchEffect(() => {
+  // works for reactivity tracking
+  console.log(copy.count);
+});
+
+// mutating original will trigger watchers relying on the copy
+original.count++;
+
+// mutating the copy will fail and result in a warning
+copy.count++; // warning!
+</code></pre><hr>
+<p><code>isProxy</code>：</p>
+<p>检查指定对象是否由<code>reactive</code>或者<code>readonly</code>创建。</p>
+<pre class="language-js"><code class="language-js">const rt = reactive({ count: 0 });
+const rd = readonly(rt);
+const plainObj = {};
+
+isProxy(rt); // true
+isProxy(rd); // true
+isProxy(plainObj); // false
+</code></pre><hr>
+<p><code>isReactive</code>：</p>
+<p>检查指定对象是否由<code>reactive</code>创建（经<code>readonly</code>创建的<code>reactive</code>值认为 true，e.g.，isReactive(readonly(reactive({}))) === true）。</p>
+<pre data-line="7-15" class="language-js"><code data-line="7-15" class="language-js">import { reactive, isReactive, readonly } from 'vue';
+export default {
+  setup() {
+    const state = reactive({
+      name: 'John',
+    });
+    // 由普通对象创建的 readonly proxy
+    const plain = readonly({
+      name: 'Mary',
+    });
+    console.log(isReactive(plain)); // -> false
+
+    // 由 reactive proxy 创建的 readonly proxy
+    const stateCopy = readonly(state);
+    console.log(isReactive(stateCopy)); // -> true
+  },
+};
+</code></pre><hr>
+<p><code>isReadonly</code>：</p>
+<p>检查指定对象是否由<code>readonly</code>创建。</p>
+<pre class="language-js"><code class="language-js">const rt = reactive({ count: 0 });
+const rd = readonly(rt);
+const plainObj = {};
+
+isReadonly(rt); // false
+isReadonly(rd); // true
+isReadonly(plainObj); // false
+</code></pre><hr>
+<p><code>toRaw</code>：</p>
+<p>调用后返回一个<code>reactive</code>对象的原始对象。</p>
+<pre class="language-js"><code class="language-js">const foo = {};
+const reactiveFoo = reactive(foo);
+
+console.log(toRaw(reactiveFoo) === foo); // true
+</code></pre><hr>
+<p><code>markRaw</code>：</p>
+<p>调用后返回一个不可被<code>reactive</code>将其作为源的对象。</p>
+<pre class="language-js"><code class="language-js">const foo = markRaw({});
+console.log(isReactive(reactive(foo))); // false
+
+// 嵌套 reactive 也可使用
+const bar = reactive({ foo });
+console.log(isReactive(bar.foo)); // false
+
+// 被 markRaw 对象的嵌套对象不受影响
+const baz = markRaw({
+  nested: {},
+});
+const qux = reactive({
+  // 即使 `baz` 被标记为 raw, 但是 baz.nested 不受影响.
+  nested: baz.nested,
+});
+
+console.log(baz.nested === qux.nested); // false
+</code></pre><hr>
+<p><code>shallowReactive</code>：</p>
+<p>浅<code>reactive</code>，只将对象的顶层<code>reactive</code>。</p>
+<pre class="language-js"><code class="language-js">const state = shallowReactive({
+  foo: 1,
+  nested: {
+    bar: 2,
+  },
+});
+
+// 改变 state 自身的属性是响应式的
+state.foo++;
+// ...但是深层嵌套对象不是响应式的
+isReactive(state.nested); // false
+state.nested.bar++; // non-reactive
+</code></pre><hr>
+<p><code>shallowReadonly</code>：</p>
+<p>浅<code>readonly</code>，只将对象的顶层<code>readonly</code>。</p>
+<pre class="language-js"><code class="language-js">const state = shallowReadonly({
+  foo: 1,
+  nested: {
+    bar: 2,
+  },
+});
+
+// 不可以改变 state 自身的属性值
+state.foo++;
+// ...但是深层嵌套对象的属性值可被改变
+isReadonly(state.nested); // false
+state.nested.bar++; // works
+</code></pre><hr>
+<h3 id="Refs"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Refs")'>¶</a> Refs</h3>
+<h5 id="bianhuamiaoshu-2"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-2")'>¶</a> 变化描述：</h5>
+<ul>
+<li>新增<code>ref</code>全局 API，调用后返回一个基础值的响应式对象，该对象只有一个 value 固定值。当源值不是基础值（即对象）时，会静默地对该对象调用<code>reactive</code>；</li>
+<li>新增<code>unref</code>全局 API，调用后返回一个<code>ref</code>值的 value 值，这个 API 是<code>val = isRef(val) ? val.value : val</code>的语法糖；</li>
+<li>新增<code>toRef</code>全局 API，调用后返回一个<code>reactive</code>对象的指定属性作为<code>ref</code>，该<code>ref</code>与<code>reactive</code>的原值互相影响；</li>
+<li>新增<code>toRefs</code>全局 API，调用后返回一个<code>reactive</code>对象的所有属性的<code>ref</code>集合，该<code>ref</code>集合的每一个属性值（即每一个 ref）与<code>reactive</code>的原值相互影响；</li>
+<li>新增<code>isRef</code>全局 API，检查指定对象是否<code>ref</code>；</li>
+<li>新增<code>customRef</code>全局 API，创建自定义的<code>ref</code>用于细粒度的控制依赖收集和触发，需要提供一个工厂函数，该工厂函数接受参数分别为<code>track</code>和<code>trigger</code>两个参数，返回值必须是带<code>get</code>、<code>set</code>方法的对象；</li>
+<li>新增<code>shallowRef</code>全局 API，浅<code>ref</code>，因为对非基础值调用<code>ref</code>会隐式调用<code>reactive</code>，相当于对<code>ref</code>的 value 值调用<code>shallowReactive</code>；</li>
+<li>新增<code>triggerRef</code>全局 API，改变由<code>shallowRef</code>创建的<code>ref</code>值后，手动触发<code>ref</code>更新以驱动<code>computed</code>和<code>watch</code>等逻辑；</li>
+</ul>
+<h5 id="daimashili-2"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-2")'>¶</a> 代码示例：</h5>
+<p><code>ref</code>：</p>
+<p>调用后返回一个基础值的响应式对象，该对象只有一个 value 固定值。当源值不是基础值（即对象）时，会静默地对该对象调用<code>reactive</code>。</p>
+<pre class="language-js"><code class="language-js">const count = ref(0);
+console.log(count.value); // 0
+
+count.value++;
+console.log(count.value); // 1
+</code></pre><hr>
+<p><code>unref</code>：</p>
+<p>调用后返回一个<code>ref</code>值的 value 值，这个 API 是<code>val = isRef(val) ? val.value : val</code>的语法糖。</p>
+<pre class="language-js"><code class="language-js">function useFoo(x: number | Ref&lt;number>) {
+  const unwrapped = unref(x); // unwrapped is guaranteed to be number now
+}
+</code></pre><hr>
+<p><code>toRef</code>：</p>
+<p>调用后返回一个<code>reactive</code>对象的指定属性作为<code>ref</code>，该<code>ref</code>与<code>reactive</code>的原值互相影响。</p>
+<pre class="language-js"><code class="language-js">const state = reactive({
+  foo: 1,
+  bar: 2,
+});
+
+const fooRef = toRef(state, 'foo');
+
+fooRef.value++;
+console.log(state.foo); // 2
+
+state.foo++;
+console.log(fooRef.value); // 3
+</code></pre><hr>
+<p><code>toRefs</code>：</p>
+<p>调用后返回一个<code>reactive</code>对象的所有属性的<code>ref</code>集合，该<code>ref</code>集合的每一个属性值（即每一个 ref）与<code>reactive</code>的原值相互影响。</p>
+<pre class="language-js"><code class="language-js">const state = reactive({
+  foo: 1,
+  bar: 2,
+});
+
+const stateAsRefs = toRefs(state);
+/*
+Type of stateAsRefs:
+
+{
+  foo: Ref&lt;number>,
+  bar: Ref&lt;number>
+}
+*/
+
+// The ref and the original property is "linked"
+state.foo++;
+console.log(stateAsRefs.foo.value); // 2
+
+stateAsRefs.foo.value++;
+console.log(state.foo); // 3
+</code></pre><hr>
+<p><code>isRef</code>：</p>
+<p>检查指定对象是否<code>ref</code>。</p>
+<pre class="language-js"><code class="language-js">const count = ref(0);
+const sum = 0;
+
+isRef(count); // true
+isRef(sum); // false
+</code></pre><hr>
+<p><code>customRef</code>：</p>
+<p>创建自定义的<code>ref</code>用于细粒度的控制依赖收集和触发，需要提供一个工厂函数，该工厂函数接受参数分别为<code>track</code>和<code>trigger</code>两个参数，返回值必须是带<code>get</code>、<code>set</code>方法的对象。</p>
+<pre class="language-html"><code class="language-html">&lt;input v-model="text" />
+</code></pre><pre class="language-js"><code class="language-js">function useDebouncedRef(value, delay = 200) {
+  let timeout;
+  return customRef((track, trigger) => {
+    return {
+      get() {
+        track();
+        return value;
+      },
+      set(newValue) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          value = newValue;
+          trigger();
+        }, delay);
+      },
+    };
+  });
+}
+
+export default {
+  setup() {
+    return {
+      text: useDebouncedRef('hello'),
+    };
+  },
+};
+</code></pre><hr>
+<p><code>shallowRef</code>：</p>
+<p>因为对非基础值调用<code>ref</code>会隐式调用<code>reactive</code>，相当于对<code>ref</code>的 value 值调用<code>shallowReactive</code>。</p>
+<pre class="language-js"><code class="language-js">const foo = shallowRef({});
+// mutating the ref's value is reactive
+foo.value = {};
+// but the value will not be converted.
+isReactive(foo.value); // false
+</code></pre><hr>
+<p><code>triggerRef</code>：</p>
+<p>新增<code>triggerRef</code>全局 API，改变由<code>shallowRef</code>创建的<code>ref</code>值后，手动触发<code>ref</code>更新以驱动<code>computed</code>和<code>watch</code>等逻辑。</p>
+<pre class="language-js"><code class="language-js">const shallow = shallowRef({
+  greet: 'Hello, world',
+});
+
+// Logs "Hello, world" once for the first run-through
+watchEffect(() => {
+  console.log(shallow.value.greet);
+});
+
+// This won't trigger the effect because the ref is shallow
+shallow.value.greet = 'Hello, universe';
+
+// Logs "Hello, universe"
+triggerRef(shallow);
+</code></pre><hr>
+<h3 id="Computed"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Computed")'>¶</a> Computed</h3>
+<h5 id="bianhuamiaoshu-3"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-3")'>¶</a> 变化描述：</h5>
+<ul>
+<li>新增<code>computed</code>全局 API，调用该 API 创建动态计算值时，需要提供一个计算函数或者带有<code>get</code>和<code>set</code>函数的对象字面量；</li>
+</ul>
+<h5 id="daimashili-3"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-3")'>¶</a> 代码示例：</h5>
+<p>类型注解：</p>
+<pre class="language-js"><code class="language-js">// read-only
+function computed&lt;T>(getter: () => T): Readonly&lt;Ref&lt;Readonly&lt;T>>>
+
+// writable
+function computed&lt;T>(options: { get: () => T; set: (value: T) => void }): Ref&lt;T>
+</code></pre><p>使用计算函数的情况：</p>
+<pre class="language-javascript"><code class="language-javascript">const count = ref(1);
+const plusOne = computed(() => count.value++);
+
+console.log(plusOne.value); // 2
+
+plusOne.value++; // error
+</code></pre><p>使用对象字面量的情况：</p>
+<pre class="language-javascript"><code class="language-javascript">const count = ref(1);
+const plusOne = computed({
+  get: () => count.value + 1,
+  set: val => {
+    count.value = val - 1;
+  },
+});
+
+plusOne.value = 1;
+console.log(count.value); // 0
+</code></pre><hr>
+<h3 id="WatchEffect"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#WatchEffect")'>¶</a> WatchEffect</h3>
+<h5 id="bianhuamiaoshu-4"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-4")'>¶</a> 变化描述：</h5>
+<ul>
+<li>新增<code>watchEffect</code>全局 API，调用该函数侦听变化时，会<strong>立即执行</strong>一次；</li>
+<li>调用该函数后返回<code>stop</code>函数，调用<code>stop</code>后停止侦听；</li>
+<li><code>watchEffect</code>的第一个参数为 handle 函数，该 handle 函数接收<code>onInvalidate</code>函数，<code>onInvalidate</code>在<code>watchEffect</code>被重新触发或者被终止时触发；</li>
+<li><code>watchEffect</code>的第二个参数为侦听选项，值为对象字面量，
+<ul>
+<li>选项<code>flush</code>，用于控制<code>watchEffect</code>的执行时机：<pre class="language-text"><code class="language-text">pre  -> 在组件更新前运行
+sync -> 在组件更新时同步运行
+post -> 在组件更新后运行（默认）
+</code></pre></li>
+<li>选项<code>onTrack</code>，<code>watchEffect</code>依赖收集时调用，用于 debugger，只在开发模式（development）可用；</li>
+<li>选项<code>onTrigger</code>，<code>watchEffect</code>重新运行时调用，用于 debugger，只在开发模式（development）可用；</li>
+</ul>
+</li>
+</ul>
+<h5 id="daimashili-4"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-4")'>¶</a> 代码示例：</h5>
+<p>类型注解：</p>
+<pre class="language-js"><code class="language-js">function watchEffect(
+  effect: (onInvalidate: InvalidateCbRegistrator) => void,
+  options?: WatchEffectOptions
+): StopHandle
+
+interface WatchEffectOptions {
+  flush?: 'pre' | 'post' | 'sync'
+  onTrack?: (event: DebuggerEvent) => void
+  onTrigger?: (event: DebuggerEvent) => void
+}
+
+interface DebuggerEvent {
+  effect: ReactiveEffect
+  target: any
+  type: OperationTypes
+  key: string | symbol | undefined
+}
+
+type InvalidateCbRegistrator = (invalidate: () => void) => void
+
+type StopHandle = () => void
+</code></pre><p>默认使用方式：</p>
+<pre class="language-javascript"><code class="language-javascript">const count = ref(0);
+
+const stop = watchEffect(() => console.log(count.value));
+// -> logs 0
+
+setTimeout(() => {
+  count.value++;
+  // -> logs 1
+}, 100);
+
+// later 手动结束 watchEffect
+setTimeout(() => {
+  stop();
+}, 200);
+</code></pre><p>同步 Invalidation sync：</p>
+<pre class="language-javascript"><code class="language-javascript">watchEffect(onInvalidate => {
+  const token = performAsyncOperation(id.value);
+  onInvalidate(() => {
+    // id 发生了变化或者 watcher 被终止
+    // 手动终止上一个未结束的异步操作
+    token.cancel();
+  });
+});
+</code></pre><p>异步 Invalidation async：</p>
+<pre class="language-javascript"><code class="language-javascript">const data = ref(null)
+watchEffect(async onInvalidate => {
+  onInvalidate(() => {...}) // 在异步函数 resolve 前注册清理函数
+  data.value = await fetchData(props.id)
+})
+</code></pre><p>参数选项：</p>
+<pre class="language-javascript"><code class="language-javascript">watchEffect(
+  () => {
+    /* side effect */
+  },
+  {
+    flush: 'pre', // 改变执行时机
+    // 收集依赖时 debug
+    onTrack(e) {
+      debugger;
+    },
+    // 被触发时 debug
+    onTrigger(e) {
+      debugger;
+    },
+  },
+);
+</code></pre><hr>
+<h3 id="Watch"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Watch")'>¶</a> Watch</h3>
+<h5 id="bianhuamiaoshu-5"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-5")'>¶</a> 变化描述：</h5>
+<ul>
+<li>新增<code>watch</code>全局 API，调用该函数侦听变化时，默认执行方式为<code>lazy</code>；</li>
+<li>可同时侦听多个属性；</li>
+<li><code>watch</code>的第二个参数为 handle 函数，该 handle 函数接收<code>onInvalidate</code>函数，<code>onInvalidate</code>在<code>watch</code>被重新触发或者被终止时触发；</li>
+<li><code>watch</code>的第三个参数为侦听选项，值为对象字面量，
+<ul>
+<li>选项<code>flush</code>，用于控制<code>watch</code>的执行时机：<pre class="language-text"><code class="language-text">pre  -> 在组件更新前运行
+sync -> 在组件更新时同步运行
+post -> 在组件更新后运行（默认）
+</code></pre></li>
+<li>选项<code>onTrack</code>，<code>watch</code>依赖收集时调用，用于 debugger，只在开发模式（development）可用；</li>
+<li>选项<code>onTrigger</code>，<code>watch</code>重新运行时调用，用于 debugger，只在开发模式（development）可用；</li>
+</ul>
+</li>
+</ul>
+<h5 id="daimashili-5"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-5")'>¶</a> 代码示例：</h5>
+<p>类型注解：</p>
+<pre class="language-js"><code class="language-js">// 侦听单个属性源
+function watch&lt;T>(
+  source: WatcherSource&lt;T>,
+  callback: (
+    value: T,
+    oldValue: T,
+    onInvalidate: InvalidateCbRegistrator
+  ) => void,
+  options?: WatchOptions
+): StopHandle
+
+// 侦听多个属性源
+function watch&lt;T extends WatcherSource&lt;unknown>[]>(
+  sources: T
+  callback: (
+    values: MapSources&lt;T>,
+    oldValues: MapSources&lt;T>,
+    onInvalidate: InvalidateCbRegistrator
+  ) => void,
+  options? : WatchOptions
+): StopHandle
+
+type WatcherSource&lt;T> = Ref&lt;T> | (() => T)
+
+type MapSources&lt;T> = {
+  [K in keyof T]: T[K] extends WatcherSource&lt;infer V> ? V : never
+}
+
+// 从 `watchEffect` 类型扩展
+interface WatchOptions extends WatchEffectOptions {
+  immediate?: boolean // default: false
+  deep?: boolean
+  // flush?: 'pre' | 'post' | 'sync'
+  // onTrack?: (event: DebuggerEvent) => void
+  // onTrigger?: (event: DebuggerEvent) => void
+}
+
+interface DebuggerEvent {
+  effect: ReactiveEffect
+  target: any
+  type: OperationTypes
+  key: string | symbol | undefined
+}
+
+type InvalidateCbRegistrator = (invalidate: () => void) => void
+
+type StopHandle = () => void
+</code></pre><p>侦听单属性：</p>
+<pre class="language-javascript"><code class="language-javascript">// 侦听 getter
+const state = reactive({ count: 0 });
+watch(
+  () => state.count,
+  (count, prevCount) => {
+    /* ... */
+  },
+);
+
+// 直接侦听 ref
+const count = ref(0);
+const stop = watch(count, (count, prevCount) => {
+  /* ... */
+});
+
+// later 手动结束 watch
+setTimeout(() => {
+  stop();
+}, 200);
+</code></pre><p>侦听多属性：</p>
+<pre class="language-javascript"><code class="language-javascript">watch([fooRef, barRef], ([foo, bar], [prevFoo, prevBar]) => {
+  /* ... */
+});
+</code></pre><p>同步 Invalidation sync：</p>
+<pre class="language-javascript"><code class="language-javascript">const data = ref(null);
+watch(data, (data, prevData, onInvalidate) => {
+  const token = performAsyncOperation(data.value);
+  onInvalidate(() => {
+    // id 发生了变化或者 watcher 被终止
+    // 手动终止上一个未结束的异步操作
+    token.cancel();
+  });
+});
+</code></pre><p>异步 Invalidation async：</p>
+<pre class="language-javascript"><code class="language-javascript">const data = ref(null);
+watch(data, async (data, prevData, onInvalidate) => {
+  onInvalidate(() => {...}); // 在异步函数 resolve 前注册清理函数
+  data.value = await fetchData(props.id);
+})
+</code></pre><p>参数选项：</p>
+<pre class="language-javascript"><code class="language-javascript">const data = ref(null);
+watch(
+  data,
+  (data, prevData) => {
+    /* side effect */
+  },
+  {
+    immediate: true, // 立即执行
+    deep: true, // 深度侦听
+    flush: 'pre', // 改变执行时机
+    // 收集依赖时 debug
+    onTrack(e) {
+      debugger;
+    },
+    // 被触发时 debug
+    onTrigger(e) {
+      debugger;
+    },
+  },
+);
+</code></pre><hr>
+<h3 id="setup"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#setup")'>¶</a> setup</h3>
+<h5 id="bianhuamiaoshu-6"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-6")'>¶</a> 变化描述：</h5>
+<ul>
+<li>添加<code>setup</code>组件选项，在组件<strong>创建前</strong>被调用，接收<code>props</code>和<code>context</code>两个参数；</li>
+</ul>
+<h5 id="daimashili-6"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-6")'>¶</a> 代码示例：</h5>
+<p>类型注解：</p>
+<pre class="language-js"><code class="language-js">interface Data {
+  [key: string]: unknown;
+}
+
+interface SetupContext {
+  attrs: Data;
+  slots: Slots;
+  emit: (event: string, ...args: unknown[]) => void;
+}
+
+function setup(props: Data, context: SetupContext): Data;
+</code></pre><p>使用<code>&lt;template></code>的方式：</p>
+<pre class="language-html"><code class="language-html">&lt;!-- MyBook.vue -->
+&lt;template>
+  &lt;div>{{ readersNumber }} {{ book.title }}&lt;/div>
+&lt;/template>
+
+&lt;script>
+  import { ref, reactive } from 'vue';
+
+  export default {
+    setup() {
+      const readersNumber = ref(0);
+      const book = reactive({ title: 'Vue 3 Guide' });
+
+      // expose to template
+      return {
+        readersNumber,
+        book,
+      };
+    },
+  };
+&lt;/script>
+</code></pre><p>使用<code>render</code> function 的方式：</p>
+<pre data-line="10" class="language-js"><code data-line="10" class="language-js">// MyBook.vue
+
+import { h, ref, reactive } from 'vue';
+
+export default {
+  setup() {
+    const readersNumber = ref(0);
+    const book = reactive({ title: 'Vue 3 Guide' });
+    // 注意返回的 render 函数内使用 ref 类型的值，应该取它的 value 值
+    return () => h('div', [readersNumber.value, book.title]);
+  },
+};
+</code></pre><hr>
+<h3 id="setupzhuanyongshengmingzhouqigouzi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#setupzhuanyongshengmingzhouqigouzi")'>¶</a> setup 专用生命周期钩子</h3>
+<h5 id="bianhuamiaoshu-7"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-7")'>¶</a> 变化描述：</h5>
+<ul>
+<li>
+<p>增加<code>setup()</code>专用的生命周期钩子，除<code>beforeCreate</code>和<code>created</code>外其它钩子与选项内的钩子相同，如同下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项 API</th>
+<th style="text-align:left"><code>setup()</code>内 API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">beforeCreate</td>
+<td style="text-align:left">N/A</td>
+</tr>
+<tr>
+<td style="text-align:left">created</td>
+<td style="text-align:left">N/A</td>
+</tr>
+<tr>
+<td style="text-align:left">beforeMount</td>
+<td style="text-align:left">onBeforeMount</td>
+</tr>
+<tr>
+<td style="text-align:left">mounted</td>
+<td style="text-align:left">onMounted</td>
+</tr>
+<tr>
+<td style="text-align:left">beforeUpdate</td>
+<td style="text-align:left">onBeforeUpdate</td>
+</tr>
+<tr>
+<td style="text-align:left">updated</td>
+<td style="text-align:left">onUpdated</td>
+</tr>
+<tr>
+<td style="text-align:left">beforeUnmount</td>
+<td style="text-align:left">onBeforeUnmount</td>
+</tr>
+<tr>
+<td style="text-align:left">unmounted</td>
+<td style="text-align:left">onUnmounted</td>
+</tr>
+<tr>
+<td style="text-align:left">errorCaptured</td>
+<td style="text-align:left">onErrorCaptured</td>
+</tr>
+<tr>
+<td style="text-align:left">renderTracked</td>
+<td style="text-align:left">onRenderTracked</td>
+</tr>
+<tr>
+<td style="text-align:left">renderTriggered</td>
+<td style="text-align:left">onRenderTriggered</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h5 id="daimashili-7"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-7")'>¶</a> 代码示例：</h5>
+<pre class="language-javascript"><code class="language-javascript">import { onMounted, onUpdated, onUnmounted } from 'vue';
+
+const MyComponent = {
+  setup() {
+    onMounted(() => {
+      console.log('mounted!');
+    });
+    onUpdated(() => {
+      console.log('updated!');
+    });
+    onUnmounted(() => {
+      console.log('unmounted!');
+    });
+  },
+};
+</code></pre><hr>
+<h3 id="Teleport"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Teleport")'>¶</a> Teleport</h3>
+<h5 id="bianhuamiaoshu-8"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-8")'>¶</a> 变化描述：</h5>
+<ul>
+<li>添加<code>&lt;teleport></code>组件；</li>
+<li>需要通过 prop <code>to</code> 给<code>&lt;teleport></code>组件提供一个目标元素，值可选项为<code>HTMLElement</code>或者是一个合法的<code>querySelector</code>字符串；</li>
+<li><code>&lt;teleport></code>组件将会移动它的 children 元素到上面指定的 DOM；</li>
+<li>在 virtual DOM 的层面上，children 元素仍属于<code>&lt;teleport></code>的后代，因此<code>&lt;teleport></code>包含的其它自定义子组件可以访问到祖先组件的注入（injections）；</li>
+<li>多个<code>&lt;teleport></code>组件具有相同的<code>to</code>目标时，将会按照组件顺序 append 到目标 DOM 内；</li>
+</ul>
+<h5 id="daimashili-8"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-8")'>¶</a> 代码示例：</h5>
+<pre data-line="4,14" class="language-html"><code data-line="4,14" class="language-html">&lt;body>
+  &lt;div id="app">
+    &lt;h1>Move the #content with the portal component&lt;/h1>
+    &lt;teleport to="#endofbody">
+      &lt;div id="content">
+        &lt;p>
+          this will be moved to #endofbody.&lt;br />
+          Pretend that it's a modal
+        &lt;/p>
+        &lt;Child />
+      &lt;/div>
+    &lt;/teleport>
+  &lt;/div>
+  &lt;div id="endofbody">&lt;/div>
+  &lt;script>
+    new Vue({
+      el: '#app',
+      components: {
+        Child: { template: '&lt;div>Placeholder&lt;/div>' },
+      },
+    });
+  &lt;/script>
+&lt;/body>
+</code></pre><pre class="language-html"><code class="language-html">&lt;!-- result-->
+
+&lt;div id="app">
+  &lt;!-- -->
+&lt;/div>
+&lt;div id="endofbody">
+  &lt;div id="content">
+    &lt;p>
+      this will be moved to #endofbody.&lt;br />
+      Pretend that it's a modal
+    &lt;/p>
+    &lt;div>Placeholder&lt;/div>
+  &lt;/div>
+&lt;/div>
+</code></pre><p>多个<code>&lt;teleport></code>目标为同一个 DOM 的情况：</p>
+<pre class="language-html"><code class="language-html">&lt;teleport to="#modals">
+  &lt;div>A&lt;/div>
+&lt;/teleport>
+&lt;teleport to="#modals">
+  &lt;div>B&lt;/div>
+&lt;/teleport>
+</code></pre><pre class="language-html"><code class="language-html">&lt;!-- result-->
+
+&lt;div id="modals">
+  &lt;div>A&lt;/div>
+  &lt;div>B&lt;/div>
+&lt;/div>
+</code></pre><hr>
+<h3 id="duogenyuansuFragmentsmultirootnode"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#duogenyuansuFragmentsmultirootnode")'>¶</a> 多根元素 Fragments(multi-root node)</h3>
+<h5 id="bianhuamiaoshu-9"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-9")'>¶</a> 变化描述：</h5>
+<ul>
+<li>不再限制自定义组件只能具有一个根元素，支持多个根元素的情况；</li>
+</ul>
+<h5 id="daimabianhuaduibi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-html"><code class="language-html">&lt;!-- Layout.vue -->
+&lt;template>
+  &lt;div>
+    &lt;header>...&lt;/header>
+    &lt;main>...&lt;/main>
+    &lt;footer>...&lt;/footer>
+  &lt;/div>
+&lt;/template>
+</code></pre><p>3.x</p>
+<pre class="language-html"><code class="language-html">&lt;!-- Layout.vue -->
+&lt;template>
+  &lt;header>...&lt;/header>
+  &lt;main v-bind="$attrs">...&lt;/main
+  >&lt;!-- 手动绑定组件外部未声明为 prop 的属性 -->
+  &lt;footer>...&lt;/footer>
+&lt;/template>
+</code></pre><hr>
+<h3 id="Suspense"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Suspense")'>¶</a> Suspense</h3>
+<h5 id="bianhuamiaoshu-10"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-10")'>¶</a> 变化描述：</h5>
+<ul>
+<li>增加<code>&lt;suspense></code>组件，用于控制数据显示；</li>
+<li>需要提供两个<code>&lt;template></code>作为<code>&lt;suspense></code>的子元素，id 为<code>default</code>的模板装载的内容为正常显示内容，id 为<code>fallback</code>的模板装载的内容为无内容时显示；</li>
+</ul>
+<h5 id="daimashili-9"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-9")'>¶</a> 代码示例：</h5>
+<pre data-line="3,11" class="language-html"><code data-line="3,11" class="language-html">&lt;template>
+  &lt;Suspense>
+    &lt;template #default>
+      &lt;div v-for="item in articleList" :key="item.id">
+        &lt;article>
+          &lt;h2>{{ item.title }}&lt;/h2>
+          &lt;p>{{ item.body }}&lt;/p>
+        &lt;/article>
+      &lt;/div>
+    &lt;/template>
+    &lt;template #fallback>
+      Articles loading...
+    &lt;/template>
+  &lt;/Suspense>
+&lt;/template>
+
+&lt;script>
+  import getArticleList from 'getArticleList';
+  export default {
+    async setup() {
+      let articleList = await getArticleList();
+      return {
+        articleList,
+      };
+    },
+  };
+&lt;/script>
+</code></pre><hr>
+<h3 id="zidingyishijianEvents"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zidingyishijianEvents")'>¶</a> 自定义事件 Events</h3>
+<h5 id="bianhuamiaoshu-11"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-11")'>¶</a> 变化描述：</h5>
+<ul>
+<li>增加组件<code>emits</code>选项，用于定义该组件需要关注的事件，当该选项包含原生事件（e.g.，<code>click</code>）时，该原生事件将被组件的自定义事件覆盖；</li>
+<li><code>emits</code>选项内可指定事件的校验函数，用于事件触发时校验提供的参数是否合理；</li>
+</ul>
+<h5 id="daimashili-10"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-10")'>¶</a> 代码示例：</h5>
+<p>使用数组结构定义：</p>
+<pre class="language-js"><code class="language-js">app.component('custom-form', {
+  emits: ['in-focus', 'submit'],
+});
+</code></pre><p>使用对象结构定义：</p>
+<pre class="language-javascript"><code class="language-javascript">app.component('custom-form', {
+  emits: {
+    // 不校验事件
+    click: null,
+
+    // 校验触发的事件
+    submit: ({ email, password }) => {
+      if (email && password) {
+        return true;
+      } else {
+        console.warn('Invalid submit event payload!');
+        return false;
+      }
+    },
+  },
+  methods: {
+    submitForm() {
+      this.$emit('submit', { email, password });
+    },
+  },
+});
+</code></pre><hr>
+<h3 id="zidingyixuanranqiRenderer"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zidingyixuanranqiRenderer")'>¶</a> 自定义渲染器 Renderer</h3>
+<h5 id="bianhuamiaoshu-12"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-12")'>¶</a> 变化描述：</h5>
+<ul>
+<li>支持使用 API<code>createRenderer</code>自定义渲染器，调用该 API 需要返回<code>render</code>和<code>createApp</code>两个全局 API；</li>
+</ul>
+<h5 id="daimashili-11"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashili-11")'>¶</a> 代码示例：</h5>
+<pre class="language-js"><code class="language-js">import { createRenderer } from 'vue'
+const { render, createApp } = createRenderer&lt;Node, Element>({
+  patchProp,
+  ...nodeOps
+});
+</code></pre><hr>
+<h2 id="BREAKINGpohuaixinggenggai"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#BREAKINGpohuaixinggenggai")'>¶</a> BREAKING | 破坏性更改</h2>
+<h3 id="quanjuAPIGlobal"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#quanjuAPIGlobal")'>¶</a> 全局 API Global</h3>
+<h5 id="bianhuamiaoshu-13"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-13")'>¶</a> 变化描述：</h5>
+<ul>
+<li>
+<p>提供的新的<code>createApp</code> api 用以声明式实例化应用；</p>
+</li>
+<li>
+<p>部分<code>Vue</code>构造函数的静态方法转变为全局方法，并移除<code>$</code>开头的同名实例方法，整体变化如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">2.x 静态方法</th>
+<th style="text-align:left">3.x 全局方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Vue.nextTick</td>
+<td style="text-align:left">nextTick</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.observable</td>
+<td style="text-align:left">reactive</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.version</td>
+<td style="text-align:left">version</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.compile</td>
+<td style="text-align:left">compile</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.set</td>
+<td style="text-align:left">set</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.delete</td>
+<td style="text-align:left">delete</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>部分全局 API 变为实例 API，整体变化如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">2.x 全局 API</th>
+<th style="text-align:left">3.x 实例 API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Vue.config</td>
+<td style="text-align:left">app.config</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.config.productionTip</td>
+<td style="text-align:left">N/A</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.config.ignoredElements</td>
+<td style="text-align:left">app.config.isCustomElement</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.component</td>
+<td style="text-align:left">app.component</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.directive</td>
+<td style="text-align:left">app.directive</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.mixin</td>
+<td style="text-align:left">app.mixin</td>
+</tr>
+<tr>
+<td style="text-align:left">Vue.use</td>
+<td style="text-align:left">app.use</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>提供内部帮助函数作为全局 API，例如<code>h</code>、<code>Transition</code>、<code>withDirectives</code>、<code>vShow</code>...</p>
+</li>
+</ul>
+<h5 id="daimashixian"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimashixian")'>¶</a> 代码实现：</h5>
+<p><code>createApp</code></p>
+<pre class="language-javascript"><code class="language-javascript">import { createApp } from 'vue';
+
+const app = createApp({});
+app.mount('#app');
+</code></pre><p>全局方法：</p>
+<pre class="language-js"><code class="language-js">import { shallowMount } from '@vue/test-utils';
+import { MyComponent } from './MyComponent.vue';
+import { nextTick } from 'vue';
+
+test('an async feature', async () => {
+  const wrapper = shallowMount(MyComponent);
+
+  // execute some DOM-related tasks
+
+  await nextTick();
+
+  // run your assertions
+});
+</code></pre><p>实例方法：</p>
+<pre class="language-js"><code class="language-js">const app = createApp(MyApp);
+
+app.component('button-counter', {
+  data: () => ({
+    count: 0,
+  }),
+  template: '&lt;button @click="count++">Clicked {{ count }} times.&lt;/button>',
+});
+
+app.directive('focus', {
+  mounted: el => el.focus(),
+});
+
+// now every application instance mounted with app.mount(), along with its
+// component tree, will have the same “button-counter” component
+// and “focus” directive without polluting the global environment
+app.mount('#app');
+</code></pre><p>内部帮助函数：</p>
+<pre class="language-js"><code class="language-js">import { h, Transition, withDirectives, vShow } from 'vue';
+
+export function render() {
+  return h(Transition, [withDirectives(h('div', 'hello'), [[vShow, this.ok]])]);
+}
+</code></pre><hr>
+<h3 id="shuangxiangbangdingvmodel"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shuangxiangbangdingvmodel")'>¶</a> 双向绑定 v-model</h3>
+<h5 id="bianhuamiaoshu-14"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-14")'>¶</a> 变化描述：</h5>
+<ul>
+<li>自定义组件内的<code>v-model</code>的 prop 和 event 默认名称变更如下：<pre class="language-text"><code class="language-text">prop: value -> modelValue;
+event: input -> update:modelValue;
+</code></pre></li>
+<li><code>v-bind</code>的<code>.sync</code>修饰符和自定义组件的<code>model</code>选项移除，并用<code>v-model</code>上的参数作为替代；</li>
+<li>自定义组件支持多个自定义的<code>v-model</code>绑定；</li>
+<li><code>v-model</code>支持自定义修饰符；</li>
+</ul>
+<h5 id="daimabianhuaduibi-2"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-2")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<p>默认使用方式：</p>
+<pre class="language-html"><code class="language-html">&lt;ChildComponent v-model="pageTitle" />
+
+&lt;!-- 等价于下面的写法: -->
+
+&lt;ChildComponent :value="pageTitle" @input="pageTitle = $event" />
+</code></pre><p>自定义<code>v-model</code>的 prop 和 event 的使用方式：</p>
+<pre class="language-html"><code class="language-html">&lt;!-- ParentComponent.vue -->
+
+&lt;ChildComponent v-model="pageTitle" />
+</code></pre><pre data-line="4-7" class="language-js"><code data-line="4-7" class="language-js">// ChildComponent.vue
+
+export default {
+  model: {
+    prop: 'title',
+    event: 'change',
+  },
+  props: {
+    // 释放 `value` prop 以用作其它用途
+    value: String,
+    // 使用 `title` 替换默认的 `value` v-model 值
+    title: {
+      type: String,
+      default: 'Default title',
+    },
+  },
+};
+</code></pre><pre class="language-html"><code class="language-html">&lt;!-- 等价于下面的写法: -->
+
+&lt;ChildComponent :title="pageTitle" @change="pageTitle = $event" />
+</code></pre><p>使用<code>v-bind.sync</code>的方式：</p>
+<pre class="language-js"><code class="language-js">// 在子组件内 emit 以 :update 开头的自定义事件
+
+this.$emit('update:title', newValue);
+</code></pre><pre class="language-html"><code class="language-html">&lt;!-- 监听自定义的 update 事件 -->
+
+&lt;ChildComponent :title="pageTitle" @update:title="pageTitle = $event" />
+
+&lt;!-- 等价于下面的写法: -->
+
+&lt;ChildComponent :title.sync="pageTitle" />
+</code></pre><p>3.x</p>
+<p>默认使用方式：</p>
+<pre class="language-html"><code class="language-html">&lt;ChildComponent v-model="pageTitle" />
+
+&lt;!-- 等价于下面的写法: -->
+&lt;!-- value -> modelValue -->
+&lt;!-- input -> update:modelValue -->
+
+&lt;ChildComponent :modelValue="pageTitle" @update:modelValue="pageTitle = $event" />
+</code></pre><p>自定义<code>v-model</code>和多个<code>v-model</code>的方式（<code>.sync</code>因这种实现方式而不再有用，所以废除）：</p>
+<pre class="language-html"><code class="language-html">&lt;ChildComponent v-model:title="pageTitle" v-model:content="pageContent" />
+
+&lt;!-- 等价于下面的写法: -->
+
+&lt;ChildComponent :title="pageTitle" @update:title="pageTitle = $event" :content="pageContent" @update:content="pageContent = $event" />
+</code></pre><p><img src="_nuxt/img/pic-0.cb59705.png" alt=""></p>
+<hr>
+<p><code>v-model</code>自定义修饰符：</p>
+<pre data-line="2" class="language-html"><code data-line="2" class="language-html">&lt;div id="app">
+  &lt;my-component v-model.capitalize="myText">&lt;/my-component>
+  {{ myText }}
+&lt;/div>
+</code></pre><pre data-line="13-15,21" class="language-js"><code data-line="13-15,21" class="language-js">const app = Vue.createApp({
+  data() {
+    return {
+      myText: '',
+    };
+  },
+});
+
+app.component('my-component', {
+  props: {
+    modelValue: String,
+    // 默认修饰符的 prop 为 modelModifiers，自定义 v-model 的修饰符形如：[propName]Modifiers，
+    modelModifiers: {
+      default: () => ({}),
+    },
+  },
+  methods: {
+    emitValue(e) {
+      let value = e.target.value;
+      // 根据修饰符可以做相应处理
+      if (this.modelModifiers.capitalize) {
+        value = value.charAt(0).toUpperCase() + value.slice(1);
+      }
+      this.$emit('update:modelValue', value);
+    },
+  },
+  template: `&lt;input
+    type="text"
+    :value="modelValue"
+    @input="emitValue">`,
+});
+
+app.mount('#app');
+</code></pre><p>自定义 v-model 情况下的自定义修饰符：</p>
+<pre class="language-html"><code class="language-html">&lt;my-component v-model:foo.capitalize="bar">&lt;/my-component>
+</code></pre><pre data-line="2,9" class="language-js"><code data-line="2,9" class="language-js">app.component('my-component', {
+  props: ['foo', 'fooModifiers'],
+  template: `
+    &lt;input type="text"
+      :value="foo"
+      @input="$emit('update:foo', $event.target.value)">
+  `,
+  created() {
+    console.log(this.fooModifiers); // { capitalize: true }
+  },
+});
+</code></pre><hr>
+<h3 id="xuanranhanshuAPIRender"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xuanranhanshuAPIRender")'>¶</a> 渲染函数 API Render</h3>
+<h5 id="bianhuamiaoshu-15"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-15")'>¶</a> 变化描述：</h5>
+<ul>
+<li><code>h</code>需要从<code>Vue</code>全局引入，以取代原<code>render</code>函数内提供的<code>createElement</code>函数；</li>
+<li>render 函数不再接受任何参数；</li>
+<li>VNodes 的 props 结构扁平化；</li>
+</ul>
+<h5 id="daimabianhuaduibi-3"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-3")'>¶</a> 代码变化对比：</h5>
+<p>render 函数参数</p>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// Vue 2 Render Function Example
+export default {
+  render(h) {
+    return h('div');
+  },
+};
+</code></pre><p>3.x</p>
+<pre data-line="2" class="language-javascript"><code data-line="2" class="language-javascript">// Vue 3 Render Function Example
+import { h } from 'vue';
+
+export default {
+  render() {
+    return h('div');
+  },
+};
+</code></pre><hr>
+<p>render 函数签名变化</p>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// Vue 2 Render Function Example
+export default {
+  render(h) {
+    return h('div');
+  },
+};
+</code></pre><p>3.x</p>
+<pre class="language-javascript"><code class="language-javascript">import { h, reactive } from 'vue';
+
+export default {
+  setup(props, { slots, attrs, emit }) {
+    const state = reactive({
+      count: 0,
+    });
+
+    function increment() {
+      state.count++;
+    }
+
+    // return the render function
+    return () =>
+      h(
+        'div',
+        {
+          onClick: increment,
+        },
+        state.count,
+      );
+  },
+};
+</code></pre><hr>
+<p>VNode props 格式</p>
+<p>2.x</p>
+<pre class="language-js"><code class="language-js">// 2.x
+{
+  class: ['button', 'is-outlined'],
+  style: { color: '#34495E' },
+  attrs: { id: 'submit' },
+  domProps: { innerHTML: '' },
+  on: { click: submitForm },
+  key: 'submit-button'
+}
+</code></pre><p>3.x</p>
+<pre data-line="5-7" class="language-js"><code data-line="5-7" class="language-js">// 3.x Syntax
+{
+  class: ['button', 'is-outlined'],
+  style: { color: '#34495E' },
+  id: 'submit',
+  innerHTML: '',
+  onClick: submitForm,
+  key: 'submit-button'
+}
+</code></pre><hr>
+<h3 id="hanshushizujianFunctionalComponent"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#hanshushizujianFunctionalComponent")'>¶</a> 函数式组件 Functional Component</h3>
+<h5 id="bianhuamiaoshu-16"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-16")'>¶</a> 变化描述：</h5>
+<ul>
+<li>函数式组件的性能优化已经在 3.x 被忽略，建议只使用有状态的组件；</li>
+<li>函数式组件只能使用简单函数创建，该函数接收<code>props</code>和<code>context</code>两个参数；</li>
+<li>单文件组件的<code>functional</code>属性移除；</li>
+<li><code>{ functional: true }</code>选项移除；</li>
+</ul>
+<h5 id="daimabianhuaduibi-4"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-4")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<p>无<code>&lt;template></code>的情况：</p>
+<pre data-line="2" class="language-javascript"><code data-line="2" class="language-javascript">export default {
+  functional: true,
+  props: ['level'],
+  render(h, { props, data, children }) {
+    return h(`h${props.level}`, data, children);
+  },
+};
+</code></pre><p>带<code>&lt;template></code>的情况：</p>
+<pre data-line="2" class="language-html"><code data-line="2" class="language-html">&lt;template>
+  &lt;template functional>
+    &lt;component :is="`h${props.level}`" v-bind="attrs" v-on="listeners" />
+  &lt;/template>
+
+  &lt;script>
+    export default {
+      props: ['level'],
+    };
+  &lt;/script>&lt;/template
+>
+</code></pre><p>3.x</p>
+<pre class="language-javascript"><code class="language-javascript">import { h } from 'vue';
+
+const DynamicHeading = (props, context) => {
+  return h(`h${props.level}`, context.attrs, context.slots);
+};
+
+DynamicHeading.props = ['level'];
+
+export default DynamicHeading;
+</code></pre><hr>
+<h3 id="yibuzujianAsyncComponent"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#yibuzujianAsyncComponent")'>¶</a> 异步组件 Async Component</h3>
+<h5 id="bianhuamiaoshu-17"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-17")'>¶</a> 变化描述：</h5>
+<ul>
+<li>使用新的<code>defineAsyncComponent</code>方法定义异步组件；</li>
+<li>定义组件带选项时，<code>component</code>更名为<code>loader</code>；</li>
+<li>新的<code>loader</code>选项必须返回一个 <strong><em>Promise</em></strong>；</li>
+<li>定义组件带选项时，<code>loading</code>更名为<code>LoadingComponent</code>；</li>
+<li>定义组件带选项时，<code>error</code>更名为<code>errorComponent</code>；</li>
+<li>新增定义组件选项<code>retryWhen</code>，用于控制当组件加载失败时，指定情况才进行重试加载；</li>
+<li>新增定义组件选项<code>maxRetries</code>，控制重试加载的次数；</li>
+<li>新增定义组件选项<code>suspensible</code>，默认为 true，为 true 时，定义的<code>loadingComponent</code>和<code>errorComponent</code>将被无视；</li>
+</ul>
+<h5 id="daimabianhuaduibi-5"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-5")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">import ErrorComponent from './components/ErrorComponent.vue';
+import LoadingComponent from './components/LoadingComponent.vue';
+
+// 无选项异步组件
+Vue.component('async-component', () => import('./my-async-component'));
+
+// 带选项异步组件
+const AsyncComponent = () => ({
+  // 需要加载的组件 (应该是一个 `Promise` 对象)
+  component: import('./MyComponent.vue'),
+  // 异步组件加载时使用的组件
+  loading: LoadingComponent,
+  // 加载失败时使用的组件
+  error: ErrorComponent,
+  // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+  delay: 200,
+  // 如果提供了超时时间且组件加载也超时了，
+  // 则使用加载失败时使用的组件。默认值是：`Infinity`
+  timeout: 3000,
+});
+</code></pre><p>3.x</p>
+<pre data-line="3,11" class="language-javascript"><code data-line="3,11" class="language-javascript">import ErrorComponent from './components/ErrorComponent.vue';
+import LoadingComponent from './components/LoadingComponent.vue';
+import { defineAsyncComponent } from 'vue';
+
+// 无选项异步组件
+const asyncPage = defineAsyncComponent(() => import('./my-async-component'));
+
+// 带选项异步组件
+const asyncPageWithOptions = defineAsyncComponent({
+  // component 更名为 loader
+  loader: () => import('./my-async-component'),
+  // A component to use while the async component is loading
+  loadingComponent: LoadingComponent,
+  // A component to use if the load fails
+  errorComponent: ErrorComponent,
+  // Delay before showing the loading component. Default: 200ms.
+  delay: 200,
+  // The error component will be displayed if a timeout is
+  // provided and exceeded. Default: Infinity.
+  timeout: 3000,
+  // A function that returns a boolean indicating whether the async component should retry when the loader promise rejects
+  retryWhen: error => error.code !== 404,
+  // Maximum allowed retries number
+  maxRetries: 3,
+  // Defining if component is suspensible
+  suspensible: false,
+});
+</code></pre><hr>
+<h3 id="Dataxuanxiang"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#Dataxuanxiang")'>¶</a> Data 选项</h3>
+<h5 id="bianhuamiaoshu-18"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-18")'>¶</a> 变化描述：</h5>
+<ul>
+<li><code>data</code>组件选项声明不再接受对象字面量，只接受<code>function</code>的声明方式；</li>
+</ul>
+<h5 id="daimabianhuaduibi-6"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-6")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-html"><code class="language-html">&lt;!-- Object Declaration -->
+&lt;script>
+  const app = new Vue({
+    data: {
+      apiKey: 'a1b2c3',
+    },
+  });
+&lt;/script>
+
+&lt;!-- Function Declaration -->
+&lt;script>
+  const app = new Vue({
+    data() {
+      return {
+        apiKey: 'a1b2c3',
+      };
+    },
+  });
+&lt;/script>
+</code></pre><p>3.x</p>
+<pre data-line="5-9" class="language-html"><code data-line="5-9" class="language-html">&lt;script>
+  import { createApp } from 'vue';
+
+  createApp({
+    data() {
+      return {
+        apiKey: 'a1b2c3',
+      };
+    },
+  }).mount('#app');
+&lt;/script>
+</code></pre><hr>
+<h3 id="zidingyiyuansuElements"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zidingyiyuansuElements")'>¶</a> 自定义元素 Elements</h3>
+<h5 id="bianhuamiaoshu-19"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-19")'>¶</a> 变化描述：</h5>
+<ul>
+<li>自定义元素白名单现在在模板编译期间执行，并且应该通过编译器选项而不是运行时配置来配置；</li>
+<li>特殊的<code>is</code> prop 现在限定只能在<code>&lt;component></code>上使用；</li>
+<li>提供新的<code>v-is</code>指令以支持 2.x 的使用情况；</li>
+</ul>
+<h5 id="daimabianhuaduibi-7"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-7")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// 这可以使 Vue 忽略在外部定义的自定义元素
+// (e.g., 使用 Web Components APIs 定义的元素)
+
+Vue.config.ignoredElements = ['plastic-button'];
+</code></pre><p>3.x</p>
+<p>使用打包工具选项定义的情况：</p>
+<pre class="language-javascript"><code class="language-javascript">// in webpack config
+rules: [
+  {
+    test: /\.vue$/,
+    use: 'vue-loader',
+    options: {
+      compilerOptions: {
+        isCustomElement: tag => tag === 'plastic-button',
+      },
+    },
+  },
+  // ...
+];
+</code></pre><p>使用运行时定义的情况（注意这种配置对预编译的模板无效）：</p>
+<pre class="language-javascript"><code class="language-javascript">const app = Vue.createApp({});
+app.config.isCustomElement = tag => tag === 'plastic-button';
+</code></pre><hr>
+<h3 id="chacaoSlots"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#chacaoSlots")'>¶</a> 插槽 Slots</h3>
+<h5 id="bianhuamiaoshu-20"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-20")'>¶</a> 变化描述：</h5>
+<ul>
+<li>指定 slot 的方式由对象字面量变为函数式；</li>
+<li><code>this.$scopedSlots</code>移除；</li>
+</ul>
+<h5 id="daimabianhuaduibi-8"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-8")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// 2.x Syntax
+h(LayoutComponent, [h('div', { slot: 'header' }, this.header), h('div', { slot: 'content' }, this.content)]);
+</code></pre><pre class="language-js"><code class="language-js">// 2.x 在组件内获取指定的槽
+this.$scopedSlots.header;
+</code></pre><p>3.x</p>
+<pre class="language-javascript"><code class="language-javascript">// 3.x Syntax
+h(
+  LayoutComponent,
+  {},
+  {
+    header: () => h('div', this.header),
+    content: () => h('div', this.content),
+  },
+);
+</code></pre><pre class="language-js"><code class="language-js">// 3.x 在组件内获取指定的槽
+this.$slots.header;
+</code></pre><hr>
+<h3 id="dongtaibangdingshuxingchuli"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#dongtaibangdingshuxingchuli")'>¶</a> 动态绑定属性处理</h3>
+<h5 id="bianhuamiaoshu-21"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-21")'>¶</a> 变化描述：</h5>
+<ul>
+<li>删除 Vue 内部定义的“枚举属性”（<code>contenteditable</code>，<code>draggable</code>和<code>spellcheck</code>）概念，并将这些“枚举属性”当作非布尔值处理；</li>
+<li>当 DOM 上的动态属性绑定值为<code>false</code>时，不再删除该属性。如果需要删除属性，使用<code>null</code>或者<code>undefined</code>；</li>
+</ul>
+<h5 id="shuxingchulibianhuaduibi"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shuxingchulibianhuaduibi")'>¶</a> 属性处理变化对比：</h5>
+<p>2.x</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">绑定表达式</th>
+<th style="text-align:left"><code>foo</code>(常规值)</th>
+<th style="text-align:left"><code>draggable</code>(枚举值)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">:attr="null"</td>
+<td style="text-align:left">N/A</td>
+<td style="text-align:left">draggable="false"</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="undefined"</td>
+<td style="text-align:left">N/A</td>
+<td style="text-align:left">N/A</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="true"</td>
+<td style="text-align:left">foo="true"</td>
+<td style="text-align:left">draggable="true"</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="false"</td>
+<td style="text-align:left">N/A</td>
+<td style="text-align:left">draggable="false"</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="0"</td>
+<td style="text-align:left">foo="0"</td>
+<td style="text-align:left">draggable="true"</td>
+</tr>
+<tr>
+<td style="text-align:left">attr=""</td>
+<td style="text-align:left">foo=""</td>
+<td style="text-align:left">draggable="true"</td>
+</tr>
+<tr>
+<td style="text-align:left">attr="foo"</td>
+<td style="text-align:left">foo="foo"</td>
+<td style="text-align:left">draggable="true"</td>
+</tr>
+<tr>
+<td style="text-align:left">attr</td>
+<td style="text-align:left">foo=""</td>
+<td style="text-align:left">draggable="true"</td>
+</tr>
+</tbody>
+</table>
+<p>3.x</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">绑定表达式</th>
+<th style="text-align:left"><code>foo</code>(常规值)</th>
+<th style="text-align:left"><code>draggable</code>(枚举值)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">:attr="null"</td>
+<td style="text-align:left">N/A</td>
+<td style="text-align:left"><strong>N/A</strong> *</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="undefined"</td>
+<td style="text-align:left">N/A</td>
+<td style="text-align:left">N/A</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="true"</td>
+<td style="text-align:left">foo="true"</td>
+<td style="text-align:left">draggable="true"</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="false"</td>
+<td style="text-align:left"><strong>foo="false"</strong> *</td>
+<td style="text-align:left">draggable="false"</td>
+</tr>
+<tr>
+<td style="text-align:left">:attr="0"</td>
+<td style="text-align:left">foo="0"</td>
+<td style="text-align:left"><strong>draggable="0"</strong> *</td>
+</tr>
+<tr>
+<td style="text-align:left">attr=""</td>
+<td style="text-align:left">foo=""</td>
+<td style="text-align:left"><strong>draggable=""</strong> *</td>
+</tr>
+<tr>
+<td style="text-align:left">attr="foo"</td>
+<td style="text-align:left">foo="foo"</td>
+<td style="text-align:left"><strong>draggable="o"</strong> *</td>
+</tr>
+<tr>
+<td style="text-align:left">attr</td>
+<td style="text-align:left">foo=""</td>
+<td style="text-align:left"><strong>draggable=""</strong> *</td>
+</tr>
+</tbody>
+</table>
+<p>*：发生变化</p>
+<hr>
+<h3 id="zidingyizhilingDirectives"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zidingyizhilingDirectives")'>¶</a> 自定义指令 Directives</h3>
+<h5 id="bianhuamiaoshu-22"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-22")'>¶</a> 变化描述：</h5>
+<ul>
+<li>
+<p>重命名自定义指令的生命周期钩子，使其与组件的生命周期一致(部分)：</p>
+<pre class="language-text"><code class="language-text">- bind → beforeMount
+
+- inserted → mounted
+
+- beforeUpdate: 新钩子，在元素更新前调用
+
+- update → 已删除
+
+- beforeUnmount 新钩子，在元素卸载前调用
+
+- unbind -> unmounted
+</code></pre></li>
+<li>
+<p>当指令应用在自定义组件时，需要在组件内使用<code>v-bind="$attrs"</code>手动绑定到具体的 DOM，因为可能存在多根元素的情况；</p>
+</li>
+</ul>
+<h5 id="daimabianhuaduibi-9"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-9")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-html"><code class="language-html">&lt;p v-highlight="yellow">Highlight this text bright yellow&lt;/p>
+</code></pre><pre class="language-javascript"><code class="language-javascript">Vue.directive('highlight', {
+  bind(el, binding, vnode) {
+    el.style.background = binding.value;
+  },
+});
+</code></pre><p>3.x<br>
+使用在原生 DOM 的情况：</p>
+<pre class="language-html"><code class="language-html">&lt;p v-highlight="yellow">Highlight this text bright yellow&lt;/p>
+</code></pre><pre class="language-javascript"><code class="language-javascript">const app = Vue.createApp({});
+
+app.directive('highlight', {
+  beforeMount(el, binding, vnode) {
+    el.style.background = binding.value;
+  },
+  mounted() {},
+  beforeUpdate() {}, // new
+  updated() {},
+  beforeUnmount() {}, // new
+  unmounted() {},
+});
+</code></pre><p>使用在自定义组件的情况：</p>
+<p>组件外部：</p>
+<pre class="language-html"><code class="language-html">&lt;custom-component v-highlight="yellow" />
+</code></pre><p>组件内部：</p>
+<pre class="language-html"><code class="language-html">&lt;template>
+  &lt;p v-bind="$attrs">Highlight this text bright yellow&lt;/p>
+  &lt;p v-bind="$attrs">Highlight this text bright yellow&lt;/p>
+  &lt;p>Keep this text normal&lt;/p>
+&lt;/template>
+</code></pre><hr>
+<h3 id="donghuazujianTransitionComponent"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#donghuazujianTransitionComponent")'>¶</a> 动画组件 Transition Component</h3>
+<h5 id="bianhuamiaoshu-23"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-23")'>¶</a> 变化描述：</h5>
+<ul>
+<li>当<code>&lt;transition></code>作为组件根元素时，在组件外部使用<code>v-if</code>或者<code>v-show</code>改变显隐值将不再生效，需要暴露指定值来控制显隐以驱动 transition 动画；</li>
+<li>将<code>v-enter</code> transition class 更名为<code>v-enter-from</code>；</li>
+<li>将<code>v-leave</code> transition class 更名为<code>v-leave-from</code>；</li>
+</ul>
+<h5 id="daimabianhuaduibi-10"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-10")'>¶</a> 代码变化对比：</h5>
+<p><code>&lt;transition></code>作为组件根元素：</p>
+<p>2.x</p>
+<pre data-line="9" class="language-html"><code data-line="9" class="language-html">&lt;!-- modal component -->
+&lt;template>
+  &lt;transition>
+    &lt;div class="modal">&lt;slot />&lt;/div>
+  &lt;/transition>
+&lt;/template>
+
+&lt;!-- usage -->
+&lt;modal v-if="showModal">hello&lt;/modal>
+</code></pre><p>3.x</p>
+<pre data-line="9" class="language-html"><code data-line="9" class="language-html">&lt;!-- modal component -->
+&lt;template>
+  &lt;transition>
+    &lt;div v-if="show" class="modal">&lt;slot />&lt;/div>
+  &lt;/transition>
+&lt;/template>
+
+&lt;!-- usage -->
+&lt;modal :show="showModal">hello&lt;/modal>
+</code></pre><hr>
+<p>class 更名：</p>
+<p>2.x</p>
+<pre class="language-css"><code class="language-css">/* before */
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+.v-leave,
+.v-enter-to {
+  opacity: 1;
+}
+</code></pre><p>3.x</p>
+<pre class="language-css"><code class="language-css">/* after */
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+.v-leave-from,
+.v-enter-to {
+  opacity: 1;
+}
+</code></pre><hr>
+<h3 id="zhentingqiAPIWatch"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zhentingqiAPIWatch")'>¶</a> 侦听器 API Watch</h3>
+<h5 id="bianhuamiaoshu-24"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-24")'>¶</a> 变化描述：</h5>
+<ul>
+<li>更改形如<code>a.b.c</code>的键路径观察方式为计算函数式，如<code>() => this.a.b.c</code>；</li>
+</ul>
+<h5 id="daimabianhuaduibi-11"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-11")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// 键路径
+vm.$watch('a.b.c', function(newVal, oldVal) {
+  // 做点什么
+});
+</code></pre><p>3.x</p>
+<pre data-line="2,10" class="language-javascript"><code data-line="2,10" class="language-javascript">vm.$watch(
+  () => vm.a.b.c,
+  (newVal, oldVal) => {
+    // 做点什么
+  },
+);
+
+// 多依赖的情况
+vm.$watch(
+  () => vm.a.b.c + vm.d.e.f,
+  (newVal, oldVal) => {
+    // 做点什么
+  },
+);
+</code></pre><hr>
+<h3 id="xiangyingshizhuruProvideInject"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#xiangyingshizhuruProvideInject")'>¶</a> 响应式注入 Provide / Inject</h3>
+<h5 id="bianhuamiaoshu-25"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-25")'>¶</a> 变化描述：</h5>
+<ul>
+<li>通过<code>ref</code>、<code>computed</code>和<code>reactive</code> api，现在可以注入响应式的值和该值对应的更新方法；</li>
+</ul>
+<h5 id="daimabianhuaduibi-12"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-12")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// 父级组件提供 'foo'
+var Provider = {
+  provide: {
+    foo: 'bar',
+  },
+  // ...
+};
+
+// 子组件注入 'foo'
+var Child = {
+  inject: ['foo'],
+  created() {
+    console.log(this.foo); // => "bar"
+  },
+  // ...
+};
+</code></pre><p>3.x</p>
+<p>在组件选项内定义的情况：</p>
+<pre data-line="5" class="language-js"><code data-line="5" class="language-js">app.component('todo-list', {
+  // ...
+  provide() {
+    return {
+      todoLength: Vue.computed(() => this.todos.length),
+    };
+  },
+});
+</code></pre><p>在<code>setup</code>函数内定义的情况：</p>
+<pre data-line="21-23,27" class="language-html"><code data-line="21-23,27" class="language-html">&lt;!-- src/components/MyMap.vue -->
+&lt;template>
+  &lt;MyMarker />
+&lt;/template>
+
+&lt;script>
+  import { provide, reactive, ref } from 'vue'
+  import MyMarker from './MyMarker.vue
+
+  export default {
+    components: {
+      MyMarker
+    },
+    setup() {
+      const location = ref('North Pole')
+      const geolocation = reactive({
+        longitude: 90,
+        latitude: 135
+      })
+
+      const updateLocation = () => {
+        location.value = 'South Pole'
+      }
+
+      provide('location', location)
+      provide('geolocation', geolocation)
+      provide('updateLocation', updateLocation)
+    }
+  }
+&lt;/script>
+</code></pre><pre data-line="9,14" class="language-html"><code data-line="9,14" class="language-html">&lt;!-- src/components/MyMarker.vue -->
+&lt;script>
+  import { inject } from 'vue';
+
+  export default {
+    setup() {
+      const userLocation = inject('location', 'The Universe');
+      const userGeolocation = inject('geolocation');
+      const updateUserLocation = inject('updateUserLocation'); // 注入更新方法
+
+      return {
+        userLocation,
+        userGeolocation,
+        updateUserLocation, // 可再导出更新方法
+      };
+    },
+  };
+&lt;/script>
+</code></pre><hr>
+<h2 id="REMOVEDfeiqigongnengtexing"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#REMOVEDfeiqigongnengtexing")'>¶</a> REMOVED | 废弃功能特性</h2>
+<h3 id="shijianAPIEvents"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shijianAPIEvents")'>¶</a> 事件 API Events</h3>
+<h5 id="bianhuamiaoshu-26"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-26")'>¶</a> 变化描述：</h5>
+<ul>
+<li><code>$on</code>，<code>$off</code>和<code>$once</code>实例方法移除。应用实例不再提供事件中心的接口。</li>
+</ul>
+<h5 id="daimabianhuaduibi-13"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-13")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-javascript"><code class="language-javascript">// eventHub.js
+
+const eventHub = new Vue();
+
+export default eventHub;
+</code></pre><pre class="language-javascript"><code class="language-javascript">// ChildComponent.vue
+import eventHub from './eventHub';
+
+export default {
+  mounted() {
+    // adding eventHub listener
+    eventHub.$on('custom-event', () => {
+      console.log('Custom event triggered!');
+    });
+  },
+  beforeDestroy() {
+    // removing eventHub listener
+    eventHub.$off('custom-event');
+  },
+};
+</code></pre><pre class="language-javascript"><code class="language-javascript">// ParentComponent.vue
+import eventHub from './eventHub';
+
+export default {
+  methods: {
+    callGlobalCustomEvent() {
+      eventHub.$emit('custom-event'); // if ChildComponent is mounted, we will have a message in the console
+    },
+  },
+};
+</code></pre><p>3.x</p>
+<p><code>$on</code>，<code>$off</code>和<code>$once</code>实例方法移除。保留<code>$emit</code>实例方法作为子组件发射自定义事件的 api。</p>
+<hr>
+<h3 id="shijianxiushifuKeyCode"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#shijianxiushifuKeyCode")'>¶</a> 事件修饰符 KeyCode</h3>
+<h5 id="bianhuamiaoshu-27"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-27")'>¶</a> 变化描述：</h5>
+<ul>
+<li><code>v-on</code>指令的修饰符不再支持 keyCodes；</li>
+<li>移除<code>config.keyCodes</code>;</li>
+</ul>
+<h5 id="daimabianhuaduibi-14"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-14")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-html"><code class="language-html">&lt;!-- keyCode version -->
+&lt;input v-on:keyup.13="submit" />
+
+&lt;!-- alias version -->
+&lt;input v-on:keyup.enter="submit" />
+</code></pre><pre class="language-js"><code class="language-js">Vue.config.keyCodes = {
+  f1: 112,
+};
+</code></pre><pre class="language-html"><code class="language-html">&lt;!-- keyCode version -->
+&lt;input v-on:keyup.112="showHelpText" />
+
+&lt;!-- custom alias version -->
+&lt;input v-on:keyup.f1="showHelpText" />
+</code></pre><p>3.x</p>
+<pre class="language-html"><code class="language-html">&lt;!-- Vue 3 Key Modifier on v-on -->
+&lt;input v-on:keyup.delete="confirmDelete" />
+</code></pre><hr>
+<h3 id="guolvqiFilters"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#guolvqiFilters")'>¶</a> 过滤器 Filters</h3>
+<h5 id="bianhuamiaoshu-28"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-28")'>¶</a> 变化描述：</h5>
+<ul>
+<li>完全移除<code>Filters</code>；</li>
+</ul>
+<h5 id="daimabianhuaduibi-15"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-15")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-html"><code class="language-html">&lt;template>
+  &lt;h1>Bank Account Balance&lt;/h1>
+  &lt;p>{{ accountBalance | currencyUSD }}&lt;/p>
+&lt;/template>
+
+&lt;script>
+  export default {
+    props: {
+      accountBalance: {
+        type: Number,
+        required: true,
+      },
+    },
+    filters: {
+      currencyUSD(value) {
+        return '$' + value;
+      },
+    },
+  };
+&lt;/script>
+</code></pre><p>3.x</p>
+<p>使用计算属性或者自定义方法处理：</p>
+<pre data-line="15-17" class="language-html"><code data-line="15-17" class="language-html">&lt;template>
+  &lt;h1>Bank Account Balance&lt;/h1>
+  &lt;p>{{ accountInUSD }}&lt;/p>
+&lt;/template>
+
+&lt;script>
+  export default {
+    props: {
+      accountBalance: {
+        type: Number,
+        required: true,
+      },
+    },
+    computed: {
+      accountInUSD() {
+        return '$' + this.accountBalance;
+      },
+    },
+  };
+&lt;/script>
+</code></pre><hr>
+<h3 id="hangneimobanshuxinginlinetemplate"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#hangneimobanshuxinginlinetemplate")'>¶</a> 行内模板属性 inline-template</h3>
+<h5 id="bianhuamiaoshu-29"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#bianhuamiaoshu-29")'>¶</a> 变化描述：</h5>
+<ul>
+<li>完全移除<code>inline-template</code>方法；</li>
+</ul>
+<h5 id="daimabianhuaduibi-16"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#daimabianhuaduibi-16")'>¶</a> 代码变化对比：</h5>
+<p>2.x</p>
+<pre class="language-html"><code class="language-html">&lt;my-component inline-template>
+  &lt;div>
+    &lt;p>These are compiled as the component's own template.&lt;/p>
+    &lt;p>Not parent's transclusion content.&lt;/p>
+  &lt;/div>
+&lt;/my-component>
+</code></pre><p>3.x</p>
+<p>不再支持<code>inline-template</code>。</p>
+<h2 id="zongjie"><a class="cs-header-anchor" href="" onclick='this.getAttribute("href")||this.setAttribute("href",window.location.origin+window.location.pathname+"#zongjie")'>¶</a> 总结</h2>
+<p>通过学习 Vue 3.x 的新特性可以体会到，Vue 在<strong>性能</strong>、<strong>工程化</strong>和<strong>可移植性</strong>这三个大方向里面作出了很大的努力，主要体现在这五个方面：</p>
+<ul>
+<li>Tree-shaking support；
+<ul>
+<li>大多数可选功能现在都支持 Tree-shaking，例如 Composition API、<code>v-model</code>、<code>&lt;transition></code>；</li>
+<li>最小可运行的 HelloWorld 例子的文件总大小: 13.5kb， 只使用 Composition API 的情况下最小可达到 11.75kb；</li>
+<li>全运行时打包总大小为: 22.5kb，功能更多更强大，但是大小比 Vue 2 更小；</li>
+</ul>
+</li>
+<li>Composition API；
+<ul>
+<li>可与原有的选项 API 同时存在，更灵活和更易于 2.x 升级 3.x，同时利于开发人员  过渡升级版本；</li>
+<li>更加灵活的逻辑组合和复用，大大地提升了复杂组件的可维护性；</li>
+<li>Reactivity 模块可作为独立的库使用，使得 Vue 3.x 在与其它框架配合使用时更加灵活；</li>
+</ul>
+</li>
+<li>Fragment, Teleport, Suspense；
+<ul>
+<li>Fragment 特性的到来，可以使<code>&lt;template></code>中不再局限于单一的根节点，同时<code>render</code>函数也可以返回包含多个 Vnode 的数组；</li>
+<li>Teleport 组件让原来的复杂组件的嵌套关系变得更加灵活和清晰；</li>
+<li>Suspense 组件大大减少了书写异步数据 DOM 渲染和异步组件的代码量；</li>
+</ul>
+</li>
+<li>Better TypeScript support；
+<ul>
+<li>Vue 3.x 库代码编写由原来的<code>flow</code>转换为<code>ts</code>，所以在编写业务代码时使用 ts 可以大大受益；</li>
+<li>API 在 js 和 ts 环境下的使用一致；</li>
+<li>支持 TSX；</li>
+<li>Class 组件仍然可用（需要引入<code>vue-class-component@next</code>）；</li>
+</ul>
+</li>
+<li>Custom Renderer API；
+<ul>
+<li>允许生成自定义的 renderer，降低了 Vue 3.x 迁移到其它平台的难度，比如小程序、Weex 等；</li>
+</ul>
+</li>
+</ul>
+</article> <hr> <div class="cs-post__link-wrapper"><a href="/post/markdown-grammar-sammple/" class="cs-outside-link">← Markdown基本语法与扩展语法</a> <a href="/post/prevent-duplicate-requests/" class="cs-outside-link">控制前端业务重复请求的一个新思路 →</a></div> <hr> <form action="https://app.convertkit.com/forms/1488259/subscriptions" method="post" data-sv-form="1488259" data-uid="51a87aa3a3" data-format="inline" data-version="5" min-width="400 500 600 700" class="cs-subscribe cs-container" data-v-011cff22><div class="cs-subscribe__wrapper" data-v-011cff22><h3 class="cs-subscribe__title" data-v-011cff22>订阅本博客的最新内容</h3> <p class="cs-subscribe__describe" data-v-011cff22>如果我有新的想法，会第一时间通过邮件与你分享.</p> <svg xmlns="http://www.w3.org/2000/svg" class="cs-subscribe__icon icon sprite-icons" data-v-011cff22 data-v-011cff22><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-icon-e-mail" data-v-011cff22 data-v-011cff22></use></svg></div> <div class="cs-subscribe__wrapper" data-v-011cff22><input aria-label="Your first name" name="fields[first_name]" placeholder="你的昵称" required class="cs-subscribe__input" data-v-011cff22> <input type="email" name="email_address" aria-label="Your email address" placeholder="你的邮件地址" required class="cs-subscribe__input" data-v-011cff22> <button data-element="submit" class="cs-subscribe__submit-btn" data-v-011cff22><span data-v-011cff22>立即订阅</span></button> <p class="cs-subscribe__tips" data-v-011cff22>请放心我不会发送任何辣鸡邮件给你.</p> <p class="cs-subscribe__tips" data-v-011cff22>
+      你可以
+      <em data-v-011cff22>随时</em> 取消订阅.
+    </p></div></form> <section class="cs-statement" data-v-08ff1539><p class="cs-statement__text" data-v-08ff1539>
+    讨论请发邮件到
+    <a href="mailto:lkangd@gmail.com" target="_blank" data-v-08ff1539>lkangd@gmail.com</a></p> <p class="cs-statement__text" data-v-08ff1539>未经授权，禁止转载</p> <p class="cs-statement__text" data-v-08ff1539>通过支付宝 lkangd@foxmail.com 或赞赏码赞助此文</p> <img alt="reward-code" src="/_nuxt/img/wechat-reward-code.3b0f29f.jpg" class="cs-statement__reward-code theme-ignore" data-v-08ff1539></section> <ul class="cs-toc" data-v-2002d74b></ul></section> <footer class="cs-footer" data-v-11bea6b1><div class="cs-footer__wrapper" data-v-11bea6b1><a href="/about/" class="fl" data-v-11bea6b1>About</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/tech/" class="fl" data-v-11bea6b1>Tech</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/think/" class="fl" data-v-11bea6b1>Think</a> <span class="fl" data-v-11bea6b1>• </span> <a href="/fun/" class="fl" data-v-11bea6b1>Fun</a> <a href="/sitemap.xml" target="_blank" class="fr" data-v-11bea6b1>Sitemap</a> <span class="fr" data-v-11bea6b1>• </span> <a href="/feed.xml" target="_blank" class="fr" data-v-11bea6b1>RSS</a> <div class="cs-footer__bottom" data-v-11bea6b1><svg xmlns="http://www.w3.org/2000/svg" class="cs-footer__logo icon sprite-icons" data-v-11bea6b1 data-v-11bea6b1><use href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" xlink:href="/_nuxt/dd2688c1fd0a9721ca652075c09dc4dd.svg#i-logo" data-v-11bea6b1 data-v-11bea6b1></use></svg>
+      2017-2020 Curtis' Spot
+      <span style="margin:0 5px" data-v-11bea6b1>•</span> <div class="cs-color-slogan cs-footer__slogan" data-v-a8c8150c data-v-11bea6b1><span class="cs-color-slogan__start-text" data-v-a8c8150c>Work With </span> <span class="cs-color-slogan__placeholder" data-v-a8c8150c></span> <span class="cs-color-slogan__wrapper" data-v-a8c8150c>
+     
+    <span data-v-a8c8150c></span></span></div></div></div></footer></div></div></div><script>window.__NUXT__={staticAssetsBase:"/_nuxt/static/1600180271",layout:"post",error:null,serverRendered:!0,routePath:"/post/new-for-vue-3",config:{}}</script><script src="/_nuxt/runtime.2b486dc.js" defer></script><script src="/_nuxt/pages/post/_id.293b655.js" defer></script><script src="/_nuxt/node_modules/commons.82dad87.js" defer></script><script src="/_nuxt/app.ab1a4d4.js" defer></script><script data-n-head="ssr" type="text/javascript" data-body="true">!function(){function t(e){r=e,document.body.className=e}var r,a={light:"light",dark:"dark"};try{r=localStorage.getItem("theme")}catch(e){}window.__setPreferredTheme=function(e){t(e);try{localStorage.setItem("theme",e)}catch(e){}};var e=window.matchMedia("(prefers-color-scheme: dark)");e.addListener(function(e){window.__setPreferredTheme(a[r]||(e.matches?"dark":"light"))}),t(a[r]||(e.matches?"dark":"light"))}()</script>
+  </body>
+</html>
